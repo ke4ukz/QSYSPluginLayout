@@ -113,6 +113,111 @@ const outline = new Outline(dataModel, selection, eventBus);
   });
 }
 
+// ── PluginInfo modal ──
+{
+  const btnPluginInfo = document.getElementById('btn-plugin-info');
+  const overlay = document.getElementById('plugininfo-overlay');
+  const btnSave = document.getElementById('plugininfo-save');
+  const btnCancel = document.getElementById('plugininfo-cancel');
+  const btnClose = document.getElementById('plugininfo-close');
+  const btnClear = document.getElementById('plugininfo-clear');
+  const btnGenerateId = document.getElementById('pi-generate-id');
+
+  const piFields = {
+    Name: document.getElementById('pi-name'),
+    Version: document.getElementById('pi-version'),
+    Id: document.getElementById('pi-id'),
+    Description: document.getElementById('pi-description'),
+    BuildVersion: document.getElementById('pi-build-version'),
+    Author: document.getElementById('pi-author'),
+    Manufacturer: document.getElementById('pi-manufacturer'),
+    Model: document.getElementById('pi-model'),
+    IsManaged: document.getElementById('pi-is-managed'),
+    Type: document.getElementById('pi-type'),
+    ShowDebug: document.getElementById('pi-show-debug'),
+  };
+
+  function populatePluginInfo() {
+    const pi = dataModel.getPluginInfo() || {};
+    piFields.Name.value = pi.Name || '';
+    piFields.Version.value = pi.Version || '';
+    piFields.Id.value = pi.Id || '';
+    piFields.Description.value = pi.Description || '';
+    piFields.BuildVersion.value = pi.BuildVersion || '';
+    piFields.Author.value = pi.Author || '';
+    piFields.Manufacturer.value = pi.Manufacturer || '';
+    piFields.Model.value = pi.Model || '';
+    piFields.IsManaged.checked = !!pi.IsManaged;
+    piFields.Type.value = pi.Type || '';
+    piFields.ShowDebug.checked = !!pi.ShowDebug;
+  }
+
+  function closePluginInfo() {
+    overlay.hidden = true;
+  }
+
+  function generateUUID() {
+    if (crypto.randomUUID) return crypto.randomUUID();
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+      const r = (Math.random() * 16) | 0;
+      return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+    });
+  }
+
+  btnPluginInfo.addEventListener('click', () => {
+    populatePluginInfo();
+    overlay.hidden = false;
+  });
+
+  btnGenerateId.addEventListener('click', () => {
+    piFields.Id.value = generateUUID();
+  });
+
+  btnSave.addEventListener('click', () => {
+    const info = {
+      Name: piFields.Name.value.trim(),
+      Version: piFields.Version.value.trim(),
+      Id: piFields.Id.value.trim(),
+      Description: piFields.Description.value.trim(),
+      BuildVersion: piFields.BuildVersion.value.trim(),
+      Author: piFields.Author.value.trim(),
+      Manufacturer: piFields.Manufacturer.value.trim(),
+      Model: piFields.Model.value.trim(),
+      IsManaged: piFields.IsManaged.checked,
+      Type: piFields.Type.value.trim(),
+      ShowDebug: piFields.ShowDebug.checked,
+    };
+    const hasContent = info.Name || info.Version || info.Id || info.Description ||
+      info.BuildVersion || info.Author || info.Manufacturer || info.Model ||
+      info.IsManaged || info.Type || info.ShowDebug;
+    dataModel.setPluginInfo(hasContent ? info : null);
+    closePluginInfo();
+    refreshLua();
+    autosave();
+  });
+
+  btnClear.addEventListener('click', () => {
+    for (const [, el] of Object.entries(piFields)) {
+      if (el.type === 'checkbox') el.checked = false;
+      else el.value = '';
+    }
+  });
+
+  btnCancel.addEventListener('click', closePluginInfo);
+  btnClose.addEventListener('click', closePluginInfo);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closePluginInfo(); });
+}
+
+// ── Help window ──
+{
+  const btnHelp = document.getElementById('btn-help');
+  btnHelp.addEventListener('click', () => {
+    const w = Math.round(window.innerWidth * 0.5);
+    const h = window.innerHeight;
+    window.open('help/', 'qsys-layout-help', `width=${w},height=${h},resizable=yes,scrollbars=yes`);
+  });
+}
+
 // ── About modal ──
 {
   const btnAbout = document.getElementById('btn-about');
@@ -159,6 +264,7 @@ eventBus.on('page:added', refreshLua);
 eventBus.on('page:removed', refreshLua);
 eventBus.on('page:renamed', refreshLua);
 eventBus.on('page:switched', refreshLua);
+eventBus.on('pluginInfo:changed', refreshLua);
 
 // Clear selection on page switch (defensive — PageTabs also clears on click)
 eventBus.on('page:switched', () => selection.clearSelection());
@@ -188,6 +294,7 @@ eventBus.on('page:added', autosave);
 eventBus.on('page:removed', autosave);
 eventBus.on('page:renamed', autosave);
 eventBus.on('canvas:resized', autosave);
+eventBus.on('pluginInfo:changed', autosave);
 
 // Flush immediately when leaving the page
 window.addEventListener('beforeunload', () => {

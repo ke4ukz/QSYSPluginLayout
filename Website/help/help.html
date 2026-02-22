@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Q-SYS Plugin Layout Editor — Help</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #1e1e1e; color: #ccc; padding: 24px 32px; line-height: 1.6; }
+    h1 { font-size: 20px; color: #fff; margin-bottom: 16px; border-bottom: 1px solid #444; padding-bottom: 8px; }
+    h2 { font-size: 16px; color: #e0e0e0; margin: 20px 0 8px; }
+    h3 { font-size: 14px; color: #ddd; margin: 14px 0 6px; }
+    p, li { font-size: 13px; color: #bbb; }
+    ul { margin-left: 20px; margin-bottom: 10px; }
+    li { margin-bottom: 4px; }
+    kbd { background: #333; border: 1px solid #555; border-radius: 3px; padding: 1px 5px; font-size: 12px; font-family: monospace; color: #ddd; }
+    table { border-collapse: collapse; margin: 8px 0 16px; width: 100%; }
+    th, td { text-align: left; padding: 5px 10px; border: 1px solid #444; font-size: 13px; }
+    th { background: #2a2a2a; color: #ddd; }
+    code { background: #2a2a2a; padding: 1px 4px; border-radius: 2px; font-size: 12px; color: #ce9178; }
+    .section { margin-bottom: 24px; }
+  </style>
+</head>
+<body>
+  <h1>Q-SYS Plugin Layout Editor Help</h1>
+
+  <div class="section">
+    <h2>Getting Started</h2>
+    <p>Drag controls or graphics from the toolbox on the left onto the canvas. Select objects to edit their properties in the panel on the right. The Lua output at the bottom auto-generates as you work.</p>
+  </div>
+
+  <div class="section">
+    <h2>Controls</h2>
+    <ul>
+      <li><strong>Button</strong> — Momentary, toggle, or trigger button</li>
+      <li><strong>Knob / Fader</strong> — Rotary or linear value control with configurable range</li>
+      <li><strong>Indicator</strong> — LED or status indicator</li>
+      <li><strong>Text</strong> — Text input, combo box, list box, or meter</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Graphics</h2>
+    <ul>
+      <li><strong>Label</strong> — Static text label</li>
+      <li><strong>GroupBox</strong> — Bordered container with title</li>
+      <li><strong>Header</strong> — Centered text with a horizontal rule</li>
+      <li><strong>Image</strong> — Base64-encoded raster image</li>
+      <li><strong>SVG</strong> — Base64-encoded SVG graphic</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Canvas</h2>
+    <ul>
+      <li>Click an object to select it; <kbd>Shift</kbd>+click to toggle selection</li>
+      <li>Click and drag on empty canvas to rubber-band select</li>
+      <li>Drag objects to move them; drag handles to resize</li>
+      <li>The blue border is the target page size (used for alignment reference)</li>
+      <li>The orange dashed border is the bounding box of all objects</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Pages</h2>
+    <p>Use the page tabs at the top of the canvas to manage multiple pages. Each page can have its own target size. Objects assigned to "All Pages" appear on every page.</p>
+  </div>
+
+  <div class="section">
+    <h2>Control Arrays</h2>
+    <p>Set the <strong>Count</strong> property to a value greater than 1 to create an array of controls. Array members share the same name and control definition, and are named <code>Name 1</code>, <code>Name 2</code>, etc. in Q-SYS.</p>
+  </div>
+
+  <div class="section">
+    <h2>Keyboard Shortcuts</h2>
+    <table>
+      <tr><th>Shortcut</th><th>Action</th></tr>
+      <tr><td><kbd>Delete</kbd> / <kbd>Backspace</kbd></td><td>Delete selected objects</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>A</kbd></td><td>Select all objects</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>D</kbd></td><td>Duplicate selected objects</td></tr>
+      <tr><td><kbd>Escape</kbd></td><td>Deselect all</td></tr>
+      <tr><td><kbd>Arrow keys</kbd></td><td>Move selected objects (by grid size, or 1px with <kbd>Ctrl</kbd>)</td></tr>
+      <tr><td><kbd>Shift</kbd>+<kbd>Arrow keys</kbd></td><td>Resize selected objects</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>PageDown</kbd></td><td>Next page</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>PageUp</kbd></td><td>Previous page</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Toolbar</h2>
+    <h3>Alignment</h3>
+    <p>Aligns objects to the first-selected (or last-selected, per settings). Requires 2+ objects selected.</p>
+
+    <h3>Distribution</h3>
+    <p>Distributes objects evenly between the outermost positions. Requires 3+ objects.</p>
+
+    <h3>Sizing</h3>
+    <p>Makes selected objects the same width, height, or both, matching the anchor object.</p>
+
+    <h3>Packing</h3>
+    <p>Packs objects tightly together. Pack Left/Right aligns edges and stacks vertically. Pack Top/Bottom aligns edges and stacks horizontally. Requires 2+ objects.</p>
+
+    <h3>Center on Page</h3>
+    <p>Centers the selection group within the target page size.</p>
+
+    <h3>Space Evenly</h3>
+    <p>Distributes objects with equal spacing across the full target page width or height.</p>
+
+    <h3>Z-Order</h3>
+    <p>Bring to Front / Send to Back reorders objects within the rendering stack.</p>
+  </div>
+
+  <div class="section">
+    <h2>Saving and Loading</h2>
+    <ul>
+      <li><strong>Save</strong> — Downloads the project as a JSON file</li>
+      <li><strong>Load</strong> — Opens a JSON project file</li>
+      <li><strong>Auto-save</strong> — Your work is automatically saved to browser local storage</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Lua Output</h2>
+    <p>The generated Lua code includes <code>GetControls</code>, <code>GetControlLayout</code>, <code>GetPages</code> (if multiple pages), and <code>EventHandler</code> stubs. Click <strong>Generate</strong> to refresh, or <strong>Copy</strong> to copy to the clipboard. The panel can be collapsed or maximized.</p>
+  </div>
+
+</body>
+</html>

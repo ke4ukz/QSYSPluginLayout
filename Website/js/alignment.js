@@ -101,56 +101,65 @@ export function distributeVertically(rects) {
 
 export function packLeft(rects) {
   if (rects.length < 2) return [];
-  const sorted = [...rects].sort((a, b) => a.x - b.x);
-  let currentX = sorted[0].x;
+  // Align left edges, stack vertically (sorted by Y position)
+  const minX = Math.min(...rects.map(r => r.x));
+  const sorted = [...rects].sort((a, b) => a.y - b.y);
+  let currentY = sorted[0].y;
   return sorted.map(r => {
-    const update = { id: r.id, changes: { x: currentX } };
-    currentX += r.w;
+    const update = { id: r.id, changes: { x: minX, y: currentY } };
+    currentY += r.h;
     return update;
   });
 }
 
 export function packRight(rects) {
   if (rects.length < 2) return [];
-  const sorted = [...rects].sort((a, b) => (a.x + a.w) - (b.x + b.w));
-  let currentRight = sorted[sorted.length - 1].x + sorted[sorted.length - 1].w;
-  const result = [];
-  for (let i = sorted.length - 1; i >= 0; i--) {
-    currentRight -= sorted[i].w;
-    result.push({ id: sorted[i].id, changes: { x: currentRight } });
-  }
-  return result;
+  // Align right edges, stack vertically (sorted by Y position)
+  const maxRight = Math.max(...rects.map(r => r.x + r.w));
+  const sorted = [...rects].sort((a, b) => a.y - b.y);
+  let currentY = sorted[0].y;
+  return sorted.map(r => {
+    const update = { id: r.id, changes: { x: maxRight - r.w, y: currentY } };
+    currentY += r.h;
+    return update;
+  });
 }
 
 export function packTop(rects) {
   if (rects.length < 2) return [];
-  const sorted = [...rects].sort((a, b) => a.y - b.y);
-  let currentY = sorted[0].y;
+  // Align top edges, stack horizontally (sorted by X position)
+  const minY = Math.min(...rects.map(r => r.y));
+  const sorted = [...rects].sort((a, b) => a.x - b.x);
+  let currentX = sorted[0].x;
   return sorted.map(r => {
-    const update = { id: r.id, changes: { y: currentY } };
-    currentY += r.h;
+    const update = { id: r.id, changes: { x: currentX, y: minY } };
+    currentX += r.w;
     return update;
   });
 }
 
 export function packBottom(rects) {
   if (rects.length < 2) return [];
-  const sorted = [...rects].sort((a, b) => (a.y + a.h) - (b.y + b.h));
-  let currentBottom = sorted[sorted.length - 1].y + sorted[sorted.length - 1].h;
-  const result = [];
-  for (let i = sorted.length - 1; i >= 0; i--) {
-    currentBottom -= sorted[i].h;
-    result.push({ id: sorted[i].id, changes: { y: currentBottom } });
-  }
-  return result;
+  // Align bottom edges, stack horizontally (sorted by X position)
+  const maxBottom = Math.max(...rects.map(r => r.y + r.h));
+  const sorted = [...rects].sort((a, b) => a.x - b.x);
+  let currentX = sorted[0].x;
+  return sorted.map(r => {
+    const update = { id: r.id, changes: { x: currentX, y: maxBottom - r.h } };
+    currentX += r.w;
+    return update;
+  });
 }
 
 export function spaceEvenlyHorizontal(rects, canvasWidth) {
   if (rects.length < 1) return [];
+  if (rects.length === 1) {
+    return [{ id: rects[0].id, changes: { x: 0 } }];
+  }
   const sorted = [...rects].sort((a, b) => a.x - b.x);
   const totalWidth = sorted.reduce((sum, r) => sum + r.w, 0);
-  const gap = (canvasWidth - totalWidth) / (sorted.length + 1);
-  let currentX = gap;
+  const gap = (canvasWidth - totalWidth) / (sorted.length - 1);
+  let currentX = 0;
   return sorted.map(r => {
     const update = { id: r.id, changes: { x: Math.round(currentX) } };
     currentX += r.w + gap;
@@ -160,10 +169,13 @@ export function spaceEvenlyHorizontal(rects, canvasWidth) {
 
 export function spaceEvenlyVertical(rects, canvasHeight) {
   if (rects.length < 1) return [];
+  if (rects.length === 1) {
+    return [{ id: rects[0].id, changes: { y: 0 } }];
+  }
   const sorted = [...rects].sort((a, b) => a.y - b.y);
   const totalHeight = sorted.reduce((sum, r) => sum + r.h, 0);
-  const gap = (canvasHeight - totalHeight) / (sorted.length + 1);
-  let currentY = gap;
+  const gap = (canvasHeight - totalHeight) / (sorted.length - 1);
+  let currentY = 0;
   return sorted.map(r => {
     const update = { id: r.id, changes: { y: Math.round(currentY) } };
     currentY += r.h + gap;

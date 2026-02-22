@@ -7,6 +7,7 @@ export class DataModel {
     this.settings = settings;
     this.objects = [];
     this._nameCounters = {};
+    this.pluginInfo = null; // null means not configured
 
     // Page support
     const defaultPage = {
@@ -479,11 +480,21 @@ export class DataModel {
     this.eventBus.emit('canvas:resized', { w, h });
   }
 
+  setPluginInfo(info) {
+    this.pluginInfo = info ? deepClone(info) : null;
+    this.eventBus.emit('pluginInfo:changed', this.pluginInfo);
+  }
+
+  getPluginInfo() {
+    return this.pluginInfo ? deepClone(this.pluginInfo) : null;
+  }
+
   toJSON() {
     return {
       pages: deepClone(this.pages),
       currentPageId: this.currentPageId,
       objects: deepClone(this.objects),
+      pluginInfo: this.pluginInfo ? deepClone(this.pluginInfo) : null,
     };
   }
 
@@ -491,6 +502,7 @@ export class DataModel {
     this.pages = json.pages || [{ id: generateId(), name: 'Page 1', canvasWidth: 400, canvasHeight: 300 }];
     this.currentPageId = json.currentPageId || this.pages[0].id;
     this.objects = json.objects || [];
+    this.pluginInfo = json.pluginInfo || null;
 
     // Sync ID counter past all existing IDs (pages, objects, arrayGroups)
     const allIds = [
@@ -528,6 +540,7 @@ export class DataModel {
   clear() {
     this.objects = [];
     this._nameCounters = {};
+    this.pluginInfo = null;
     const defaultPage = {
       id: generateId(),
       name: 'Page 1',

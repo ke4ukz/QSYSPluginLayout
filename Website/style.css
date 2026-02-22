@@ -623,9 +623,14 @@ html, body { height: 100%; overflow: hidden; font-family: 'Segoe UI', system-ui,
 .about-body h4 { font-size: 14px; color: #ddd; margin-bottom: 8px; }
 .about-body p { font-size: 12px; color: #aaa; line-height: 1.6; margin-bottom: 10px; }
 .about-body code { background: #1a1a1a; padding: 1px 4px; border-radius: 2px; font-size: 11px; color: #ce9178; }
+.about-version { color: #ccc !important; font-size: 11px !important; margin-top: -4px !important; margin-bottom: 12px !important; }
 .about-privacy { color: #6a9955 !important; }
 .about-disclaimer { color: #888 !important; font-style: italic; font-size: 11px !important; }
-.about-copyright { color: #999 !important; font-size: 11px !important; text-align: center; margin-top: 8px !important; }
+.about-copyright { color: #999 !important; font-size: 11px !important; text-align: center; margin-top: 8px !important; margin-bottom: 2px !important; }
+.about-repo { text-align: center; font-size: 11px !important; margin-bottom: 4px !important; }
+.about-repo a { color: #569cd6; }
+.about-license { color: #888 !important; font-size: 10px !important; text-align: center; line-height: 1.5 !important; }
+.about-license a { color: #6a9955; }
 
 /* Settings form */
 .settings-section {
@@ -664,6 +669,47 @@ html, body { height: 100%; overflow: hidden; font-family: 'Segoe UI', system-ui,
 .settings-row input[type="checkbox"] {
   accent-color: #4a9eff;
 }
+.settings-row input[type="text"] {
+  flex: 1;
+  min-width: 0;
+  padding: 3px 6px;
+  background: #1e1e1e;
+  border: 1px solid #444;
+  color: #ddd;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.required-tag {
+  font-size: 9px;
+  color: #e06c00;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* ── PluginInfo Id field group ── */
+.pi-id-group {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+.pi-id-group input[type="text"] {
+  flex: 1;
+  min-width: 0;
+}
+.pi-id-group button {
+  padding: 3px 8px;
+  background: #3c3c3c;
+  color: #ddd;
+  border: 1px solid #555;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 11px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.pi-id-group button:hover { background: #505050; }
 
 /* ── ComboBox Items Editor ── */
 .combobox-items-list {

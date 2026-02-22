@@ -4,6 +4,13 @@ export function generateLua(dataModel) {
 
   let lua = '';
 
+  // PluginInfo
+  const pi = dataModel.getPluginInfo();
+  if (pi) {
+    lua += generatePluginInfo(pi);
+    lua += '\n\n';
+  }
+
   // GetPages (only if 2+ pages)
   if (pages.length > 1) {
     lua += generateGetPages(pages);
@@ -24,6 +31,31 @@ export function generateLua(dataModel) {
   }
 
   return lua;
+}
+
+// ── PluginInfo ──
+function generatePluginInfo(pi) {
+  let code = 'PluginInfo = {\n';
+
+  // Required fields (always emitted)
+  code += `  Name = "${luaEscape(pi.Name || '')}",\n`;
+  code += `  Version = "${luaEscape(pi.Version || '')}",\n`;
+  code += `  Id = "${luaEscape(pi.Id || '')}",\n`;
+
+  // Optional string fields
+  if (pi.Description) code += `  Description = "${luaEscape(pi.Description)}",\n`;
+  if (pi.BuildVersion) code += `  BuildVersion = "${luaEscape(pi.BuildVersion)}",\n`;
+  if (pi.Author) code += `  Author = "${luaEscape(pi.Author)}",\n`;
+  if (pi.Manufacturer) code += `  Manufacturer = "${luaEscape(pi.Manufacturer)}",\n`;
+  if (pi.Model) code += `  Model = "${luaEscape(pi.Model)}",\n`;
+
+  // Boolean fields
+  if (pi.IsManaged) code += '  IsManaged = true,\n';
+  if (pi.Type) code += `  Type = "${luaEscape(pi.Type)}",\n`;
+  if (pi.ShowDebug) code += '  ShowDebug = true,\n';
+
+  code += '}';
+  return code;
 }
 
 // ── GetPages ──
@@ -312,13 +344,14 @@ function generateRuntime(controls) {
 
   // ComboBox/ListBox choices
   if (comboEntries.length > 0) {
-    code += '  -- Populate ComboBox/ListBox choices\n';
+    code += '  -- ComboBox/ListBox choices\n';
     for (const entry of comboEntries) {
       const items = entry.cd.comboBoxItems;
       const mode = entry.cd.comboBoxMode || 'simple';
       const name = entry.cd.Name;
+      const safeName = name.replace(/[^A-Za-z0-9_]/g, '_');
 
-      code += `  Controls["${name}"].Choices = {\n`;
+      code += `  local ${safeName}_Choices = {\n`;
 
       if (mode === 'simple') {
         for (let i = 0; i < items.length; i++) {
@@ -340,6 +373,14 @@ function generateRuntime(controls) {
       }
 
       code += '  }\n';
+
+      if (entry.count > 1) {
+        code += `  for i = 1, ${entry.count} do\n`;
+        code += `    Controls["${name} "..i].Choices = ${safeName}_Choices\n`;
+        code += '  end\n';
+      } else {
+        code += `  Controls["${name}"].Choices = ${safeName}_Choices\n`;
+      }
     }
     if (eventEntries.length > 0) code += '\n';
   }
@@ -353,7 +394,7 @@ function generateRuntime(controls) {
     for (const entry of arrayEntries) {
       const safeName = entry.cd.Name.replace(/[^A-Za-z0-9_]/g, '_');
       code += `  function ${safeName}_Handler(ctl, i)\n`;
-      code += '    -- add your code here, ctl is the control and i is its index\n';
+      code += '    print(ctl, i)\n';
       code += '  end\n';
     }
 

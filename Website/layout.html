@@ -79,7 +79,13 @@
       <div class="toolbar-separator"></div>
 
       <div class="toolbar-group">
+        <button id="btn-plugin-info" title="Edit PluginInfo">&#x1F6C8; PluginInfo</button>
+      </div>
+      <div class="toolbar-separator"></div>
+
+      <div class="toolbar-group">
         <button id="btn-settings" title="Application Settings">&#x2699; Settings</button>
+        <button id="btn-help" title="Help">&#x2753; Help</button>
         <button id="btn-about" title="About">&#x2139; About</button>
       </div>
     </header>
@@ -159,13 +165,86 @@
         </div>
         <div class="modal-body about-body">
           <h4>Q-SYS Plugin Layout Editor</h4>
+          <p class="about-version">Version 0.1.0</p>
           <p>A visual editor for designing Q-SYS plugin control layouts. Drag controls and graphics onto the canvas, configure their properties, and generate the Lua code for <code>GetControls</code>, <code>GetControlLayout</code>, and <code>GetPages</code>, as well as stub <code>EventHandler</code> functions for each input control.</p>
           <p class="about-privacy">All project data is stored locally on your computer. Nothing is sent to or stored on any server.</p>
-          <p class="about-disclaimer">This tool is provided as-is with no warranty, expressed or implied. Not affiliated with, endorsed by, or sponsored by QSC, LLC, Q-SYS, or Acuity Brands.</p>
-          <p class="about-copyright">&copy; 2026 Jonathan Dean. All rights reserved.</p>
+          <p class="about-disclaimer">Not affiliated with, endorsed by, or sponsored by QSC, LLC, Q-SYS, or Acuity Brands.</p>
+          <p class="about-copyright">&copy; 2026 Jonathan Dean</p>
+          <p class="about-repo"><a href="https://github.com/ke4ukz/QSYSPluginLayout" target="_blank">github.com/ke4ukz/QSYSPluginLayout</a></p>
+          <p class="about-license">This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. This program is distributed without any warranty; see the <a href="COPYING" target="_blank">GNU GPL v3</a> for details.</p>
         </div>
         <div class="modal-footer">
           <button id="about-ok" class="btn-primary">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PluginInfo Modal ── -->
+    <div id="plugininfo-overlay" class="modal-overlay" hidden>
+      <div class="modal-dialog" style="max-width:500px">
+        <div class="modal-header">
+          <h3>PluginInfo</h3>
+          <button id="plugininfo-close" class="modal-close" title="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="settings-section">
+            <h4>Required</h4>
+            <div class="settings-row">
+              <label>Name <span class="required-tag">required</span></label>
+              <input type="text" id="pi-name" placeholder="FolderName~PluginName">
+            </div>
+            <div class="settings-row">
+              <label>Version <span class="required-tag">required</span></label>
+              <input type="text" id="pi-version" placeholder="1.0.0">
+            </div>
+            <div class="settings-row">
+              <label>Id <span class="required-tag">required</span></label>
+              <div class="pi-id-group">
+                <input type="text" id="pi-id" placeholder="qsysc.make.model.version">
+                <button id="pi-generate-id" title="Generate UUID">UUID</button>
+              </div>
+            </div>
+          </div>
+          <div class="settings-section">
+            <h4>Optional</h4>
+            <div class="settings-row">
+              <label>Description</label>
+              <input type="text" id="pi-description" placeholder="Brief description">
+            </div>
+            <div class="settings-row">
+              <label>BuildVersion</label>
+              <input type="text" id="pi-build-version" placeholder="Build iteration">
+            </div>
+            <div class="settings-row">
+              <label>Author</label>
+              <input type="text" id="pi-author" placeholder="Author name or contact">
+            </div>
+            <div class="settings-row">
+              <label>Manufacturer</label>
+              <input type="text" id="pi-manufacturer" placeholder="Hardware manufacturer">
+            </div>
+            <div class="settings-row">
+              <label>Model</label>
+              <input type="text" id="pi-model" placeholder="Product model name">
+            </div>
+            <div class="settings-row">
+              <label>IsManaged</label>
+              <input type="checkbox" id="pi-is-managed">
+            </div>
+            <div class="settings-row">
+              <label>Type</label>
+              <input type="text" id="pi-type" placeholder="Reflect reporting type">
+            </div>
+            <div class="settings-row">
+              <label>ShowDebug</label>
+              <input type="checkbox" id="pi-show-debug">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="plugininfo-clear">Clear</button>
+          <button id="plugininfo-save" class="btn-primary">Save</button>
+          <button id="plugininfo-cancel">Cancel</button>
         </div>
       </div>
     </div>
