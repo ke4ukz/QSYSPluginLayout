@@ -317,6 +317,249 @@ const outline = new Outline(dataModel, selection, eventBus);
   overlay.addEventListener('click', e => { if (e.target === overlay) closePins(); });
 }
 
+// ── Design-Time Properties modal ──
+{
+  const btnDesignProps = document.getElementById('btn-design-props');
+  const overlay = document.getElementById('designprops-overlay');
+  const btnSave = document.getElementById('designprops-save');
+  const btnCancel = document.getElementById('designprops-cancel');
+  const btnClose = document.getElementById('designprops-close');
+  const btnClear = document.getElementById('designprops-clear');
+  const btnAdd = document.getElementById('designprops-add');
+  const listEl = document.getElementById('designprops-list');
+
+  let editingProps = [];
+
+  function renderPropCards() {
+    listEl.innerHTML = '';
+    if (editingProps.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'pins-empty';
+      empty.textContent = 'No properties defined.';
+      listEl.appendChild(empty);
+      return;
+    }
+    editingProps.forEach((prop, i) => {
+      const card = document.createElement('div');
+      card.className = 'dprop-card';
+
+      // Header row: Name, Type, Remove
+      const header = document.createElement('div');
+      header.className = 'dprop-card-header';
+
+      const nameInput = document.createElement('input');
+      nameInput.type = 'text';
+      nameInput.placeholder = 'Property name';
+      nameInput.value = prop.Name;
+      nameInput.addEventListener('input', () => { editingProps[i].Name = nameInput.value; });
+
+      const typeSelect = document.createElement('select');
+      for (const t of ['string', 'integer', 'double', 'boolean', 'enum']) {
+        const opt = document.createElement('option');
+        opt.value = t;
+        opt.textContent = t;
+        if (prop.Type === t) opt.selected = true;
+        typeSelect.appendChild(opt);
+      }
+      typeSelect.addEventListener('change', () => {
+        editingProps[i].Type = typeSelect.value;
+        // Reset type-dependent fields
+        if (typeSelect.value === 'boolean') editingProps[i].Value = true;
+        else if (typeSelect.value === 'integer' || typeSelect.value === 'double') editingProps[i].Value = 0;
+        else if (typeSelect.value === 'enum') editingProps[i].Value = '';
+        else editingProps[i].Value = '';
+        renderPropCards();
+      });
+
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = '\u00D7';
+      removeBtn.title = 'Remove property';
+      removeBtn.addEventListener('click', () => {
+        editingProps.splice(i, 1);
+        renderPropCards();
+      });
+
+      header.append(nameInput, typeSelect, removeBtn);
+      card.appendChild(header);
+
+      // Type-dependent fields
+      const fields = document.createElement('div');
+      fields.className = 'dprop-fields';
+
+      // Value field
+      if (prop.Type === 'boolean') {
+        const f = document.createElement('div');
+        f.className = 'dprop-field';
+        const lbl = document.createElement('label');
+        lbl.textContent = 'Value:';
+        const sel = document.createElement('select');
+        for (const v of [['true', true], ['false', false]]) {
+          const opt = document.createElement('option');
+          opt.value = v[0];
+          opt.textContent = v[0];
+          if (prop.Value === v[1]) opt.selected = true;
+          sel.appendChild(opt);
+        }
+        sel.addEventListener('change', () => { editingProps[i].Value = sel.value === 'true'; });
+        f.append(lbl, sel);
+        fields.appendChild(f);
+      } else if (prop.Type === 'integer' || prop.Type === 'double') {
+        const fVal = document.createElement('div');
+        fVal.className = 'dprop-field';
+        const lblVal = document.createElement('label');
+        lblVal.textContent = 'Value:';
+        const valInput = document.createElement('input');
+        valInput.type = 'number';
+        valInput.value = prop.Value ?? 0;
+        if (prop.Type === 'integer') valInput.step = '1';
+        else valInput.step = 'any';
+        valInput.addEventListener('input', () => { editingProps[i].Value = valInput.value; });
+        fVal.append(lblVal, valInput);
+        fields.appendChild(fVal);
+
+        const fMin = document.createElement('div');
+        fMin.className = 'dprop-field';
+        const lblMin = document.createElement('label');
+        lblMin.textContent = 'Min:';
+        const minInput = document.createElement('input');
+        minInput.type = 'number';
+        minInput.value = prop.Min ?? '';
+        minInput.placeholder = '';
+        minInput.addEventListener('input', () => { editingProps[i].Min = minInput.value; });
+        fMin.append(lblMin, minInput);
+        fields.appendChild(fMin);
+
+        const fMax = document.createElement('div');
+        fMax.className = 'dprop-field';
+        const lblMax = document.createElement('label');
+        lblMax.textContent = 'Max:';
+        const maxInput = document.createElement('input');
+        maxInput.type = 'number';
+        maxInput.value = prop.Max ?? '';
+        maxInput.placeholder = '';
+        maxInput.addEventListener('input', () => { editingProps[i].Max = maxInput.value; });
+        fMax.append(lblMax, maxInput);
+        fields.appendChild(fMax);
+      } else if (prop.Type === 'enum') {
+        const fVal = document.createElement('div');
+        fVal.className = 'dprop-field';
+        const lblVal = document.createElement('label');
+        lblVal.textContent = 'Default:';
+        const valInput = document.createElement('input');
+        valInput.type = 'text';
+        valInput.value = prop.Value || '';
+        valInput.placeholder = '(optional)';
+        valInput.addEventListener('input', () => { editingProps[i].Value = valInput.value; });
+        fVal.append(lblVal, valInput);
+        fields.appendChild(fVal);
+
+        // Choices as comma-separated text
+        const choicesDiv = document.createElement('div');
+        choicesDiv.className = 'dprop-field';
+        choicesDiv.style.width = '100%';
+        const lblC = document.createElement('label');
+        lblC.textContent = 'Choices:';
+        const choicesInput = document.createElement('input');
+        choicesInput.type = 'text';
+        choicesInput.className = 'dprop-choices-input';
+        choicesInput.placeholder = 'Choice1, Choice2, Choice3';
+        choicesInput.value = (prop.Choices || []).join(', ');
+        choicesInput.addEventListener('input', () => {
+          editingProps[i].Choices = choicesInput.value.split(',').map(s => s.trim()).filter(Boolean);
+        });
+        choicesDiv.append(lblC, choicesInput);
+        fields.appendChild(choicesDiv);
+      } else {
+        // string
+        const f = document.createElement('div');
+        f.className = 'dprop-field';
+        const lbl = document.createElement('label');
+        lbl.textContent = 'Value:';
+        const valInput = document.createElement('input');
+        valInput.type = 'text';
+        valInput.value = prop.Value || '';
+        valInput.addEventListener('input', () => { editingProps[i].Value = valInput.value; });
+        f.append(lbl, valInput);
+        fields.appendChild(f);
+      }
+
+      card.appendChild(fields);
+
+      // Optional fields: Header, Comment, Description
+      const opt = document.createElement('div');
+      opt.className = 'dprop-optional';
+      for (const key of ['Header', 'Comment', 'Description']) {
+        const f = document.createElement('div');
+        f.className = 'dprop-field';
+        const lbl = document.createElement('label');
+        lbl.textContent = key + ':';
+        const inp = document.createElement('input');
+        inp.type = 'text';
+        inp.value = prop[key] || '';
+        inp.placeholder = key;
+        inp.addEventListener('input', () => { editingProps[i][key] = inp.value; });
+        f.append(lbl, inp);
+        opt.appendChild(f);
+      }
+      card.appendChild(opt);
+
+      listEl.appendChild(card);
+    });
+  }
+
+  function openDesignProps() {
+    editingProps = dataModel.getDesignProperties().map(p => ({ ...p, Choices: p.Choices ? [...p.Choices] : [] }));
+    renderPropCards();
+    overlay.hidden = false;
+  }
+
+  function closeDesignProps() {
+    overlay.hidden = true;
+  }
+
+  btnDesignProps.addEventListener('click', openDesignProps);
+
+  btnAdd.addEventListener('click', () => {
+    editingProps.push({ Name: '', Type: 'string', Value: '', Choices: [] });
+    renderPropCards();
+    // Focus the new name input
+    const cards = listEl.querySelectorAll('.dprop-card');
+    if (cards.length > 0) {
+      const lastCard = cards[cards.length - 1];
+      const nameInput = lastCard.querySelector('input[type="text"]');
+      if (nameInput) nameInput.focus();
+    }
+  });
+
+  btnClear.addEventListener('click', () => {
+    editingProps = [];
+    renderPropCards();
+  });
+
+  btnSave.addEventListener('click', () => {
+    const validProps = editingProps
+      .filter(p => p.Name.trim())
+      .map(p => {
+        const out = { Name: p.Name.trim(), Type: p.Type, Value: p.Value };
+        if (p.Type === 'enum' && p.Choices && p.Choices.length > 0) out.Choices = [...p.Choices];
+        if ((p.Type === 'integer' || p.Type === 'double') && p.Min !== undefined && p.Min !== '') out.Min = p.Min;
+        if ((p.Type === 'integer' || p.Type === 'double') && p.Max !== undefined && p.Max !== '') out.Max = p.Max;
+        if (p.Header) out.Header = p.Header.trim();
+        if (p.Comment) out.Comment = p.Comment.trim();
+        if (p.Description) out.Description = p.Description.trim();
+        return out;
+      });
+    dataModel.setDesignProperties(validProps);
+    closeDesignProps();
+    refreshLua();
+    autosave();
+  });
+
+  btnCancel.addEventListener('click', closeDesignProps);
+  btnClose.addEventListener('click', closeDesignProps);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeDesignProps(); });
+}
+
 // ── Help window ──
 {
   const btnHelp = document.getElementById('btn-help');
@@ -375,6 +618,7 @@ eventBus.on('page:renamed', refreshLua);
 eventBus.on('page:switched', refreshLua);
 eventBus.on('pluginInfo:changed', refreshLua);
 eventBus.on('pins:changed', refreshLua);
+eventBus.on('designProperties:changed', refreshLua);
 eventBus.on('settings:changed', refreshLua);
 
 // Clear selection on page switch (defensive — PageTabs also clears on click)
@@ -407,6 +651,7 @@ eventBus.on('page:renamed', autosave);
 eventBus.on('canvas:resized', autosave);
 eventBus.on('pluginInfo:changed', autosave);
 eventBus.on('pins:changed', autosave);
+eventBus.on('designProperties:changed', autosave);
 
 // Flush immediately when leaving the page
 window.addEventListener('beforeunload', () => {

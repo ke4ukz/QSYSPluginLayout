@@ -805,3 +805,103 @@ html, body { height: 100%; overflow: hidden; font-family: 'Segoe UI', system-ui,
   text-align: center;
   padding: 8px 0;
 }
+
+/* ── Design-Time Properties Editor ── */
+.dprop-card {
+  background: #252525;
+  border: 1px solid #3a3a3a;
+  border-radius: 4px;
+  padding: 8px;
+  margin: 6px 0;
+  position: relative;
+}
+.dprop-card-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+.dprop-card-header input[type="text"] {
+  flex: 1;
+  min-width: 0;
+  padding: 3px 6px;
+  background: #1e1e1e;
+  border: 1px solid #444;
+  color: #ddd;
+  border-radius: 3px;
+  font-size: 12px;
+}
+.dprop-card-header select {
+  padding: 3px 4px;
+  background: #1e1e1e;
+  border: 1px solid #444;
+  color: #ddd;
+  border-radius: 3px;
+  font-size: 12px;
+  width: 90px;
+}
+.dprop-card-header button {
+  padding: 2px 6px;
+  background: #3c3c3c;
+  color: #aaa;
+  border: 1px solid #555;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+.dprop-card-header button:hover { background: #505050; color: #ddd; }
+.dprop-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: center;
+}
+.dprop-field {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.dprop-field label {
+  font-size: 10px;
+  color: #888;
+  white-space: nowrap;
+}
+.dprop-field input[type="text"],
+.dprop-field input[type="number"] {
+  padding: 2px 4px;
+  background: #1e1e1e;
+  border: 1px solid #444;
+  color: #ddd;
+  border-radius: 3px;
+  font-size: 11px;
+  width: 80px;
+}
+.dprop-field select {
+  padding: 2px 4px;
+  background: #1e1e1e;
+  border: 1px solid #444;
+  color: #ddd;
+  border-radius: 3px;
+  font-size: 11px;
+}
+.dprop-choices-input {
+  width: 100% !important;
+  margin-top: 4px;
+}
+.dprop-optional {
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+}
+.dprop-optional input[type="text"] {
+  padding: 2px 4px;
+  background: #1e1e1e;
+  border: 1px solid #444;
+  color: #ddd;
+  border-radius: 3px;
+  font-size: 11px;
+  flex: 1;
+  min-width: 80px;
+}

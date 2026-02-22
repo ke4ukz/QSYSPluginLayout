@@ -9,6 +9,7 @@ export class DataModel {
     this._nameCounters = {};
     this.pluginInfo = null; // null means not configured
     this.pins = []; // GetPins entries: { Name, Direction, Domain }
+    this.designProperties = []; // GetProperties entries
 
     // Page support
     const defaultPage = {
@@ -499,6 +500,15 @@ export class DataModel {
     return deepClone(this.pins);
   }
 
+  setDesignProperties(props) {
+    this.designProperties = deepClone(props || []);
+    this.eventBus.emit('designProperties:changed', this.designProperties);
+  }
+
+  getDesignProperties() {
+    return deepClone(this.designProperties);
+  }
+
   toJSON() {
     return {
       pages: deepClone(this.pages),
@@ -506,6 +516,7 @@ export class DataModel {
       objects: deepClone(this.objects),
       pluginInfo: this.pluginInfo ? deepClone(this.pluginInfo) : null,
       pins: deepClone(this.pins),
+      designProperties: deepClone(this.designProperties),
     };
   }
 
@@ -515,6 +526,7 @@ export class DataModel {
     this.objects = json.objects || [];
     this.pluginInfo = json.pluginInfo || null;
     this.pins = json.pins || [];
+    this.designProperties = json.designProperties || [];
 
     // Sync ID counter past all existing IDs (pages, objects, arrayGroups)
     const allIds = [
@@ -554,6 +566,7 @@ export class DataModel {
     this._nameCounters = {};
     this.pluginInfo = null;
     this.pins = [];
+    this.designProperties = [];
     const defaultPage = {
       id: generateId(),
       name: 'Page 1',

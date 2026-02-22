@@ -81,6 +81,7 @@
       <div class="toolbar-group">
         <button id="btn-plugin-info" title="Edit PluginInfo">&#x1F6C8; PluginInfo</button>
         <button id="btn-pins" title="Edit Audio/Serial Pins">&#x1F50C; Pins</button>
+        <button id="btn-design-props" title="Edit Design-Time Properties">&#x2699; Properties</button>
       </div>
       <div class="toolbar-separator"></div>
 
@@ -273,6 +274,26 @@
           <button id="pins-clear">Clear All</button>
           <button id="pins-save" class="btn-primary">Save</button>
           <button id="pins-cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Design-Time Properties Modal ── -->
+    <div id="designprops-overlay" class="modal-overlay" hidden>
+      <div class="modal-dialog" style="max-width:560px">
+        <div class="modal-header">
+          <h3>Design-Time Properties</h3>
+          <button id="designprops-close" class="modal-close" title="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="pins-hint">Define properties shown in Q-SYS Designer's properties pane. A stub RectifyProperties will also be generated.</p>
+          <div id="designprops-list"></div>
+          <button id="designprops-add" class="combobox-add-btn">+ Add Property</button>
+        </div>
+        <div class="modal-footer">
+          <button id="designprops-clear">Clear All</button>
+          <button id="designprops-save" class="btn-primary">Save</button>
+          <button id="designprops-cancel">Cancel</button>
         </div>
       </div>
     </div>

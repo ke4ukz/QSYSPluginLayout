@@ -18,6 +18,15 @@ export function generateLua(dataModel, settings) {
     lua += '\n\n';
   }
 
+  // GetProperties / RectifyProperties (only if design properties defined)
+  const designProps = dataModel.getDesignProperties();
+  if (designProps.length > 0) {
+    lua += generateGetProperties(designProps);
+    lua += '\n\n';
+    lua += generateRectifyProperties();
+    lua += '\n\n';
+  }
+
   // GetPins (only if pins defined)
   const pins = dataModel.getPins();
   if (pins.length > 0) {
@@ -68,6 +77,63 @@ function generatePluginInfo(pi) {
   if (pi.ShowDebug) code += '  ShowDebug = true,\n';
 
   code += '}';
+  return code;
+}
+
+// ── GetProperties ──
+function generateGetProperties(props) {
+  let code = 'function GetProperties()\n';
+  code += '  local properties = {}\n';
+  for (const prop of props) {
+    code += '  table.insert(properties, {\n';
+    code += `    Name = "${luaEscape(prop.Name)}",\n`;
+    code += `    Type = "${prop.Type}",\n`;
+
+    // Value
+    if (prop.Type === 'boolean') {
+      code += `    Value = ${prop.Value ? 'true' : 'false'},\n`;
+    } else if (prop.Type === 'integer') {
+      code += `    Value = ${parseInt(prop.Value) || 0},\n`;
+    } else if (prop.Type === 'double') {
+      code += `    Value = ${parseFloat(prop.Value) || 0},\n`;
+    } else if (prop.Type === 'enum') {
+      if (prop.Value) code += `    Value = "${luaEscape(prop.Value)}",\n`;
+    } else {
+      // string
+      code += `    Value = "${luaEscape(prop.Value || '')}",\n`;
+    }
+
+    // Choices (enum only)
+    if (prop.Type === 'enum' && prop.Choices && prop.Choices.length > 0) {
+      code += '    Choices = {';
+      code += prop.Choices.map(c => `"${luaEscape(c)}"`).join(', ');
+      code += '},\n';
+    }
+
+    // Min/Max (integer and double)
+    if ((prop.Type === 'integer' || prop.Type === 'double') && prop.Min !== undefined && prop.Min !== '') {
+      code += `    Min = ${Number(prop.Min)},\n`;
+    }
+    if ((prop.Type === 'integer' || prop.Type === 'double') && prop.Max !== undefined && prop.Max !== '') {
+      code += `    Max = ${Number(prop.Max)},\n`;
+    }
+
+    // Optional metadata
+    if (prop.Header) code += `    Header = "${luaEscape(prop.Header)}",\n`;
+    if (prop.Comment) code += `    Comment = "${luaEscape(prop.Comment)}",\n`;
+    if (prop.Description) code += `    Description = "${luaEscape(prop.Description)}",\n`;
+
+    code += '  })\n';
+  }
+  code += '  return properties\n';
+  code += 'end';
+  return code;
+}
+
+function generateRectifyProperties() {
+  let code = 'function RectifyProperties(props)\n';
+  code += '  return props\n';
+  code += 'end';
   return code;
 }
 
