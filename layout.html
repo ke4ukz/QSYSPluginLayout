@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Q-SYS Plugin Layout Editor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- ── Toolbar ── -->
+    <header id="toolbar">
+      <div class="toolbar-group" id="toolbar-file">
+        <button id="btn-new" title="New Project">New</button>
+        <button id="btn-save" title="Save Project (JSON)">Save</button>
+        <button id="btn-load" title="Load Project (JSON)">Load</button>
+        <input type="file" id="file-input" accept=".json" hidden>
+      </div>
+      <div class="toolbar-separator"></div>
+
+      <div class="toolbar-group" id="toolbar-alignment">
+        <button id="btn-align-left" title="Align Left">&#x258C;L</button>
+        <button id="btn-align-center-h" title="Align Center Horizontal">&#x2503;C</button>
+        <button id="btn-align-right" title="Align Right">R&#x2590;</button>
+        <button id="btn-align-top" title="Align Top">&#x2580;T</button>
+        <button id="btn-align-center-v" title="Align Middle Vertical">&#x2501;M</button>
+        <button id="btn-align-bottom" title="Align Bottom">B&#x2584;</button>
+      </div>
+      <div class="toolbar-separator"></div>
+
+      <div class="toolbar-group" id="toolbar-distribute">
+        <button id="btn-dist-h" title="Distribute Horizontally">&#x2194;D</button>
+        <button id="btn-dist-v" title="Distribute Vertically">&#x2195;D</button>
+        <button id="btn-space-even-h" title="Space Evenly Across Page (Horizontal)">&#x2194;S</button>
+        <button id="btn-space-even-v" title="Space Evenly Across Page (Vertical)">&#x2195;S</button>
+      </div>
+      <div class="toolbar-separator"></div>
+
+      <div class="toolbar-group" id="toolbar-sizing">
+        <button id="btn-same-width" title="Make Same Width">W=</button>
+        <button id="btn-same-height" title="Make Same Height">H=</button>
+        <button id="btn-same-size" title="Make Same Size">WH=</button>
+      </div>
+      <div class="toolbar-separator"></div>
+
+      <div class="toolbar-group" id="toolbar-pack">
+        <button id="btn-pack-left" title="Pack Left">&#x25C0;&#x25C0;</button>
+        <button id="btn-pack-right" title="Pack Right">&#x25B6;&#x25B6;</button>
+        <button id="btn-pack-top" title="Pack Top">&#x25B2;&#x25B2;</button>
+        <button id="btn-pack-bottom" title="Pack Bottom">&#x25BC;&#x25BC;</button>
+      </div>
+      <div class="toolbar-separator"></div>
+
+      <div class="toolbar-group" id="toolbar-center-page">
+        <button id="btn-center-page-h" title="Center on Page (Horizontal)">&#x2194;&#xD7;</button>
+        <button id="btn-center-page-v" title="Center on Page (Vertical)">&#x2195;&#xD7;</button>
+      </div>
+      <div class="toolbar-separator"></div>
+
+      <div class="toolbar-group" id="toolbar-zorder">
+        <button id="btn-bring-front" title="Bring to Front">&#x2191;F</button>
+        <button id="btn-send-back" title="Send to Back">&#x2193;B</button>
+      </div>
+      <div class="toolbar-separator"></div>
+
+      <div class="toolbar-group" id="toolbar-grid">
+        <label title="Show grid overlay"><input type="checkbox" id="chk-grid" checked> Grid</label>
+        <label title="Grid spacing in pixels">
+          <input type="number" id="grid-size" value="10" min="1" max="100" style="width:3.5em">px
+        </label>
+        <label title="Snap to grid"><input type="checkbox" id="chk-snap" checked> Snap</label>
+      </div>
+      <div class="toolbar-separator"></div>
+
+      <div class="toolbar-group" id="toolbar-canvas-size">
+        <label title="Target page width (alignment reference)">TW:<input type="number" id="canvas-width" value="400" min="50" max="4000" style="width:4em"></label>
+        <label title="Target page height (alignment reference)">TH:<input type="number" id="canvas-height" value="300" min="50" max="4000" style="width:4em"></label>
+      </div>
+      <div class="toolbar-separator"></div>
+
+      <div class="toolbar-group">
+        <button id="btn-settings" title="Application Settings">&#x2699; Settings</button>
+        <button id="btn-about" title="About">&#x2139; About</button>
+      </div>
+    </header>
+
+    <!-- ── Settings Modal ── -->
+    <div id="settings-overlay" class="modal-overlay" hidden>
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>Settings</h3>
+          <button id="settings-close" class="modal-close" title="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="settings-section">
+            <h4>New Control Defaults</h4>
+            <div class="settings-row">
+              <label>UserPin enabled by default</label>
+              <input type="checkbox" id="setting-default-user-pin" checked>
+            </div>
+            <div class="settings-row">
+              <label>Default PinStyle</label>
+              <select id="setting-default-pin-style">
+                <option value="Input">Input</option>
+                <option value="Output">Output</option>
+                <option value="Both" selected>Both</option>
+                <option value="None">None</option>
+              </select>
+            </div>
+            <div class="settings-row">
+              <label>Auto-add label to new controls</label>
+              <input type="checkbox" id="setting-auto-add-label">
+            </div>
+            <div class="settings-row">
+              <label>Alignment anchor</label>
+              <select id="setting-alignment-anchor">
+                <option value="first">First selected</option>
+                <option value="last">Last selected</option>
+              </select>
+            </div>
+          </div>
+          <div class="settings-section">
+            <h4>Grid & Canvas Defaults</h4>
+            <div class="settings-row">
+              <label>Grid Size (px)</label>
+              <input type="number" id="setting-grid-size" value="10" min="1" max="100">
+            </div>
+            <div class="settings-row">
+              <label>Snap to Grid</label>
+              <input type="checkbox" id="setting-snap" checked>
+            </div>
+            <div class="settings-row">
+              <label>Show Grid</label>
+              <input type="checkbox" id="setting-show-grid" checked>
+            </div>
+            <div class="settings-row">
+              <label>Default Target Width</label>
+              <input type="number" id="setting-canvas-width" value="400" min="50" max="4000">
+            </div>
+            <div class="settings-row">
+              <label>Default Target Height</label>
+              <input type="number" id="setting-canvas-height" value="300" min="50" max="4000">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="settings-save" class="btn-primary">Save</button>
+          <button id="settings-cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── About Modal ── -->
+    <div id="about-overlay" class="modal-overlay" hidden>
+      <div class="modal-dialog" style="max-width:440px">
+        <div class="modal-header">
+          <h3>About</h3>
+          <button id="about-close" class="modal-close" title="Close">&times;</button>
+        </div>
+        <div class="modal-body about-body">
+          <h4>Q-SYS Plugin Layout Editor</h4>
+          <p>A visual editor for designing Q-SYS plugin control layouts. Drag controls and graphics onto the canvas, configure their properties, and generate the Lua code for <code>GetControls</code>, <code>GetControlLayout</code>, and <code>GetPages</code>, as well as stub <code>EventHandler</code> functions for each input control.</p>
+          <p class="about-privacy">All project data is stored locally on your computer. Nothing is sent to or stored on any server.</p>
+          <p class="about-disclaimer">This tool is provided as-is with no warranty, expressed or implied. Not affiliated with, endorsed by, or sponsored by QSC, LLC, Q-SYS, or Acuity Brands.</p>
+          <p class="about-copyright">&copy; 2026 Jonathan Dean. All rights reserved.</p>
+        </div>
+        <div class="modal-footer">
+          <button id="about-ok" class="btn-primary">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Toolbox (left panel) ── -->
+    <aside id="toolbox">
+      <h3>Controls</h3>
+      <div class="toolbox-section" id="toolbox-controls">
+        <div class="toolbox-item" data-object-kind="control" data-type="Button" draggable="true">
+          <span class="toolbox-icon">&#x25A3;</span> Button
+        </div>
+        <div class="toolbox-item" data-object-kind="control" data-type="Knob" draggable="true">
+          <span class="toolbox-icon">&#x25CE;</span> Knob / Fader
+        </div>
+        <div class="toolbox-item" data-object-kind="control" data-type="Indicator" draggable="true">
+          <span class="toolbox-icon">&#x25CF;</span> Indicator
+        </div>
+        <div class="toolbox-item" data-object-kind="control" data-type="Text" draggable="true">
+          <span class="toolbox-icon">&#x25AD;</span> Text
+        </div>
+      </div>
+      <h3>Graphics</h3>
+      <div class="toolbox-section" id="toolbox-graphics">
+        <div class="toolbox-item" data-object-kind="graphic" data-type="Label" draggable="true">
+          <span class="toolbox-icon">A</span> Label
+        </div>
+        <div class="toolbox-item" data-object-kind="graphic" data-type="GroupBox" draggable="true">
+          <span class="toolbox-icon">&#x25A1;</span> GroupBox
+        </div>
+        <div class="toolbox-item" data-object-kind="graphic" data-type="Header" draggable="true">
+          <span class="toolbox-icon">&#x2501;</span> Header
+        </div>
+        <div class="toolbox-item" data-object-kind="graphic" data-type="image" draggable="true">
+          <span class="toolbox-icon">&#x25A4;</span> Image
+        </div>
+        <div class="toolbox-item" data-object-kind="graphic" data-type="svg" draggable="true">
+          <span class="toolbox-icon">&lt;/&gt;</span> SVG
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Canvas (center) ── -->
+    <main id="canvas-container">
+      <div id="canvas-viewport">
+        <div id="canvas">
+          <div id="target-size-rect"></div>
+          <div id="bounding-box-rect"><span class="bbox-label"></span></div>
+          <div id="selection-rect" hidden></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ── Properties Panel (right) ── -->
+    <aside id="properties-panel">
+      <h3>Properties</h3>
+      <div id="properties-content">
+        <p class="placeholder-text">Select an object to edit its properties.</p>
+      </div>
+    </aside>
+
+    <!-- ── Lua Output (bottom) ── -->
+    <footer id="lua-panel">
+      <div id="lua-panel-header">
+        <h3>Lua Output</h3>
+        <button id="btn-generate-lua" title="Generate Lua code">Generate</button>
+        <button id="btn-copy-lua" title="Copy to clipboard">Copy</button>
+        <button id="btn-maximize-lua" title="Maximize / Restore">&#x2922;</button>
+        <button id="btn-toggle-lua" title="Collapse / Expand">&#x25BC;</button>
+      </div>
+      <pre id="lua-output-wrap"><code id="lua-output"></code></pre>
+    </footer>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

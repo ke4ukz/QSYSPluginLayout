@@ -1,0 +1,2034 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../" data-mc-toc-path="[%=System.LinkedTitle%]" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Reserved Functions</title>
+        <link href="../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../Skins/Default/Stylesheets/Components/Print.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../Resources/Stylesheets/DeveloperHelpStyles.css" rel="stylesheet" type="text/css" />
+        <link href="../Resources/TableStyles/Shaded_Rows.css" rel="stylesheet" data-mc-stylesheet-type="table" />
+        <script src="../../Resources/Scripts/jquery.min.js" type="text/javascript">
+        </script>
+        <script src="../../Resources/Scripts/purify.min.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../Resources/Scripts/require.min.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../Resources/Scripts/require.config.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../Resources/Scripts/foundation.min.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js" type="text/javascript" defer="defer">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../index.htm#Standards_Definitions/Reserved_Functions.htm">Open topic with navigation</a>
+        </p>
+        <div class="nocontent">
+            <div class="MCBreadcrumbsBox_0 breadcrumbs" role="navigation" aria-label="Breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="5" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+            </div>
+        </div>
+        <div role="main" id="mc-main-content">
+            <h1 data-mc-autonum=""><span class="autonumber"><span></span></span>Reserved Functions</h1>
+            <p>Following are the reserved functions within plugins. While not all of these are reserved in the traditional sense, many of the listed Design Time functions are required for the plugin to compile and are used within the Core OS&#160;Platform. If a function is not required for compile, it is noted as <i>optional</i>.</p>
+            <p> For a list of reserved control names, see <a href="Reserved_Control_Names.htm" class="MCXref xref">Reserved Control Names</a>.</p>
+            <p class="note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>Lua is case-senstive. For example, "string"&#160;and "String" are not the same.</p>
+            <h2 data-mc-autonum=""><span class="autonumber"><span></span></span>Design Time Functions</h2>
+            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" aria-expanded="false"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="7" width="16" alt="Closed" data-mc-alt2="Open" />GetProperties()</a></span>
+                <div class="MCDropDownBody dropDownBody">
+                    <p>Add properties to the plugin. These are user-configurable fields defined before running or emulating a design. Properties are defined in a table where each property is defined as an object with the following parameters.</p>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Property</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Required?</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Name</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>The property name displayed in the properties pane of Q-SYS Designer Software (QDS).</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Type</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Sets the type of property. Options:</p>
+                                    <ul>
+                                        <li>
+                                            <p>"string"</p>
+                                        </li>
+                                        <li>
+                                            <p>"integer"</p>
+                                        </li>
+                                        <li>
+                                            <p>"double"</p>
+                                        </li>
+                                        <li>
+                                            <p>"boolean"</p>
+                                        </li>
+                                        <li>
+                                            <p>"enum"</p>
+                                        </li>
+                                    </ul>
+                                    <p>See <a href="#Type" class="MCXref xref">Type Properties</a> for more information.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Value</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Varies</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Default value for the property. Type is dependent on property type - e.g. If Type = 'string' then Value = "A String".</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Choices</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Table</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>List of choice strings that will be displayed in a combo box. Only valid for 'enum' property type - e.g. {"Choice 1", "Choice 2"}.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Min</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Defines lowest extent for a property. Valid for the 'integer' and 'double' property types.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Max</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Defines the highest extent for a property. Valid for the 'integer' and 'double' property types.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Header</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Define a Header this property will display below. Requires QDS 9.10 or later</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Comment</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Define a comment to show below this property. Requires QDS 9.10 or later</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Description</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body1">
+                                    <p>Give a brief description of this property.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4><a name="Type"></a>Type Properties</h4>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">string</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>A string. A default value is optional.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>A signed-long floating number. A default value  is required.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">double</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>A double floating point value. A default value is required.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">boolean</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>A combo box with the Choices of 'Yes' or 'No'. In Runtime, the Value will return a true or false.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">enum</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body1">
+                                    <p>A combo box of strings defined by Choices. A default value is not required (combo box will show blank until a selection is made).</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="codeSnippet">
+                        <div style="mc-code-lang: Lua;" class="codeSnippetBody" data-mc-continue="False" data-mc-line-number-start="1" data-mc-use-line-numbers="False"><pre><code><span style="color: #a71d5d; ">function</span> <span style="color: #795da3; ">GetProperties</span>()<br />&#160;&#160;<span style="color: #a71d5d; ">local</span> properties = {}<br />&#160;&#160;<span style="color: #0086b3; ">table</span>.<span style="color: #0086b3; ">insert</span>(properties,{<br />&#160;&#160;&#160;&#160;Name = <span style="color: #df5000; ">"String Property"</span>,&#160;<br />&#160;&#160;&#160;&#160;Type = <span style="color: #df5000; ">"string"</span>,&#160;<br />&#160;&#160;&#160;&#160;Value = <span style="color: #df5000; ">"This is a string"</span><br />&#160;&#160;})<br />&#160;&#160;<span style="color: #0086b3; ">table</span>.<span style="color: #0086b3; ">insert</span>(properties,{<br />&#160;&#160;&#160;&#160;Name = <span style="color: #df5000; ">"Integer Property"</span>,<br />&#160;&#160;&#160;&#160;Type = <span style="color: #df5000; ">"integer"</span>,<br />&#160;&#160;&#160;&#160;Min = <span style="color: #008080; ">0</span>,<br />&#160;&#160;&#160;&#160;Max = <span style="color: #008080; ">100</span>,<br />&#160;&#160;&#160;&#160;Value = <span style="color: #008080; ">50</span><br />&#160;&#160;})<br />&#160;&#160;<span style="color: #0086b3; ">table</span>.<span style="color: #0086b3; ">insert</span>(properties,{<br />&#160;&#160;&#160;&#160;Name = <span style="color: #df5000; ">"Double Property"</span>,&#160;<br />&#160;&#160;&#160;&#160;Type = <span style="color: #df5000; ">"double"</span>,&#160;<br />&#160;&#160;&#160;&#160;Min = <span style="color: #008080; ">0</span>,&#160;<br />&#160;&#160;&#160;&#160;Max = <span style="color: #008080; ">100</span>,&#160;<br />&#160;&#160;&#160;&#160;Value = <span style="color: #008080; ">50</span><br />&#160;&#160;})<br />&#160;&#160;<span style="color: #0086b3; ">table</span>.<span style="color: #0086b3; ">insert</span>(properties,{<br />&#160;&#160;&#160;&#160;Name = <span style="color: #df5000; ">"Enum Property"</span>,<br />&#160;&#160;&#160;&#160;Type = <span style="color: #df5000; ">"enum"</span>,<br />&#160;&#160;&#160;&#160;Choices = {<span style="color: #df5000; ">"Choice1"</span>, <span style="color: #df5000; ">"Choice2"</span>, <span style="color: #df5000; ">"Choice3"</span>},<br />&#160;&#160;&#160;&#160;Value = <span style="color: #df5000; ">"Choice 1"</span><br />&#160;&#160;})<br />&#160;&#160;<span style="color: #0086b3; ">table</span>.<span style="color: #0086b3; ">insert</span>(properties,{<br />&#160;&#160;&#160;&#160;Name = <span style="color: #df5000; ">"Bool Property"</span>,&#160;<br />&#160;&#160;&#160;&#160;Type = <span style="color: #df5000; ">"boolean"</span>,&#160;<br />&#160;&#160;&#160;&#160;Value = <span style="color: #0086b3; ">true</span><br />&#160;&#160;})<br />&#160;&#160;<span style="color: #a71d5d; ">return</span> properties<br /><span style="color: #a71d5d; ">end</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" aria-expanded="false"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="7" width="16" alt="Closed" data-mc-alt2="Open" />GetColor(props)</a></span>
+                <div class="MCDropDownBody dropDownBody">
+                    <p>Returns the initial color of the plugin block when it is added to a design. A color is defined by a three value table of integers ranging from 0-255. The format is { Red, Green, Blue }.</p>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Name</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Required?</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Red</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>First index in table. Defines the intensity of red between 0 and 255.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Green</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Second index in table. Defines the intensity of green between 0 and 255.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Blue</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body1">
+                                    <p>Third index in table. Defines the intensity of blue between 0 and 255.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="codeSnippet">
+                        <div style="mc-code-lang: Lua;" class="codeSnippetBody" data-mc-continue="False" data-mc-line-number-start="1" data-mc-use-line-numbers="False"><pre><code><span style="color: #969896; ">-- Define the color of the plugin object in the design</span><br /><span style="color: #a71d5d; ">function</span> <span style="color: #795da3; ">GetColor</span>(props)<br />&#160;&#160;<span style="color: #a71d5d; ">return</span> { <span style="color: #008080; ">102</span>, <span style="color: #008080; ">102</span>, <span style="color: #008080; ">102</span> }<br /><span style="color: #a71d5d; ">end</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" aria-expanded="false"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="7" width="16" alt="Closed" data-mc-alt2="Open" />GetPrettyName(props)</a></span>
+                <div class="MCDropDownBody dropDownBody">
+                    <p>Returns the name of the plugin to display when it is pulled into a design. If a pretty name is not specified, QDS will display the name from the PluginInfo header. Values defined by properties of the plugin can be accessed inside this function via a table that is passed to this function as an argument.</p>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Required?</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body1">
+                                    <p>Defines the name to display on the component when pulled into a schematic page.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="tip" data-mc-autonum="&lt;b&gt;Tip: &lt;/b&gt;"><span class="autonumber"><span><b>Tip: </b></span></span> Version information defined in PluginInfo can be included by using PluginInfo.Version.</p>
+                    <div class="codeSnippet">
+                        <div style="mc-code-lang: Lua;" class="codeSnippetBody" data-mc-continue="False" data-mc-line-number-start="1" data-mc-use-line-numbers="False"><pre><code><span style="color: #a71d5d; ">function</span> <span style="color: #795da3; ">GetPrettyName</span>(props)<br />&#160;&#160;<span style="color: #a71d5d; ">return</span> <span style="color: #0086b3; ">string</span>.<span style="color: #0086b3; ">format</span>(<span style="color: #df5000; ">"My Plugin Name %s"</span>, PluginInfo.Version)<br /><span style="color: #a71d5d; ">end</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" aria-expanded="false"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="7" width="16" alt="Closed" data-mc-alt2="Open" />RectifyProperties(props)</a></span>
+                <div class="MCDropDownBody dropDownBody">
+                    <p><i>Optional</i> This function runs after a property change as a mechanism to adapt global variables and change visibility of properties when appropriate. Values defined by properties of the plugin can be accessed inside this function via a table that is passed to this function as an argument.</p>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Name</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Required?</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">IsHidden</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Boolean</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body1">
+                                    <p>Defines the visibility of a property in the properties pane of QDS.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="codeSnippet">
+                        <div style="mc-code-lang: Lua;" class="codeSnippetBody" data-mc-continue="False" data-mc-line-number-start="1" data-mc-use-line-numbers="False"><pre><code><span style="color: #a71d5d; ">function</span> <span style="color: #795da3; ">RectifyProperties</span>(props)<br />&#160;&#160;props[<span style="color: #df5000; ">"Number of PINs"</span>].IsHidden = props[<span style="color: #df5000; ">"Use PIN"</span>].Value == <span style="color: #df5000; ">"No"</span><br />&#160;&#160;<span style="color: #a71d5d; ">return</span> props<br /><span style="color: #a71d5d; ">end</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" aria-expanded="false"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="7" width="16" alt="Closed" data-mc-alt2="Open" />GetPages(props) </a></span>
+                <div class="MCDropDownBody dropDownBody">
+                    <p><i>Optional.</i> Used when a plugin will have multiple pages of user interface.  Returns the table of page name objects.  Each page name object must contain a “name” property for each desired page. Values defined by properties of the plugin can be accessed inside this function via a table which is passed to this function as an argument.</p>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Property</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Required?</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">name</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body1">
+                                    <p>Defines the name of the page you want to add to the plugin.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="tip" data-mc-autonum="&lt;b&gt;Tip: &lt;/b&gt;"><span class="autonumber"><span><b>Tip: </b></span></span>Pages are ordered as you define them in the table returned by this function.</p>
+                    <p>This example defines a global list of page names and adds them to the plugin using the GetPages() function:</p>
+                    <div class="codeSnippet">
+                        <div style="mc-code-lang: Lua;" class="codeSnippetBody" data-mc-continue="False" data-mc-line-number-start="1" data-mc-use-line-numbers="False"><pre><code>PageNames = { <span style="color: #df5000; ">"Control"</span>, <span style="color: #df5000; ">"Setup"</span> }&#160;&#160;<span style="color: #969896; ">--List the pages within the plugin</span><br /><span style="color: #a71d5d; ">function</span> <span style="color: #795da3; ">GetPages</span>(props)<br />&#160;&#160;<span style="color: #a71d5d; ">local</span> pages = {}<br />&#160;&#160;<span style="color: #a71d5d; ">for</span> ix,name <span style="color: #a71d5d; ">in</span> <span style="color: #0086b3; ">ipairs</span>(PageNames) <span style="color: #a71d5d; ">do</span><br />&#160;&#160;&#160;&#160;<span style="color: #0086b3; ">table</span>.<span style="color: #0086b3; ">insert</span>(pages, {name = PageNames[ix]})<br />&#160;&#160;<span style="color: #a71d5d; ">end</span><br />&#160;&#160;<span style="color: #a71d5d; ">return</span> pages<br /><span style="color: #a71d5d; ">end</span></code></pre>
+                        </div>
+                    </div>
+                    <p class="note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>PageNames is defined outside the GetPages() function to allow access elsewhere in the plugin. PageNames can be modified within the Get Pages() function to add pages based on property settings. However, even though PageNames appears to be global, it is merely a constant when viewed from outside the function. Therefore, changes made here do&#160;not carry over to other UI functions.</p>
+                </div>
+            </div>
+            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" aria-expanded="false"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="7" width="16" alt="Closed" data-mc-alt2="Open" />GetControls(props)</a></span>
+                <div class="MCDropDownBody dropDownBody">
+                    <p>Return a table containing the control objects used within the plugin.  Controls are persistent data objects stored within the design.  They can be bound to user interface components and pins by the plugin. Values defined by properties of the plugin can be accessed inside this function via a table that is passed to this function as an argument.</p>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Name</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Required?</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Name</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Name of the control.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">ControlType</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Defines the type of control. Options: </p>
+                                    <ul>
+                                        <li>
+                                            <p>"Button"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Knob"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Indicator"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Text"</p>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">DefaultValue</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">See description</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Defines a default value for the control the first time the plugin code is compiled in a design. Type could be a Boolean, value, or string depending on the control's value.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">UserPin</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Boolean</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Default is false. If true, pin will be available under "Control Pins" in the "Properties" pane of QDS.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">PinStyle</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Defines the style of pin when exposed. If not defined, and "UserPin" is true, the control pin will always be visible when the component is in the schematic page. Options:</p>
+                                    <ul>
+                                        <li>
+                                            <p>"Input"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Output"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Both"</p>
+                                        </li>
+                                        <li>
+                                            <p>"None"</p>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body2">Count</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body2">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body2">
+                                    <p>Default is 1. Defines the number of controls created with these properties. If this value is greater than one, when accessed in the run-time code, the controls are created as an array.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>There are no specific properties for a "Text" control. You can define whether a text control is a text box, combo box, or list box in <a href="#GetControlLayout">GetControlLayout()</a>.</p>
+                    <h4>Button-Specific Properties</h4>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');border-top-left-radius: 0px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;border-left-style: solid;border-left-width: 1px;border-left-color: #696969;border-right-style: solid;border-right-width: 1px;border-right-color: #696969;border-top-style: solid;border-top-width: 1px;border-top-color: #696969;border-bottom-style: solid;border-bottom-width: 1px;border-bottom-color: #696969;" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Name</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Required?</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">ButtonType</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Defines the control behavior of the button. Options:</p>
+                                    <ul>
+                                        <li>
+                                            <p> "Toggle"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Momentary"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Trigger"</p>
+                                        </li>
+                                        <li>
+                                            <p>"StateTrigger" - For more information about StateTriggers read the help topic <a href="https://help.qsys.com/#Control_Scripting/State_Trigger.htm" target="_blank">here</a>.</p>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Icon</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Defines an icon for the control. The icon can be from QDS (e.g., "skull") or from a local file. To learn how the plugin compiler can encode a local image, see <a href="../Development_Tools/Plugin_Compiler.htm" class="MCXref xref">Plugin Compiler</a>.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">IconType</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Yes (if Icon is defined)</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Defines the format of the image file. The default value is 'Icon', and the 'Image' supports PNG (with alpha-channel) and JPG. Options: SVG, Image, Icon.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Max</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Yes (if ButtonType is StateTrigger)</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Defines the maximum value for a StateTrigger.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Min</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Yes (if ButtonType is StateTrigger)</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body1">
+                                    <p>Defines the minimum value for a StateTrigger.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4>Knob-Specific Properties</h4>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');border-top-left-radius: 0px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;border-left-style: solid;border-left-width: 1px;border-left-color: #696969;border-right-style: solid;border-right-width: 1px;border-right-color: #696969;border-top-style: solid;border-top-width: 1px;border-top-color: #696969;border-bottom-style: solid;border-bottom-width: 1px;border-bottom-color: #696969;" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Name</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Required?</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">ControlUnit</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Defines the units of the  control. Options:</p>
+                                    <ul>
+                                        <li>
+                                            <p>"dB"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Hz"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Float"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Integer"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Pan"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Percent"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Position"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Seconds"</p>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Max</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">See Below</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Defines the maximum value of the knob. Must be greater than the "Min" value. Default value and range limits are determined by the particular "ControlUnit" selected. See <a href="#Knob-Spe" class="MCXref xref">Knob-Specific Ranges</a> for details. </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Min</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">See Below</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body1">
+                                    <p>Defines the minimum value of the knob. Must be less than  the "Max" value. Default value and range limits are determined by the particular "ControlUnit" selected. See <a href="#Knob-Spe" class="MCXref xref">Knob-Specific Ranges</a> for details. </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4><a name="Knob-Spe"></a>Knob-Specific Ranges</h4>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');border-top-left-radius: 0px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;border-left-style: solid;border-left-width: 1px;border-left-color: #696969;border-right-style: solid;border-right-width: 1px;border-right-color: #696969;border-top-style: solid;border-top-width: 1px;border-top-color: #696969;border-bottom-style: solid;border-bottom-width: 1px;border-bottom-color: #696969;" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" style="width: 85px;" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Control Unit</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Lower Limit</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Upper Limit</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">
+                                    <p>Default</p>
+                                    <p>Min</p>
+                                </th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">
+                                    <p>Default</p>
+                                    <p>Max</p>
+                                </th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">
+                                    <p>Min/Max</p>
+                                    <p>Required</p>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">dB</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">-100</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">20</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">-100</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">20</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">Yes</td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Hz</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">20</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">20000</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">20</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">20000</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">Yes</td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Float</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">-1,000,000,000 </td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">1,000,000,000 </td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">0</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">100</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">Yes</td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">-999,999,999 </td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">999,999,999</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">1</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">100</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">Yes</td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Pan</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">-1</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">1</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">-1</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">1</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">No</td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Percent</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">0</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">100</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">0</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">100</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">Yes</td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Position</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">0</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">1</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">0</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">1</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">No</td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body2">Seconds</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body2">0</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body2">87400</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body2">0</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body2">1</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body2">Yes</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4>Indicator-Specific Properties</h4>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Name</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Required?</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">IndicatorType</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body1">
+                                    <p>Defines the type of indicator to be displayed. Options:</p>
+                                    <ul>
+                                        <li>
+                                            <p>"Led"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Meter"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Text"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Status"</p>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="codeSnippet">
+                        <div style="mc-code-lang: Lua;" class="codeSnippetBody" data-mc-continue="False" data-mc-line-number-start="1" data-mc-use-line-numbers="False"><pre><code><span style="color: #a71d5d; ">function</span> <span style="color: #795da3; ">GetControls</span>(props)&#160;<br />&#160;&#160;<span style="color: #969896; ">--[[</span><br /><span style="color: #969896; ">&#160;&#160;This function uses a local 'controls' table. This should not be confused with the "Controls" table available during runtime</span><br /><span style="color: #969896; ">&#160;&#160;--]]</span><br />&#160;&#160;<span style="color: #a71d5d; ">local</span> controls = {}<br />&#160;&#160;<span style="color: #969896; ">--single Control</span><br />&#160;&#160;<span style="color: #0086b3; ">table</span>.<span style="color: #0086b3; ">insert</span>(controls,{<br />&#160;&#160;&#160;&#160;Name = <span style="color: #df5000; ">"TextBox"</span>,<br />&#160;&#160;&#160;&#160;ControlType = <span style="color: #df5000; ">"Text"</span>,<br />&#160;&#160;&#160;&#160;UserPin = <span style="color: #0086b3; ">false</span>,<br />&#160;&#160;&#160;&#160;Count = <span style="color: #008080; ">1</span><br />&#160;&#160;})<br />&#160;&#160;<span style="color: #969896; ">--multiple controls (note Count value)</span><br />&#160;&#160;<span style="color: #0086b3; ">table</span>.<span style="color: #0086b3; ">insert</span>(controls,{<br />&#160;&#160;&#160;&#160;Name = <span style="color: #df5000; ">"LED Indicator"</span>,<br />&#160;&#160;&#160;&#160;ControlType = <span style="color: #df5000; ">"Indicator"</span>,<br />&#160;&#160;&#160;&#160;IndicatorType = <span style="color: #df5000; ">"Led"</span>,<br />&#160;&#160;&#160;&#160;UserPin = <span style="color: #0086b3; ">true</span>,<br />&#160;&#160;&#160;&#160;PinStyle = <span style="color: #df5000; ">"Output"</span>,<br />&#160;&#160;&#160;&#160;Count = <span style="color: #008080; ">5</span><br />&#160;&#160;})<br />&#160;&#160;<span style="color: #a71d5d; ">return</span> controls<br /><span style="color: #a71d5d; ">end</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" aria-expanded="false"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="7" width="16" alt="Closed" data-mc-alt2="Open" /></a><a name="GetControlLayout"></a><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_" aria-expanded="false">GetControlLayout(props)
+                </a></span>
+                <div class="MCDropDownBody dropDownBody">
+                    <p>Returns the layout and graphics tables that define the UI view of the plugin.</p>
+                    <p>The layout table is comprised of objects that define how each of the controls defined in&#160;GetControls() will be shown in the plugin's UI. Each object's name must match a control defined in the GetControls() function.</p>
+                    <p>If more than one of a specific control are defined, each control's name is comprised of the control name, followed by a space, and then  a numerical suffix. For example, a button control defined with a name of "myBtn"&#160;and a set "Count" of 3 in&#160;GetControls() would create controls called "myBtn 1", myBtn 2" and "myBtn 3", respectively.</p>
+                    <p>The graphics table is comprised of objects for each of the unbound graphics in the UI, such as labels, images, and  group boxes.</p>
+                    <h3 data-mc-autonum=""><span class="autonumber"><span></span></span>Layout Table Properties</h3>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Name</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Required?</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Position</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Table</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Defines the position of the control. Given in the form {x,y}.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Size</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Table</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Defines the size of the control. Given in the form {x,y}.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Style</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>
+                                Defines how control is displayed. Options:
+                                </p>
+                                    <ul>
+                                        <li>
+                                            <p>"Fader"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Knob"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Button"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Text"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Meter"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Led"</p>
+                                        </li>
+                                        <li>
+                                            <p>"ListBox"</p>
+                                        </li>
+                                        <li>
+                                            <p>"ComboBox"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Media"</p>
+                                        </li>
+                                        <li>
+                                            <p>"None" - This can be used when a control needs to be hidden but access to its control pins is still required.</p>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">ClassName</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Defines the Default CSS Class Name of the control for when it is dragged onto a UCI.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Color</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Table</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>
+                                Defines the color of the control. Given in the form {r,g,b,alpha}. Alpha is optional. Range: 0 - 255</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">TextColor</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Table</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Color of text. Given in the form {r,g,b,alpha}. Alpha is optional. Range: 0 - 255</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Font</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>
+                                Default is "Roboto" with FontStyle="Regular". See <a href="#FontAndFontStyle" class="MCXref xref">Font and FontStyle Combinations</a> for all valid  combinations.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">FontSize</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>
+                                Size of font used for text.                            </p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">FontStyle</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>
+                                See <a href="#FontAndFontStyle" class="MCXref xref">Font and FontStyle Combinations</a> for all valid combinations.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">IsBold</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Boolean</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Sets the FontStyle to Bold.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">HTextAlign</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>
+                                Options:
+                                </p>
+                                    <ul>
+                                        <li>
+                                            <p>"Center"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Left"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Right"</p>
+                                        </li>
+                                    </ul>
+                                    <p>Default is "Center"</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">IsReadOnly</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Boolean</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>
+                                Control cannot be changed at run-time. This is good for status readouts, not necessary for indicators. (Use Status Text control without this property.)                            </p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Margin</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>
+                                Sets margin for control. Default is 0.                            </p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Padding</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>
+                                Number of pixels to pad the control graphics.
+Default is 1.                         </p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">PrettyName</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>
+                                Used to create alternate names for control pins. Use "~" to create a separate sub-level.
+                            </p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Radius</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>
+                               Same as CornerRadius.                            </p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">StrokeColor</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Table</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Color of outline. Provided in the form {r,g,b,alpha}. Alpha is optional. Default is black {0,0,0}. Range: 0 - 255</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">StrokeWidth</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Thickness of outline. Default is 1.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">VTextAlign</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Options: </p>
+                                    <ul>
+                                        <li>
+                                            <p>"Center"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Top"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Bottom"</p>
+                                        </li>
+                                    </ul>
+                                    <p> Default is "Center"</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body2">ZOrder</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body2">Signed Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body2">
+                                    <p>Sets the position of the control in the vertical plane. Range is -2147483648 to 2147483647.  See notes on <a href="#Object" class="MCXref xref">Object Layering</a> below.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4>Button-Only Properties</h4>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Name</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Required?</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">ButtonStyle</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Options:</p>
+                                    <ul>
+                                        <li>
+                                            <p>"Toggle"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Momentary"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Trigger"</p>
+                                        </li>
+                                        <li>
+                                            <p>"StateTrigger"</p>
+                                        </li>
+                                        <li>
+                                            <p>"On"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Off"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Custom"</p>
+                                        </li>
+                                    </ul>
+                                    <p>For a "string" type button, use "Custom'".</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">ButtonVisualStyle</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Options:</p>
+                                    <ul>
+                                        <li>
+                                            <p>"Flat"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Gloss"</p>
+                                        </li>
+                                    </ul>
+                                    <p>Default is "Gloss". </p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">CornerRadius</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Sets radius of corners</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Radius</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>
+                               Same as CornerRadius.                            </p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">CustomButtonUp</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Defines the string of a Custom button when in the up position. </p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">CustomButtonDown</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Defines the string of a Custom button when in the down position.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Legend</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Defines a legend for the button.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">OffColor</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Table</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Used only when UnlinkOffColor is true. Sets the color of the button when it's off. Provided in the form {r,g,b,alpha}. Alpha is optional. Range: 0 - 255</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">UnlinkOffColor</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Boolean</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Allow a button to show two completely different colors for on and off states.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">IconColor</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Table</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Sets the color of the buttons Icon. Provided in the form {r,g,b,alpha}. Alpha is optional. Range: 0 - 255</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">WordWrap</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Boolean</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body1">
+                                    <p>Defines whether the legend text should wrap.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>The "Off", "On" and "Custom" options are the equivalent of the "Off", "On" and "String" push-actions as described in Q-SYS Help.</p>
+                    <h4>Fader-Only Properties</h4>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Name</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">
+                                    <p>Required?</p>
+                                </th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">ShowTextbox</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Boolean</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body1">
+                                    <p>Add a text box to show the current control's value. Default is "false".</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4>Meter-Only Properties</h4>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Name</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">
+                                    <p>Required?</p>
+                                </th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">CornerRadius</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Sets radius of corners</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Radius</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>
+                               Same as CornerRadius.                            </p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">BackgroundColor</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Table</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Sets background color for the meter. Provided in the form {r,g,b,alpha}. Alpha is optional. Range: 0 - 255</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">MeterStyle</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Options:</p>
+                                    <ul>
+                                        <li>
+                                            <p>"Level"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Reduction"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Gain"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Standard"</p>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">ShowTextbox</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Boolean</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body1">
+                                    <p>Add a text box to show the current control's value. Default is "true".</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4>Text-Only Properties</h4>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Name</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Required?</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">CornerRadius</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Sets radius of corners</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Radius</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>
+                               Same as CornerRadius                           </p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">TextBoxStyle</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Options:</p>
+                                    <ul>
+                                        <li>
+                                            <p>"Normal"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Meter"</p>
+                                        </li>
+                                        <li>
+                                            <p>"NoBackground"</p>
+                                        </li>
+                                    </ul>
+                                    <p> Default is "Normal"</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body2">WordWrap</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body2">Boolean</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body2">
+                                    <p>Defines whether the legend text should wrap</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3 data-mc-autonum=""><span class="autonumber"><span></span></span>Graphics Table Properties</h3>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Name</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Required?</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Position</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Table</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Defines the position of the control. Given in the form {x,y}.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Size</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Table</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Defines the size of the control. Given in the form {x,y}.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Type</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Options:</p>
+                                    <ul>
+                                        <li>
+                                            <p>"Label" - Fixed text label</p>
+                                        </li>
+                                        <li>
+                                            <p>"GroupBox" - Outline to enclose controls with or without title</p>
+                                        </li>
+                                        <li>
+                                            <p>"Header" - Single line with header text</p>
+                                        </li>
+                                        <li>
+                                            <p>"Image" - An image except SVG (see SVG type)</p>
+                                        </li>
+                                        <li>
+                                            <p>"Svg" - Image</p>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body2">ZOrder</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body2">Signed Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body2">
+                                    <p>Sets the position of the graphic in the vertical plane. Range is -2147483648 to 2147483647. See notes on <a href="#Object" class="MCXref xref">Object Layering</a> below.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4>GroupBox-Only Properties</h4>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Name</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Required?</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">CornerRadius</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Sets radius of corners on the group box.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Radius</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Same as CornerRadius.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Text</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Default is no text shown.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Font</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Default is "Roboto" with FontStyle="Regular". See <a href="#FontAndFontStyle" class="MCXref xref">Font and FontStyle Combinations</a> for all valid  combinations.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">FontSize</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Default FontSize varies by style type.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">FontStyle</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">FontStyle</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>See  <a href="#FontAndFontStyle" class="MCXref xref">Font and FontStyle Combinations</a> for all valid combinations.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">IsBold</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Boolean</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Sets the FontStyle to Bold.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">HTextAlign</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Options: "Center", "Left", "Right". Default is "Center".</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">StrokeWidth</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Defines the width of the stroke around the control. Default is 0. Options: 0-64.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">StrokeColor</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Table</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Defines the color of the stroke around the control. Default is black. Provided in the form {r,g,b,alpha}. Alpha is optional. Range: 0 - 255</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Color</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Table</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Text Color provided in the form {r,g,b,alpha}. Alpha is optional. Range: 0 - 255</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body2">Fill</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body2">Table</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body2">
+                                    <p>Default is clear. Provided in the form {r,g,b,alpha}. Alpha is optional. Range: 0 - 255</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4>Header-Only Properties</h4>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Name</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Required?</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Text</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Default is no text shown.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Font</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Default is "Roboto" with FontStyle="Regular". See <a href="#FontAndFontStyle" class="MCXref xref">Font and FontStyle Combinations</a> for all valid  combinations.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">FontSize</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Default FontSize varies by style type.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">FontStyle</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">FontStyle</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>See  <a href="#FontAndFontStyle" class="MCXref xref">Font and FontStyle Combinations</a> for all valid combinations.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">IsBold</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Boolean</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Sets the FontStyle to Bold.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">HTextAlign</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Options:</p>
+                                    <ul>
+                                        <li>
+                                            <p>"Center"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Left"</p>
+                                        </li>
+                                        <li>
+                                            <p>"Right"</p>
+                                        </li>
+                                    </ul>
+                                    <p>Default is "Center"</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Color</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Table</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body1">
+                                    <p>Set the text color. Provided in the form {r,g,b,alpha}.  Alpha is optional. Range: 0 - 255</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4>Image/SVG-only Properties</h4>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Name</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Require?</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Image</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body1">
+                                    <p>Contains the entire Base-64-encoded JPG/PNG/SVG string for the Image or Svg types.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4>Label-only Properties</h4>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Name</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Required?</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Color</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Table</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Sets color of label. Provided in the form {r,g,b,alpha}. Alpha is optional. Range: 0 - 255</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">CornerRadius</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Sets radius of corners on the group box.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Radius</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Same as CornerRadius.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Margin</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Sets margin for control. Default is 0.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Padding</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Number of pixels to pad the border around the text. Default is 1.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Text</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Default is no text shown.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Font</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Default is "Roboto" with FontStyle="Regular". See <a href="#FontAndFontStyle" class="MCXref xref">Font and FontStyle Combinations</a> for all valid  combinations.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Fill</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Table</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Default is clear. Provided in the form {r,g,b,aplha}. Alpha is optional.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">FontSize</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Default FontSize varies by style type.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">FontStyle</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">FontStyle</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>See  <a href="#FontAndFontStyle" class="MCXref xref">Font and FontStyle Combinations</a> for all valid combinations.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">IsBold</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Boolean</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Sets the FontStyle to Bold.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">HTextAlign</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Options: "Center", "Left", "Right". Default is "Center".</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">VTextAlign</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Options: "Center", "Top", "Bottom". Default is "Center"</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">StrokeWidth</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Integer</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Defines the width of the stroke around the control. Default is 1. Options: 0-64</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">StrokeColor</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Table</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body1">
+                                    <p>Defines the color of the stroke around the control. Default is black. Provided in the form {r,g,b,alpha}. Alpha is optional. Range: 0 - 255</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4><a name="FontAndFontStyle"></a>Font and FontStyle Combinations</h4>
+                    <p class="note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>FontStyle capitalization varies between fonts.</p>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Font</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Link to Example</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">FontStyle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Adamina</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1"><a href="https://fonts.google.com/specimen/Adamina" target="_blank">Adamina</a>
+                                </td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Regular</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Droid Sans</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">No Link</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Regular, Bold</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Lato</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1"><a href="https://fonts.google.com/specimen/Lato" target="_blank">Lato</a>
+                                </td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Light, Light Italic, Regular, Italic, Bold, Bold Italic, Black, Black Italic</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Montserrat</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2"><a href="https://fonts.google.com/specimen/Montserrat" target="_blank">Montserrat</a>
+                                </td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Thin, Thin Italic, ExtraLight, ExtraLight Italic, Light, Light Italic, Regular, Italic, Medium, Medium Italic, SemiBold, SemiBold Italic, Bold, Bold Italic, ExtraBold, ExtraBold Italic, Black, Black Italic</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Noto Serif</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1"><a href="https://fonts.google.com/specimen/Noto+Serif" target="_blank">Noto Serif</a>
+                                </td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Regular, Italic,  Bold, BoldItalic</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Open Sans</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2"><a href="https://fonts.google.com/specimen/Open+Sans" target="_blank">Open Sans</a>
+                                </td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Light, Light Italic, Regular, Italic, Semibold, Semibold Italic, Bold, Bold Italic, Extrabold, Extrabold Italic</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Poppins</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1"><a href="https://fonts.google.com/specimen/Poppins" target="_blank">Poppins</a>
+                                </td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Light, Regular, Medium, SemiBold, Bold</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Roboto</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2"><a href="https://fonts.google.com/specimen/Roboto" target="_blank">Roboto</a>
+                                </td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Thin, Thin Italic, Light, Light Italic, Regular, Italic, Medium, Medium Italic, Bold, Bold Italic, Black, Black Italic</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Roboto Mono</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1"><a href="https://fonts.google.com/specimen/Roboto+Mono" target="_blank">Roboto Mono</a>
+                                </td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Thin, Thin Italic, Light, Light Italic, Regular, Italic, Medium, Medium Italic, Bold, Bold Italic</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Roboto Slab</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2"><a href="https://fonts.google.com/specimen/Roboto+Slab" target="_blank">Roboto Slab</a>
+                                </td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Thin, Light, Regular, Bold</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Slabo 27px</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1"><a href="https://fonts.google.com/specimen/Slabo+27px" target="_blank">Slabo 27px</a>
+                                </td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body1">
+                                    <p>Regular</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="codeSnippet">
+                        <div style="mc-code-lang: Lua;" class="codeSnippetBody" data-mc-continue="False" data-mc-line-number-start="1" data-mc-use-line-numbers="False"><pre><code><span style="color: #a71d5d; ">function</span> <span style="color: #795da3; ">GetControlLayout</span>(props)&#160;<br />&#160;&#160;<span style="color: #a71d5d; ">local</span> layout = {}<br />&#160;&#160;<span style="color: #a71d5d; ">local</span> graphics = {}<br /><br />&#160;&#160;<span style="color: #969896; ">--Example of a single textbox control</span><br />&#160;&#160;layout[<span style="color: #df5000; ">"TextBox"</span>]={<br />&#160;&#160;&#160;&#160;Style=<span style="color: #df5000; ">"Text"</span>,<br />&#160;&#160;&#160;&#160;IsReadOnly=<span style="color: #0086b3; ">true</span>,<br />&#160;&#160;&#160;&#160;Position={<span style="color: #008080; ">0</span>,<span style="color: #008080; ">0</span>},<br />&#160;&#160;&#160;&#160;Size={<span style="color: #008080; ">100</span>,<span style="color: #008080; ">16</span>},<br />&#160;&#160;&#160;&#160;TextColor={<span style="color: #008080; ">255</span>,<span style="color: #008080; ">255</span>,<span style="color: #008080; ">255</span>},<br />&#160;&#160;&#160;&#160;TextBoxStyle=<span style="color: #df5000; ">"NoBackground"</span>,<br />&#160;&#160;&#160;&#160;FontSize=<span style="color: #008080; ">9</span>,<br />&#160;&#160;&#160;&#160;HTextAlign=<span style="color: #df5000; ">"Left"</span>,<br />&#160;&#160;&#160;&#160;VTextAlign=<span style="color: #df5000; ">"Center"</span>,<br />&#160;&#160;&#160;&#160;Font = <span style="color: #df5000; ">"Montserrat"</span>,<br />&#160;&#160;&#160;&#160;FontStyle = <span style="color: #df5000; ">"SemiBold"</span>,<br />&#160;&#160;}<br />&#160;&#160;<br />&#160;&#160;<span style="color: #969896; ">--Example of defining multiple LED indicators&#160;&#160;</span><br />&#160;&#160;<span style="color: #a71d5d; ">for</span> idx = <span style="color: #008080; ">1</span>,<span style="color: #008080; ">5</span> <span style="color: #a71d5d; ">do</span><br />&#160;&#160;&#160;&#160;layout[<span style="color: #df5000; ">"LEDIndicator "</span>..i]={<br />&#160;&#160;&#160;&#160;&#160;&#160;PrettyName=<span style="color: #df5000; ">"LED~State"</span>,<br />&#160;&#160;&#160;&#160;&#160;&#160;Style=<span style="color: #df5000; ">"LED"</span>,<br />&#160;&#160;&#160;&#160;&#160;&#160;Color={<span style="color: #008080; ">0</span>,<span style="color: #008080; ">255</span>,<span style="color: #008080; ">0</span>},<br />&#160;&#160;&#160;&#160;&#160;&#160;OffColor={<span style="color: #008080; ">0</span>,<span style="color: #008080; ">0</span>,<span style="color: #008080; ">0</span>},<br />&#160;&#160;&#160;&#160;&#160;&#160;UnlinkOffColor=<span style="color: #0086b3; ">true</span>,<br />&#160;&#160;&#160;&#160;&#160;&#160;Position={<span style="color: #008080; ">0</span>,<span style="color: #008080; ">20</span>},<br />&#160;&#160;&#160;&#160;&#160;&#160;Size={<span style="color: #008080; ">16</span>,<span style="color: #008080; ">16</span>},<br />&#160;&#160;&#160;&#160;&#160;&#160;CornerRadius=<span style="color: #008080; ">8</span><br />&#160;&#160;&#160;&#160;}<br />&#160;&#160;<span style="color: #a71d5d; ">end</span><br />&#160;&#160;<br />&#160;&#160;<span style="color: #969896; ">--Plugin Background Color - Note: As "Fill" and "StrokeColor" are the same color so there is no outline</span><br />&#160;&#160;<span style="color: #0086b3; ">table</span>.<span style="color: #0086b3; ">insert</span>(graphics,{<br />&#160;&#160;&#160;&#160;Type=<span style="color: #df5000; ">"GroupBox"</span>,<br />&#160;&#160;&#160;&#160;Position={<span style="color: #008080; ">0</span>,<span style="color: #008080; ">0</span>},<br />&#160;&#160;&#160;&#160;Size={<span style="color: #008080; ">200</span>,<span style="color: #008080; ">200</span>},<br />&#160;&#160;&#160;&#160;Fill={<span style="color: #008080; ">0</span>,<span style="color: #008080; ">0</span>,<span style="color: #008080; ">0</span>},<br />&#160;&#160;&#160;&#160;CornerRadius=<span style="color: #008080; ">0</span>,<br />&#160;&#160;&#160;&#160;StrokeColor={<span style="color: #008080; ">0</span>,<span style="color: #008080; ">0</span>,<span style="color: #008080; ">0</span>},<br />&#160;&#160;&#160;&#160;StrokeWidth=<span style="color: #008080; ">1</span><br />&#160;&#160;})<br /><br />&#160;&#160;<span style="color: #969896; ">--Label</span><br />&#160;&#160;<span style="color: #0086b3; ">table</span>.<span style="color: #0086b3; ">insert</span>(graphics,{<br />&#160;&#160;&#160;&#160;Type=<span style="color: #df5000; ">"Label"</span>,<br />&#160;&#160;&#160;&#160;Text=<span style="color: #df5000; ">"This is a label"</span>,<br />&#160;&#160;&#160;&#160;Position={<span style="color: #008080; ">0</span>,<span style="color: #008080; ">40</span>},<br />&#160;&#160;&#160;&#160;Size={<span style="color: #008080; ">100</span>,<span style="color: #008080; ">14</span>},<br />&#160;&#160;&#160;&#160;Color={<span style="color: #008080; ">255</span>,<span style="color: #008080; ">255</span>,<span style="color: #008080; ">255</span>},<br />&#160;&#160;&#160;&#160;FontSize=<span style="color: #008080; ">9</span>,<br />&#160;&#160;&#160;&#160;HTextAlign=<span style="color: #df5000; ">"Left"</span><br />&#160;&#160;})<br /><br />&#160;&#160;<span style="color: #a71d5d; ">return</span> layout,graphics<br /><span style="color: #a71d5d; ">end</span></code></pre>
+                        </div>
+                    </div>
+                    <h3 data-mc-autonum=""><span class="autonumber"><span></span></span><a name="Object"></a>Object Layering</h3>
+                    <p>QDS normally handles how controls and graphics objects are overlaid over one another (the z-order). When building a plugin,  <code>ZOrder</code> can be specified as a signed integer for controls and graphics to manually set where on the vertical plane an object resides. The higher the value, the closer to the front the object will be. The "stacking" of items using <code>ZOrder</code> applies equally to graphic elements and controls as they exist in the same  layering scheme. This allows graphics to be placed above controls if required. In other words, what you do to any one graphic or control potentially has effects on any object on that page (graphic or control).</p>
+                    <p>The <code>ZOrder</code> key can be added to the layout or graphic control definition at any point, as shown in the following example for a TextBox control.</p>
+                    <div class="codeSnippet">
+                        <div style="mc-code-lang: Lua;" class="codeSnippetBody" data-mc-continue="False" data-mc-line-number-start="1" data-mc-use-line-numbers="False"><pre><code>layout[<span style="color: #df5000; ">"TextBox"</span>]={<br />&#160;&#160;Style=<span style="color: #df5000; ">"Text"</span>,<br />&#160;&#160;IsReadOnly=<span style="color: #0086b3; ">true</span>,<br />&#160;&#160;Position={<span style="color: #008080; ">0</span>,<span style="color: #008080; ">0</span>},<br />&#160;&#160;Size={<span style="color: #008080; ">100</span>,<span style="color: #008080; ">16</span>},<br />&#160;&#160;ZOrder=<span style="color: #008080; ">23</span>,<br />&#160;&#160;TextColor={<span style="color: #008080; ">255</span>,<span style="color: #008080; ">255</span>,<span style="color: #008080; ">255</span>},<br />&#160;&#160;TextBoxStyle=<span style="color: #df5000; ">"NoBackground"</span>,<br />&#160;&#160;FontSize=<span style="color: #008080; ">9</span>,<br />&#160;&#160;HTextAlign=<span style="color: #df5000; ">"Left"</span>,<br />&#160;&#160;VTextAlign=<span style="color: #df5000; ">"Center"</span><br />}<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</code></pre>
+                        </div>
+                    </div>
+                    <p class="note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If <code>ZOrder</code> is used to manually set the order on ANY control or graphic, it is recommended that it be used on all controls or graphics. Otherwise, strange effects may occur.</p>
+                    <h3 data-mc-autonum=""><span class="autonumber"><span></span></span>Using Multiple Pages</h3>
+                    <p>For plugins that use multiple pages, the control layout needs to be split into two distinct sections:</p>
+                    <ul>
+                        <li>
+                            <p>Controls and graphics that are common and appear on all pages.</p>
+                        </li>
+                        <li>
+                            <p>Controls and graphics that only appear on a specific page.</p>
+                        </li>
+                    </ul>
+                    <p>Those that are common can be added as normal. However, an additional condition needs to be included to separate which controls are shown on which page.</p>
+                    <p>This condition can use the numeric index value of the page:</p>
+                    <div class="codeSnippet"><a class="codeSnippetCopyButton" role="button" href="javascript:void(0);">Copy</a>
+                        <div style="mc-code-lang: Lua;" class="codeSnippetBody" data-mc-continue="False" data-mc-line-number-start="1" data-mc-use-line-numbers="False"><pre><code><span style="color: #969896; ">-- Common controls and graphics go here...</span><br /><br /><span style="color: #a71d5d; ">if</span> props[<span style="color: #df5000; ">'page_index'</span>].Value == <span style="color: #008080; ">1</span> <span style="color: #a71d5d; ">then</span><br />&#160;&#160;<span style="color: #969896; ">-- Controls and graphics which appear on first page</span><br /><span style="color: #a71d5d; ">elseif</span> props[<span style="color: #df5000; ">'page_index'</span>].Value == <span style="color: #008080; ">2</span> <span style="color: #a71d5d; ">then</span><br />&#160;&#160;<span style="color: #969896; ">-- Controls and graphics which should appear on second page and so on</span><br /><span style="color: #a71d5d; ">end</span></code></pre>
+                        </div>
+                    </div>
+                    <p>&#160;</p>
+                    <p>Alternatively, you can use the page's actual name instead:</p>
+                    <div class="codeSnippet"><a class="codeSnippetCopyButton" role="button" href="javascript:void(0);">Copy</a>
+                        <div style="mc-code-lang: Lua;" class="codeSnippetBody" data-mc-continue="False" data-mc-line-number-start="1" data-mc-use-line-numbers="False"><pre><code><span style="color: #a71d5d; ">local</span> CurrentPage = pagenames[props[<span style="color: #df5000; ">"page_index"</span>].Value]<br /><br /><span style="color: #969896; ">--Common controls and graphics go here</span>&#160;<br /><br /><span style="color: #a71d5d; ">if</span> CurrentPage == <span style="color: #df5000; ">"Page 1"</span> <span style="color: #a71d5d; ">then</span><br />&#160;&#160;<span style="color: #969896; ">-- Controls and graphics which appear on "Page 1" here</span><br /><span style="color: #a71d5d; ">elseif</span> CurrentPage == <span style="color: #df5000; ">"Page 2"</span> <span style="color: #a71d5d; ">then</span><br />&#160;&#160;<span style="color: #969896; ">-- Controls and graphics which appear on "Page 2" here and so on...</span><br /><span style="color: #a71d5d; ">end</span></code></pre>
+                        </div>
+                    </div>
+                    <p class="tip" data-mc-autonum="&lt;b&gt;Tip: &lt;/b&gt;"><span class="autonumber"><span><b>Tip: </b></span></span>A typical use case in a multi-page plugin is to alter the pages the plugin shows based on what property values are set. An array is used to define the default pages and then, in GetProperties(), additional pages can be added based on the property settings. However, when GetControls() or Get ControlLayout() are called, the page name array will revert back to just the default pages. The changes made in GetProperties() will not carry over. As the page name array may be needed in GetControls() or GetControlsLayout(), the full array will need to be recreated from scratch from within these functions. The way to do that is to create a separate helper function that creates the full page name array based on the properties and call that helper function from within GetControls() or GetControlLayout() to recreate the page name array that is required.</p>
+                </div>
+            </div>
+            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" aria-expanded="false"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="7" width="16" alt="Closed" data-mc-alt2="Open" /></a><a name="GetCompo"></a><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_" aria-expanded="false">GetComponents(props)</a></span>
+                <div class="MCDropDownBody dropDownBody">
+                    <p><i>Optional</i> Use this function to embed one or more audio components into a plugin to allow it to do audio processing. The function returns a table of components to be used within the plugin. Any components added here will not be visible in the plugin's UI. Any required controls must be manually added to the UI. An event handler in the plugin run-time script section can be used to update the embedded component controls as required. For audio signals, use the GetPins() function to add audio pins to the plugin and GetWiring() to wire them to the embedded components. Values defined by the properties of the plugin can be accessed inside this function via a table that is passed to this function as an argument.</p>
+                    <p>See <a href="Embedded_Components.htm" class="MCXref xref">Embedded Components</a> for more information.</p>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Name</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Required?</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Name</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">Name of the component (must not contain any spaces)</td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Type</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">Defines the type of component, e.g. 'mixer', 'scriptable_controls', etc</td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Properties</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Table</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body1">Defines the value of any properties the component requires, e.g. the number of inputs or outputs</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>While any component can be embedded into a plugin, consider whether it's necessary, as there are implications to the user of the plugin. Some components have limits on their usage  in a design, such as how many instances can be included or how many channels can be used. Examples of such components include the Audio Player (maximum 32 channels) and Audio Recorder (one component, four channels max).  Embedding such components in a plugin will add to the overall design channel count and component count for that type of component and if the design exceeds any maximums, this will cause the design to fail to compile. Since embedded components in a plugin are not visible to a user of the plugin, it may not be obvious to the user why the design compile is failing, which could lead to user frustration. In such circumstances, consider accessing a Named Component in the design for those types of components instead.</p>
+                    <div class="codeSnippet">
+                        <div style="mc-code-lang: Lua;" class="codeSnippetBody" data-mc-continue="False" data-mc-line-number-start="1" data-mc-use-line-numbers="False"><pre><code><span style="color: #a71d5d; ">function</span> <span style="color: #795da3; ">GetComponents</span>(props)&#160;<br />&#160;&#160;<span style="color: #a71d5d; ">local</span> components = {}<br />&#160;&#160;<span style="color: #0086b3; ">table</span>.<span style="color: #0086b3; ">insert</span>(components,{<br />&#160;&#160;&#160;&#160;Name = <span style="color: #df5000; ">"MainMixer"</span>,<br />&#160;&#160;&#160;&#160;Type = <span style="color: #df5000; ">"mixer"</span>,<br />&#160;&#160;&#160;&#160;Properties = {<br />&#160;&#160;&#160;&#160;&#160;&#160;[<span style="color: #df5000; ">"n_inputs"</span>] = <span style="color: #008080; ">8</span>,<br />&#160;&#160;&#160;&#160;&#160;&#160;[<span style="color: #df5000; ">"n_outputs"</span>] = <span style="color: #008080; ">1</span>,<br />&#160;&#160;&#160;&#160;}<br />&#160;&#160;})<br />&#160;&#160;<span style="color: #0086b3; ">table</span>.<span style="color: #0086b3; ">insert</span>(components, {<br />&#160;&#160;&#160;&#160;Name = <span style="color: #df5000; ">"SignalPresence"</span>,<br />&#160;&#160;&#160;&#160;Type = <span style="color: #df5000; ">"signal_presence"</span>,<br />&#160;&#160;&#160;&#160;Properties = {[<span style="color: #df5000; ">"multi_channel_type"</span>] = <span style="color: #008080; ">1</span>}<br />&#160;&#160;}<br />&#160;&#160;<span style="color: #a71d5d; ">return</span> comp<br /><span style="color: #a71d5d; ">end</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" aria-expanded="false"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="7" width="16" alt="Closed" data-mc-alt2="Open" />GetPins(props)</a></span>
+                <div class="MCDropDownBody dropDownBody">
+                    <p><i>Optional</i> Add audio or serial pins to the plugin object. Controls may have pins not defined here.  Values defined by properties of the plugin can be accessed inside this function via a table that is passed to this function as an argument. Pins are defined by an object containing the following properties:</p>
+                    <table style="mc-table-style: url('../Resources/TableStyles/Shaded_Rows.css');" class="TableStyle-Shaded_Rows" cellspacing="0">
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <col class="TableStyle-Shaded_Rows-Column-Column1" />
+                        <thead>
+                            <tr class="TableStyle-Shaded_Rows-Head-Header1">
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Name</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Type</th>
+                                <th class="TableStyle-Shaded_Rows-HeadE-Column1-Header1">Required?</th>
+                                <th class="TableStyle-Shaded_Rows-HeadD-Column1-Header1">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Name</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body1">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body1">
+                                    <p>Name of the pin.</p>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body2">
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Direction</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyE-Column1-Body2">Yes</td>
+                                <td class="TableStyle-Shaded_Rows-BodyD-Column1-Body2">
+                                    <p>Defines the direction of pins shown. Options are :</p>
+                                    <ul>
+                                        <li>
+                                            <p>"input"</p>
+                                        </li>
+                                        <li>
+                                            <p>"output"</p>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="TableStyle-Shaded_Rows-Body-Body1">
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">Domain</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">String</td>
+                                <td class="TableStyle-Shaded_Rows-BodyB-Column1-Body1">No</td>
+                                <td class="TableStyle-Shaded_Rows-BodyA-Column1-Body1">
+                                    <p>Defines the type of pin. Pins are audio by default. Set to "serial" for a serial pin.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>This function can only be used to add  audio or serial pins.</p>
+                    <div class="codeSnippet">
+                        <div style="mc-code-lang: Lua;" class="codeSnippetBody" data-mc-continue="False" data-mc-line-number-start="1" data-mc-use-line-numbers="False"><pre><code><span style="color: #a71d5d; ">function</span> <span style="color: #795da3; ">GetPins</span>(props)&#160;<br />&#160;&#160;<span style="color: #a71d5d; ">local</span> pins = {}<br />&#160;&#160;<span style="color: #0086b3; ">table</span>.<span style="color: #0086b3; ">insert</span>(pins,{<br />&#160;&#160;&#160;&#160;Name = <span style="color: #df5000; ">"Audio Input"</span>,<br />&#160;&#160;&#160;&#160;Direction = <span style="color: #df5000; ">"input"</span><br />&#160;&#160;})<br />&#160;&#160;<span style="color: #0086b3; ">table</span>.<span style="color: #0086b3; ">insert</span>(pins,{<br />&#160;&#160;&#160;&#160;Name = <span style="color: #df5000; ">"Audio Output"</span>,<br />&#160;&#160;&#160;&#160;Direction = <span style="color: #df5000; ">"output"</span><br />&#160;&#160;})<br />&#160;&#160;<span style="color: #a71d5d; ">return</span> pins<br /><span style="color: #a71d5d; ">end</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" aria-expanded="false"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="7" width="16" alt="Closed" data-mc-alt2="Open" />GetWiring(props)</a></span>
+                <div class="MCDropDownBody dropDownBody">
+                    <p><i>Optional</i> Returns a table of objects that describes the wire connections between components and plugin pins. Wire objects are a table of strings, defining the source and one of more destinations the wire connects.  Pins must be referenced by component name and pin name. Note these pin wiring restrictions:</p>
+                    <ul>
+                        <li>
+                            <p>A plugin input pin can be connected to a component input pin or a plugin output pin.</p>
+                        </li>
+                        <li>
+                            <p>A plugin input pin can be connected to multiple component input pins.</p>
+                        </li>
+                        <li>
+                            <p>A component input pin can only be connected to a single plugin input pin.</p>
+                        </li>
+                        <li>
+                            <p>A component output pin can be connected to multiple plugin output pins.</p>
+                        </li>
+                        <li>
+                            <p>A plugin output pin can only be connected to a single component output pin</p>
+                        </li>
+                    </ul>
+                    <div class="codeSnippet">
+                        <div style="mc-code-lang: Lua;" class="codeSnippetBody" data-mc-continue="False" data-mc-line-number-start="1" data-mc-use-line-numbers="False"><pre><code><span style="color: #a71d5d; ">function</span> <span style="color: #795da3; ">GetWiring</span>(props)&#160;<br />&#160;&#160;<span style="color: #a71d5d; ">local</span> wiring = {}<br />&#160;&#160;<span style="color: #969896; ">--Plugin input pin (named in GetPins() as "In 1") to embedded component input pin 1</span><br />&#160;&#160;<span style="color: #0086b3; ">table</span>.<span style="color: #0086b3; ">insert</span>(wiring,{<br />&#160;&#160;&#160;&#160;<span style="color: #df5000; ">"In 1"</span>,<br />&#160;&#160;&#160;&#160;<span style="color: #df5000; ">"main_mixer Input 1"</span><br />&#160;&#160;})<br />&#160;&#160;<span style="color: #969896; ">--Embedded component output pin 1 to plugin output pin (named in GetPins as "Out 1")</span>&#160;<br />&#160;&#160;<span style="color: #0086b3; ">table</span>.<span style="color: #0086b3; ">insert</span>(wiring,{<br />&#160;&#160;&#160;&#160;<span style="color: #df5000; ">"main_mixer Output 1"</span>,<br />&#160;&#160;&#160;&#160;<span style="color: #df5000; ">"Mix Output"</span><br />&#160;&#160;})<br />&#160;&#160;<span style="color: #a71d5d; ">return</span> wiring<br /><span style="color: #a71d5d; ">end</span></code></pre>
+                        </div>
+                    </div>
+                    <MadCap:dropDownBody>
+                        <p class="tip" data-mc-autonum="&lt;b&gt;Tip: &lt;/b&gt;"><span class="autonumber"><span><b>Tip: </b></span></span>In QDS, you can use Tools &gt;&#160;View Component Controls Info to help define any control pin names of a component.</p>
+                    </MadCap:dropDownBody>
+                </div>
+            </div>
+            <h2 data-mc-autonum=""><span class="autonumber"><span></span></span>Runtime</h2>
+            <p>This information is provided to further increase understanding of QSC-authored plugins. These functions are not required to be added to a user-authored plugin. The following are common functions typically found in QSC-authored plugins.    For a working example of these functions, see <a href="../Code_Examples/TCPSocket_Example.htm" class="MCXref xref">TCPSocket</a>.</p>
+            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" aria-expanded="false"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="7" width="16" alt="Closed" data-mc-alt2="Open" />SetupDebugPrint()</a></span>
+                <div class="MCDropDownBody dropDownBody">
+                    <p>Sets flags based on Debug Print properties that are set before running, allowing end users to determine the print messages going to the debug window.</p>
+                </div>
+            </div>
+            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" aria-expanded="false"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="7" width="16" alt="Closed" data-mc-alt2="Open" />Send(cmd)</a></span>
+                <div class="MCDropDownBody dropDownBody">
+                    <p>Sends data over a socket.</p>
+                </div>
+            </div>
+            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" aria-expanded="false"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="7" width="16" alt="Closed" data-mc-alt2="Open" />ClearVariables()</a></span>
+                <div class="MCDropDownBody dropDownBody">
+                    <p>Flushes controls, variables, tables, and flags if the connection is disrupted or reset.</p>
+                </div>
+            </div>
+            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" aria-expanded="false"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="7" width="16" alt="Closed" data-mc-alt2="Open" />Connect()</a></span>
+                <div class="MCDropDownBody dropDownBody">
+                    <p>Set flags or trigger other functions once the connection has been established.</p>
+                </div>
+            </div>
+            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" aria-expanded="false"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="7" width="16" alt="Closed" data-mc-alt2="Open" />Disconnected()</a></span>
+                <div class="MCDropDownBody dropDownBody">
+                    <p>Reset any flags or trigger other functions if the connection is disrupted.</p>
+                </div>
+            </div>
+            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" aria-expanded="false"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="7" width="16" alt="Closed" data-mc-alt2="Open" />GetDeviceInfo()</a></span>
+                <div class="MCDropDownBody dropDownBody">
+                    <p>Initial data exchange from the device. This function is typically used to request data that is static (e.g. Serial Number).</p>
+                </div>
+            </div>
+            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" aria-expanded="false"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="7" width="16" alt="Closed" data-mc-alt2="Open" />PollDevice()</a></span>
+                <div class="MCDropDownBody dropDownBody">
+                    <p>Request data that needs to be polled for changes. This function is called at regular intervals to maintain connection health and verify the device is still reachable.</p>
+                </div>
+            </div>
+            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" aria-expanded="false"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="7" width="16" alt="Closed" data-mc-alt2="Open" />ParseResponse()</a></span>
+                <div class="MCDropDownBody dropDownBody">
+                    <p>Handle data received over a socket. This function determines data context and sends to a more specific function for handling.</p>
+                </div>
+            </div>
+            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0)" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" aria-expanded="false"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="7" width="16" alt="Closed" data-mc-alt2="Open" />Initialization()</a></span>
+                <div class="MCDropDownBody dropDownBody">
+                    <p>Called once when the plugin starts and is used to initialize and set up parts of the plugin that require it.</p>
+                </div>
+            </div>
+        </div>
+        <p class="copyright">Copyright © 2026 QSC, LLC. Click <a target="_blank" href="https://help.qsys.com/#Legal.htm">here</a> for trademark and other legal notices.</p>
+    </body>
+</html>
