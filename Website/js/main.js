@@ -68,6 +68,7 @@ const outline = new Outline(dataModel, selection, eventBus);
     canvasWidth: document.getElementById('setting-canvas-width'),
     canvasHeight: document.getElementById('setting-canvas-height'),
     autoGenerateStatus: document.getElementById('setting-auto-generate-status'),
+    authorName: document.getElementById('setting-author-name'),
   };
 
   function populateModal() {
@@ -77,6 +78,7 @@ const outline = new Outline(dataModel, selection, eventBus);
     fields.autoAddLabel.checked = vals.autoAddLabel;
     fields.alignmentAnchor.value = vals.alignmentAnchor;
     fields.autoGenerateStatus.checked = vals.autoGenerateStatus;
+    fields.authorName.value = vals.authorName || '';
     fields.gridSize.value = vals.gridSize;
     fields.snapToGrid.checked = vals.snapToGrid;
     fields.showGrid.checked = vals.showGrid;
@@ -106,6 +108,7 @@ const outline = new Outline(dataModel, selection, eventBus);
       autoAddLabel: fields.autoAddLabel.checked,
       alignmentAnchor: fields.alignmentAnchor.value,
       autoGenerateStatus: fields.autoGenerateStatus.checked,
+      authorName: fields.authorName.value.trim(),
       gridSize: parseInt(fields.gridSize.value) || 10,
       snapToGrid: fields.snapToGrid.checked,
       showGrid: fields.showGrid.checked,
@@ -169,6 +172,10 @@ const outline = new Outline(dataModel, selection, eventBus);
 
   btnPluginInfo.addEventListener('click', () => {
     populatePluginInfo();
+    // Auto-fill Author from persistent setting if empty
+    if (!piFields.Author.value && settings.get('authorName')) {
+      piFields.Author.value = settings.get('authorName');
+    }
     overlay.hidden = false;
   });
 

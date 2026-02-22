@@ -11,6 +11,7 @@ const DEFAULTS = {
   canvasHeight: 300,
   alignmentAnchor: 'first',
   autoGenerateStatus: false,
+  authorName: '',
 };
 
 export class Settings {

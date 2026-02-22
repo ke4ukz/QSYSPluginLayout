@@ -5,8 +5,16 @@ export function generateLua(dataModel, settings) {
 
   let lua = '';
 
-  // PluginInfo
+  // Header comments
   const pi = dataModel.getPluginInfo();
+  const authorName = settings && settings.get('authorName');
+  const pluginName = pi && pi.Name;
+  if (pluginName || authorName) {
+    lua += generateHeaderComments(pluginName, authorName);
+    lua += '\n\n';
+  }
+
+  // PluginInfo
   if (pi) {
     lua += generatePluginInfo(pi);
     lua += '\n\n';
@@ -53,6 +61,23 @@ export function generateLua(dataModel, settings) {
   }
 
   return lua;
+}
+
+// ── Header Comments ──
+function generateHeaderComments(pluginName, authorName) {
+  const months = ['January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'];
+  const now = new Date();
+  const dateStr = `${months[now.getMonth()]} ${now.getFullYear()}`;
+
+  // Strip folder prefix(es) — "Folder~Sub~Name" → "Name"
+  const displayName = pluginName ? pluginName.split('~').pop() : '';
+
+  let code = '';
+  if (displayName) code += `-- ${displayName}\n`;
+  if (authorName) code += `-- by ${authorName}\n`;
+  code += `-- ${dateStr}`;
+  return code;
 }
 
 // ── PluginInfo ──
