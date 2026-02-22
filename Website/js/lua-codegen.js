@@ -1,6 +1,7 @@
-export function generateLua(dataModel) {
+export function generateLua(dataModel, settings) {
   const pages = dataModel.getPages();
   const allControls = dataModel.getObjectsByKindGlobal('control');
+  const autoStatus = settings && settings.get('autoGenerateStatus');
 
   let lua = '';
 
@@ -17,15 +18,27 @@ export function generateLua(dataModel) {
     lua += '\n\n';
   }
 
+  // GetPins (only if pins defined)
+  const pins = dataModel.getPins();
+  if (pins.length > 0) {
+    lua += generateGetPins(pins);
+    lua += '\n\n';
+  }
+
   // GetControls (global — all controls from all pages)
-  lua += generateGetControls(allControls);
+  lua += generateGetControls(allControls, autoStatus);
   lua += '\n\n';
 
   // GetControlLayout (per-page conditionals if 2+ pages)
   lua += generateGetControlLayout(dataModel, pages);
 
+  // Status constants
+  if (autoStatus) {
+    lua += '\n\n' + generateStatusConstants();
+  }
+
   // Runtime (global — ComboBox choices + event handlers from all pages)
-  const runtimeCode = generateRuntime(allControls);
+  const runtimeCode = generateRuntime(allControls, autoStatus);
   if (runtimeCode) {
     lua += '\n\n' + runtimeCode;
   }
@@ -73,6 +86,24 @@ function generateGetPages(pages) {
   return code;
 }
 
+// ── GetPins ──
+function generateGetPins(pins) {
+  let code = 'function GetPins(props)\n';
+  code += '  local pins = {}\n';
+  for (const pin of pins) {
+    code += '  table.insert(pins, {\n';
+    code += `    Name = "${luaEscape(pin.Name)}",\n`;
+    code += `    Direction = "${pin.Direction}",\n`;
+    if (pin.Domain === 'serial') {
+      code += '    Domain = "serial",\n';
+    }
+    code += '  })\n';
+  }
+  code += '  return pins\n';
+  code += 'end';
+  return code;
+}
+
 // ── Grouping helper ──
 // Splits controls into standalone + array groups (by arrayGroup UUID)
 function groupControls(controls) {
@@ -99,11 +130,23 @@ function groupControls(controls) {
 }
 
 // ── GetControls ──
-function generateGetControls(controls) {
+function generateGetControls(controls, autoStatus) {
   const { standalones, groups } = groupControls(controls);
 
   let code = 'function GetControls(props)\n';
   code += '  local ctrls = {}\n';
+
+  // Auto-generated Status control
+  if (autoStatus) {
+    code += '  -- Status\n';
+    code += '  table.insert(ctrls, {\n';
+    code += '    Name = "Status",\n';
+    code += '    ControlType = "Indicator",\n';
+    code += '    IndicatorType = "Status",\n';
+    code += '    UserPin = true,\n';
+    code += '    PinStyle = "Output",\n';
+    code += '  })\n';
+  }
 
   // Standalone controls
   for (const ctrl of standalones) {
@@ -312,12 +355,25 @@ function emitLayoutBody(ctrl, I) {
   return code;
 }
 
+// ── Status Constants ──
+function generateStatusConstants() {
+  let code = 'STATUSES = {\n';
+  code += '  OK = 0,\n';
+  code += '  COMPROMISED = 1,\n';
+  code += '  FAULT = 2,\n';
+  code += '  NOT_PRESENT = 3,\n';
+  code += '  MISSING = 4,\n';
+  code += '  INITIALIZING = 5\n';
+  code += '}';
+  return code;
+}
+
 // ── Runtime (ComboBox choices + Event Handlers) ──
 
 // Types that support EventHandler (Indicator is display-only)
 const EVENT_TYPES = new Set(['Button', 'Knob', 'Text']);
 
-function generateRuntime(controls) {
+function generateRuntime(controls, autoStatus) {
   const { standalones, groups } = groupControls(controls);
 
   // Build logical control list (one entry per unique control/array)
@@ -338,9 +394,21 @@ function generateRuntime(controls) {
 
   const eventEntries = logicalControls.filter(e => EVENT_TYPES.has(e.cd.ControlType));
 
-  if (comboEntries.length === 0 && eventEntries.length === 0) return '';
+  if (comboEntries.length === 0 && eventEntries.length === 0 && !autoStatus) return '';
 
   let code = 'if Controls then\n';
+
+  // SetStatus helper
+  if (autoStatus) {
+    code += '  function SetStatus(status, text)\n';
+    code += '    assert(type(status) == "number", "status must be a number")\n';
+    code += '    Controls.Status.Value = status\n';
+    code += '    if text ~= nil then\n';
+    code += '      Controls.Status.String = text\n';
+    code += '    end\n';
+    code += '  end\n';
+    if (comboEntries.length > 0 || eventEntries.length > 0) code += '\n';
+  }
 
   // ComboBox/ListBox choices
   if (comboEntries.length > 0) {

@@ -756,3 +756,52 @@ html, body { height: 100%; overflow: hidden; font-family: 'Segoe UI', system-ui,
   font-size: 11px;
 }
 .combobox-add-btn:hover { background: #3c3c3c; color: #ddd; border-color: #4a9eff; }
+
+/* ── Pins Editor ── */
+.pins-hint {
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 8px;
+}
+.pin-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 3px 0;
+}
+.pin-row input[type="text"] {
+  flex: 1;
+  min-width: 0;
+  padding: 3px 6px;
+  background: #1e1e1e;
+  border: 1px solid #444;
+  color: #ddd;
+  border-radius: 3px;
+  font-size: 12px;
+}
+.pin-row select {
+  padding: 3px 4px;
+  background: #1e1e1e;
+  border: 1px solid #444;
+  color: #ddd;
+  border-radius: 3px;
+  font-size: 12px;
+}
+.pin-row button {
+  padding: 2px 6px;
+  background: #3c3c3c;
+  color: #aaa;
+  border: 1px solid #555;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+.pin-row button:hover { background: #505050; color: #ddd; }
+.pins-empty {
+  color: #666;
+  font-style: italic;
+  font-size: 11px;
+  text-align: center;
+  padding: 8px 0;
+}

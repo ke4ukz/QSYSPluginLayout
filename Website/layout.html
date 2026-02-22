@@ -80,6 +80,7 @@
 
       <div class="toolbar-group">
         <button id="btn-plugin-info" title="Edit PluginInfo">&#x1F6C8; PluginInfo</button>
+        <button id="btn-pins" title="Edit Audio/Serial Pins">&#x1F50C; Pins</button>
       </div>
       <div class="toolbar-separator"></div>
 
@@ -123,6 +124,13 @@
                 <option value="first">First selected</option>
                 <option value="last">Last selected</option>
               </select>
+            </div>
+          </div>
+          <div class="settings-section">
+            <h4>Code Generation</h4>
+            <div class="settings-row">
+              <label>Auto-generate Status control</label>
+              <input type="checkbox" id="setting-auto-generate-status">
             </div>
           </div>
           <div class="settings-section">
@@ -245,6 +253,26 @@
           <button id="plugininfo-clear">Clear</button>
           <button id="plugininfo-save" class="btn-primary">Save</button>
           <button id="plugininfo-cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Pins Modal ── -->
+    <div id="pins-overlay" class="modal-overlay" hidden>
+      <div class="modal-dialog" style="max-width:520px">
+        <div class="modal-header">
+          <h3>Audio / Serial Pins</h3>
+          <button id="pins-close" class="modal-close" title="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="pins-hint">Define audio and serial pins for the plugin. Pins are audio by default.</p>
+          <div id="pins-list"></div>
+          <button id="pins-add" class="combobox-add-btn">+ Add Pin</button>
+        </div>
+        <div class="modal-footer">
+          <button id="pins-clear">Clear All</button>
+          <button id="pins-save" class="btn-primary">Save</button>
+          <button id="pins-cancel">Cancel</button>
         </div>
       </div>
     </div>

@@ -67,6 +67,7 @@ const outline = new Outline(dataModel, selection, eventBus);
     showGrid: document.getElementById('setting-show-grid'),
     canvasWidth: document.getElementById('setting-canvas-width'),
     canvasHeight: document.getElementById('setting-canvas-height'),
+    autoGenerateStatus: document.getElementById('setting-auto-generate-status'),
   };
 
   function populateModal() {
@@ -75,6 +76,7 @@ const outline = new Outline(dataModel, selection, eventBus);
     fields.defaultPinStyle.value = vals.defaultPinStyle;
     fields.autoAddLabel.checked = vals.autoAddLabel;
     fields.alignmentAnchor.value = vals.alignmentAnchor;
+    fields.autoGenerateStatus.checked = vals.autoGenerateStatus;
     fields.gridSize.value = vals.gridSize;
     fields.snapToGrid.checked = vals.snapToGrid;
     fields.showGrid.checked = vals.showGrid;
@@ -103,6 +105,7 @@ const outline = new Outline(dataModel, selection, eventBus);
       defaultPinStyle: fields.defaultPinStyle.value,
       autoAddLabel: fields.autoAddLabel.checked,
       alignmentAnchor: fields.alignmentAnchor.value,
+      autoGenerateStatus: fields.autoGenerateStatus.checked,
       gridSize: parseInt(fields.gridSize.value) || 10,
       snapToGrid: fields.snapToGrid.checked,
       showGrid: fields.showGrid.checked,
@@ -208,6 +211,112 @@ const outline = new Outline(dataModel, selection, eventBus);
   overlay.addEventListener('click', e => { if (e.target === overlay) closePluginInfo(); });
 }
 
+// ── Pins modal ──
+{
+  const btnPins = document.getElementById('btn-pins');
+  const overlay = document.getElementById('pins-overlay');
+  const btnSave = document.getElementById('pins-save');
+  const btnCancel = document.getElementById('pins-cancel');
+  const btnClose = document.getElementById('pins-close');
+  const btnClear = document.getElementById('pins-clear');
+  const btnAdd = document.getElementById('pins-add');
+  const pinsList = document.getElementById('pins-list');
+
+  let editingPins = [];
+
+  function renderPinRows() {
+    pinsList.innerHTML = '';
+    if (editingPins.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'pins-empty';
+      empty.textContent = 'No pins defined.';
+      pinsList.appendChild(empty);
+      return;
+    }
+    editingPins.forEach((pin, i) => {
+      const row = document.createElement('div');
+      row.className = 'pin-row';
+
+      const nameInput = document.createElement('input');
+      nameInput.type = 'text';
+      nameInput.placeholder = 'Pin name';
+      nameInput.value = pin.Name;
+      nameInput.addEventListener('input', () => { editingPins[i].Name = nameInput.value; });
+
+      const dirSelect = document.createElement('select');
+      for (const val of ['input', 'output']) {
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.textContent = val;
+        if (pin.Direction === val) opt.selected = true;
+        dirSelect.appendChild(opt);
+      }
+      dirSelect.addEventListener('change', () => { editingPins[i].Direction = dirSelect.value; });
+
+      const domainSelect = document.createElement('select');
+      for (const val of ['audio', 'serial']) {
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.textContent = val;
+        if (pin.Domain === val) opt.selected = true;
+        domainSelect.appendChild(opt);
+      }
+      domainSelect.addEventListener('change', () => { editingPins[i].Domain = domainSelect.value; });
+
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = '\u00D7';
+      removeBtn.title = 'Remove pin';
+      removeBtn.addEventListener('click', () => {
+        editingPins.splice(i, 1);
+        renderPinRows();
+      });
+
+      row.append(nameInput, dirSelect, domainSelect, removeBtn);
+      pinsList.appendChild(row);
+    });
+  }
+
+  function openPins() {
+    editingPins = dataModel.getPins().map(p => ({ ...p }));
+    renderPinRows();
+    overlay.hidden = false;
+  }
+
+  function closePins() {
+    overlay.hidden = true;
+  }
+
+  btnPins.addEventListener('click', openPins);
+
+  btnAdd.addEventListener('click', () => {
+    editingPins.push({ Name: '', Direction: 'input', Domain: 'audio' });
+    renderPinRows();
+    // Focus the new name input
+    const inputs = pinsList.querySelectorAll('input[type="text"]');
+    if (inputs.length > 0) inputs[inputs.length - 1].focus();
+  });
+
+  btnClear.addEventListener('click', () => {
+    editingPins = [];
+    renderPinRows();
+  });
+
+  btnSave.addEventListener('click', () => {
+    // Filter out pins with empty names
+    const validPins = editingPins
+      .filter(p => p.Name.trim())
+      .map(p => ({ Name: p.Name.trim(), Direction: p.Direction, Domain: p.Domain }));
+    dataModel.setPins(validPins);
+    closePins();
+    refreshLua();
+    autosave();
+  });
+
+  btnCancel.addEventListener('click', closePins);
+  btnClose.addEventListener('click', closePins);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closePins(); });
+}
+
 // ── Help window ──
 {
   const btnHelp = document.getElementById('btn-help');
@@ -247,7 +356,7 @@ const btnGenerate = document.getElementById('btn-generate-lua');
 const luaOutput = document.getElementById('lua-output');
 
 function refreshLua() {
-  const code = generateLua(dataModel);
+  const code = generateLua(dataModel, settings);
   luaOutput.innerHTML = highlightLua(code);
 }
 
@@ -265,6 +374,8 @@ eventBus.on('page:removed', refreshLua);
 eventBus.on('page:renamed', refreshLua);
 eventBus.on('page:switched', refreshLua);
 eventBus.on('pluginInfo:changed', refreshLua);
+eventBus.on('pins:changed', refreshLua);
+eventBus.on('settings:changed', refreshLua);
 
 // Clear selection on page switch (defensive — PageTabs also clears on click)
 eventBus.on('page:switched', () => selection.clearSelection());
@@ -295,6 +406,7 @@ eventBus.on('page:removed', autosave);
 eventBus.on('page:renamed', autosave);
 eventBus.on('canvas:resized', autosave);
 eventBus.on('pluginInfo:changed', autosave);
+eventBus.on('pins:changed', autosave);
 
 // Flush immediately when leaving the page
 window.addEventListener('beforeunload', () => {

@@ -10,6 +10,7 @@ const DEFAULTS = {
   canvasWidth: 400,
   canvasHeight: 300,
   alignmentAnchor: 'first',
+  autoGenerateStatus: false,
 };
 
 export class Settings {
