@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0
+## 1.0.0
 
 ### Features
 - WYSIWYG canvas editor with drag, resize, and snap-to-grid
