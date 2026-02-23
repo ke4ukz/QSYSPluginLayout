@@ -1,3 +1,86 @@
+// Find line ranges in generated Lua that correspond to a control name.
+// Returns array of [startLine, endLine] pairs (0-indexed, inclusive).
+export function findControlLineRanges(code, controlName) {
+  const lines = code.split('\n');
+  const ranges = [];
+  const escaped = controlName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const commentRe = new RegExp(`^\\s*-- ${escaped}(\\s*\\(|\\s*$)`);
+
+  for (let i = 0; i < lines.length; i++) {
+    if (!commentRe.test(lines[i])) continue;
+
+    // Found a matching comment — walk forward tracking brace depth
+    let end = i;
+    let braceDepth = 0;
+    let foundBrace = false;
+
+    for (let j = i + 1; j < lines.length; j++) {
+      for (const ch of lines[j]) {
+        if (ch === '{') { braceDepth++; foundBrace = true; }
+        if (ch === '}') braceDepth--;
+      }
+      end = j;
+
+      if (foundBrace && braceDepth <= 0) {
+        // Check if next line is another array member for the same control
+        if (j + 1 < lines.length && lines[j + 1].trim().startsWith(`layout["${controlName} `)) {
+          continue;
+        }
+        break;
+      }
+    }
+
+    ranges.push([i, end]);
+  }
+
+  return ranges;
+}
+
+// Find line ranges in the Runtime section that reference a control by name.
+// Covers EventHandler blocks, ComboBox/ListBox Choices, and handler functions.
+export function findRuntimeLineRanges(code, controlName) {
+  const lines = code.split('\n');
+  const ranges = [];
+  const safeName = controlName.replace(/[^A-Za-z0-9_]/g, '_');
+
+  const isMatch = line =>
+    line.includes(`Controls["${controlName}"]`) ||
+    line.includes(`Controls["${controlName} "`) ||
+    line.includes(`${safeName}_Choices`) ||
+    line.includes(`${safeName}_Handler`);
+
+  for (let i = 0; i < lines.length; i++) {
+    if (!isMatch(lines[i])) continue;
+    if (ranges.some(([s, e]) => i >= s && i <= e)) continue;
+
+    // Walk up past blanks/comments to find enclosing block start
+    let start = i;
+    for (let k = i - 1; k >= 0; k--) {
+      const kt = lines[k].trim();
+      if (kt === '' || kt.startsWith('--')) continue;
+      if (/^(for |function |local )/.test(kt)) start = k;
+      break;
+    }
+
+    // Track depth from start to find block end
+    let end = start;
+    let depth = 0;
+    for (let j = start; j < lines.length; j++) {
+      const l = lines[j];
+      depth += (l.match(/\{/g) || []).length + (l.match(/\bdo\b/g) || []).length +
+               (l.match(/\bfunction\b/g) || []).length;
+      depth -= (l.match(/\}/g) || []).length + (l.match(/\bend\b/g) || []).length;
+      end = j;
+      if (depth <= 0) break;
+    }
+
+    ranges.push([start, end]);
+    i = end;
+  }
+
+  return ranges;
+}
+
 export function generateLua(dataModel, settings) {
   const pages = dataModel.getPages();
   const allControls = dataModel.getObjectsByKindGlobal('control');

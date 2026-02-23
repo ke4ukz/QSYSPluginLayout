@@ -8,7 +8,7 @@ import { PropertiesPanel } from './properties-panel.js';
 import { Toolbar } from './toolbar.js';
 import { PageTabs } from './page-tabs.js';
 import { Outline } from './outline.js';
-import { generateLua } from './lua-codegen.js';
+import { generateLua, findControlLineRanges, findRuntimeLineRanges } from './lua-codegen.js';
 import { highlightLua } from './lua-highlight.js';
 
 // ── Initialize ──
@@ -604,11 +604,51 @@ eventBus.on('object:removed', obj => {
 // ── Lua generation (auto-updates on any model change) ──
 const btnGenerate = document.getElementById('btn-generate-lua');
 const luaOutput = document.getElementById('lua-output');
+let _currentLuaCode = '';
 
 function refreshLua() {
-  const code = generateLua(dataModel, settings);
-  luaOutput.innerHTML = highlightLua(code);
+  _currentLuaCode = generateLua(dataModel, settings);
+  luaOutput.innerHTML = highlightLua(_currentLuaCode);
+  highlightSelectedControl();
 }
+
+function highlightSelectedControl() {
+  luaOutput.querySelectorAll('.lua-line.hl').forEach(el => el.classList.remove('hl'));
+
+  const ids = selection.getSelectedIds();
+  if (ids.length !== 1) return;
+
+  const obj = dataModel.getObject(ids[0]);
+  if (!obj) return;
+
+  let allRanges = [];
+
+  if (obj.kind === 'control') {
+    const name = obj.controlDef.Name;
+    if (!name) return;
+    allRanges = findControlLineRanges(_currentLuaCode, name);
+    allRanges.push(...findRuntimeLineRanges(_currentLuaCode, name));
+  } else if (obj.kind === 'graphic') {
+    const gp = obj.graphicProps;
+    const label = gp.Text ? `${gp.Type}: ${gp.Text}` : gp.Type;
+    allRanges = findControlLineRanges(_currentLuaCode, label);
+  }
+
+  let first = null;
+  for (const [start, end] of allRanges) {
+    for (let i = start; i <= end; i++) {
+      const el = luaOutput.querySelector(`[data-line="${i}"]`);
+      if (el) {
+        el.classList.add('hl');
+        if (!first) first = el;
+      }
+    }
+  }
+
+  if (first) first.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+eventBus.on('selection:changed', highlightSelectedControl);
 
 if (btnGenerate) {
   btnGenerate.addEventListener('click', refreshLua);

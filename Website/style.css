@@ -551,6 +551,7 @@ html, body { height: 100%; overflow: hidden; font-family: 'Segoe UI', system-ui,
 .lua-number   { color: #b5cea8; }
 .lua-comment  { color: #6a9955; font-style: italic; }
 .lua-ident    { color: #dcdcaa; }
+.lua-line.hl  { background: rgba(255, 200, 50, 0.12); display: inline; }
 
 /* ── Modal ── */
 .modal-overlay {

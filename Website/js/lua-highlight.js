@@ -71,5 +71,7 @@ export function highlightLua(code) {
       return `<span class="lua-${t.type}">${escaped}</span>`;
     }).join('');
   });
-  return htmlLines.join('\n');
+  return htmlLines.map((html, i) =>
+    `<span class="lua-line" data-line="${i}">${html}\n</span>`
+  ).join('');
 }
