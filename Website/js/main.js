@@ -25,28 +25,10 @@ const outline = new Outline(dataModel, selection, eventBus);
 
 // ── Apply saved settings on startup ──
 {
-  const gridSizeInput = document.getElementById('grid-size');
-  const chkGrid = document.getElementById('chk-grid');
-  const chkSnap = document.getElementById('chk-snap');
-  const canvasW = document.getElementById('canvas-width');
-  const canvasH = document.getElementById('canvas-height');
-
-  const gs = settings.get('gridSize');
-  const snap = settings.get('snapToGrid');
-  const showGrid = settings.get('showGrid');
-  const cw = settings.get('canvasWidth');
-  const ch = settings.get('canvasHeight');
-
-  gridSizeInput.value = gs;
-  chkGrid.checked = showGrid;
-  chkSnap.checked = snap;
-  canvasW.value = cw;
-  canvasH.value = ch;
-
-  canvas.setGridSize(gs);
-  canvas.setShowGrid(showGrid);
-  canvas.setSnapEnabled(snap);
-  dataModel.setCanvasSize(cw, ch);
+  canvas.setGridSize(settings.get('gridSize'));
+  canvas.setShowGrid(settings.get('showGrid'));
+  canvas.setSnapEnabled(settings.get('snapToGrid'));
+  dataModel.setCanvasSize(settings.get('canvasWidth'), settings.get('canvasHeight'));
 }
 
 // ── Settings modal ──
@@ -115,6 +97,13 @@ const outline = new Outline(dataModel, selection, eventBus);
       canvasWidth: parseInt(fields.canvasWidth.value) || 400,
       canvasHeight: parseInt(fields.canvasHeight.value) || 300,
     });
+
+    // Apply grid/canvas settings immediately
+    canvas.setGridSize(settings.get('gridSize'));
+    canvas.setShowGrid(settings.get('showGrid'));
+    canvas.setSnapEnabled(settings.get('snapToGrid'));
+    dataModel.setCanvasSize(settings.get('canvasWidth'), settings.get('canvasHeight'));
+
     closeModal();
   });
 }

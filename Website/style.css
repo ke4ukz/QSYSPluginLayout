@@ -18,13 +18,16 @@ html, body { height: 100%; overflow: hidden; font-family: 'Segoe UI', system-ui,
 #toolbar {
   grid-area: toolbar;
   display: flex;
-  align-items: center;
-  gap: 4px;
+  flex-direction: column;
+  gap: 2px;
   padding: 4px 8px;
   background: #2d2d2d;
   border-bottom: 1px solid #444;
-  flex-wrap: wrap;
-  min-height: 36px;
+}
+.toolbar-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 #toolbar button {
   padding: 3px 7px;

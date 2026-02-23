@@ -9,8 +9,6 @@ export class Toolbar {
     this.settings = settings;
 
     this._bindAlignmentButtons();
-    this._bindGridControls();
-    this._bindCanvasSizeControls();
     this._bindZOrderButtons();
     this._bindFileButtons();
     this._bindLuaPanel();
@@ -88,39 +86,6 @@ export class Toolbar {
     // Space evenly (2+ selected, needs canvas dims)
     bindCanvas('btn-space-even-h', (rects, cw) => align.spaceEvenlyHorizontal(rects, cw), 2);
     bindCanvas('btn-space-even-v', (rects, _cw, ch) => align.spaceEvenlyVertical(rects, ch), 2);
-  }
-
-  _bindGridControls() {
-    const chkGrid = document.getElementById('chk-grid');
-    const gridSizeInput = document.getElementById('grid-size');
-    const chkSnap = document.getElementById('chk-snap');
-
-    chkGrid.addEventListener('change', () => {
-      this.canvas.setShowGrid(chkGrid.checked);
-    });
-
-    gridSizeInput.addEventListener('change', () => {
-      const size = parseInt(gridSizeInput.value) || 10;
-      this.canvas.setGridSize(size);
-    });
-
-    chkSnap.addEventListener('change', () => {
-      this.canvas.setSnapEnabled(chkSnap.checked);
-    });
-  }
-
-  _bindCanvasSizeControls() {
-    const wInput = document.getElementById('canvas-width');
-    const hInput = document.getElementById('canvas-height');
-
-    const update = () => {
-      const w = parseInt(wInput.value) || 400;
-      const h = parseInt(hInput.value) || 300;
-      this.dataModel.setCanvasSize(w, h);
-    };
-
-    wInput.addEventListener('change', update);
-    hInput.addEventListener('change', update);
   }
 
   _bindZOrderButtons() {
