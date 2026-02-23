@@ -5,7 +5,10 @@ html, body { height: 100%; overflow: hidden; font-family: 'Segoe UI', system-ui,
 /* ── App Grid ── */
 #app {
   display: grid;
-  height: 100vh;
+  position: fixed;
+  inset: 0;
+  height: 100dvh;
+  overflow: hidden;
   grid-template-columns: 180px 1fr 260px;
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
