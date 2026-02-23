@@ -37,8 +37,9 @@ html, body { height: 100%; overflow: hidden; font-family: 'Segoe UI', system-ui,
   white-space: nowrap;
   line-height: 1.4;
 }
-#toolbar button:hover { background: #505050; }
-#toolbar button:active { background: #606060; }
+#toolbar button:hover:not(:disabled) { background: #505050; }
+#toolbar button:active:not(:disabled) { background: #606060; }
+#toolbar button:disabled { opacity: 0.35; cursor: default; }
 #toolbar label { font-size: 11px; display: flex; align-items: center; gap: 2px; white-space: nowrap; }
 #toolbar input[type="number"] {
   background: #2a2a2a; color: #ddd; border: 1px solid #555; border-radius: 3px;

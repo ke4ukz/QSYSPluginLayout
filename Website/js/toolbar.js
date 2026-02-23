@@ -15,6 +15,7 @@ export class Toolbar {
     this._bindFileButtons();
     this._bindLuaPanel();
     this._bindPageEvents();
+    this._bindSelectionState();
   }
 
   _getSelectedRects() {
@@ -198,6 +199,39 @@ export class Toolbar {
     };
     this.eventBus.on('page:switched', sync);
     this.eventBus.on('model:loaded', sync);
+  }
+
+  _bindSelectionState() {
+    // [buttonId, minSelected]
+    const rules = [
+      // Alignment (2+)
+      ['btn-align-left', 2], ['btn-align-center-h', 2], ['btn-align-right', 2],
+      ['btn-align-top', 2], ['btn-align-center-v', 2], ['btn-align-bottom', 2],
+      // Distribution (3+)
+      ['btn-dist-h', 3], ['btn-dist-v', 3],
+      // Sizing (2+)
+      ['btn-same-width', 2], ['btn-same-height', 2], ['btn-same-size', 2],
+      // Packing (2+)
+      ['btn-pack-left', 2], ['btn-pack-right', 2], ['btn-pack-top', 2], ['btn-pack-bottom', 2],
+      // Space evenly (2+)
+      ['btn-space-even-h', 2], ['btn-space-even-v', 2],
+      // Center on page (1+)
+      ['btn-center-page-h', 1], ['btn-center-page-v', 1],
+      // Z-order (1+)
+      ['btn-bring-front', 1], ['btn-send-back', 1],
+    ];
+
+    const entries = rules.map(([id, min]) => [document.getElementById(id), min]).filter(([el]) => el);
+
+    const update = (ids) => {
+      const count = ids.length;
+      for (const [el, min] of entries) {
+        el.disabled = count < min;
+      }
+    };
+
+    this.eventBus.on('selection:changed', update);
+    update([]); // initial state — nothing selected
   }
 
   _bindLuaPanel() {
