@@ -11,11 +11,14 @@ import { Outline } from './outline.js';
 import { generateLua, findControlLineRanges, findRuntimeLineRanges } from './lua-codegen.js';
 import * as align from './alignment.js';
 import { highlightLua } from './lua-highlight.js';
+import { UndoManager } from './undo-manager.js';
 
 // ── Initialize ──
 const eventBus = new EventBus();
 const settings = new Settings(eventBus);
 const dataModel = new DataModel(eventBus, settings);
+const undoManager = new UndoManager(dataModel);
+dataModel.undoManager = undoManager;
 const selection = new SelectionManager(eventBus);
 const canvas = new CanvasManager(dataModel, selection, eventBus);
 const toolbox = new Toolbox(dataModel, canvas, eventBus, settings);
@@ -30,6 +33,24 @@ const outline = new Outline(dataModel, selection, eventBus);
   canvas.setShowGrid(settings.get('showGrid'));
   canvas.setSnapEnabled(settings.get('snapToGrid'));
   dataModel.setCanvasSize(settings.get('canvasWidth'), settings.get('canvasHeight'));
+}
+
+// ── Undo batching for drag operations ──
+eventBus.on('drag:start', () => undoManager.beginBatch());
+eventBus.on('drag:end', () => undoManager.endBatch());
+
+// ── Undo batching for keyboard movements ──
+let _keyMoveBatchTimer = null;
+function beginKeyMoveBatch() {
+  if (!_keyMoveBatchTimer) {
+    undoManager.beginBatch();
+  } else {
+    clearTimeout(_keyMoveBatchTimer);
+  }
+  _keyMoveBatchTimer = setTimeout(() => {
+    undoManager.endBatch();
+    _keyMoveBatchTimer = null;
+  }, 500);
 }
 
 // ── Settings modal ──
@@ -733,6 +754,18 @@ document.addEventListener('keydown', e => {
   const tag = e.target.tagName;
   if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
 
+  // Undo / Redo
+  if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
+    e.preventDefault();
+    undoManager.undo();
+    return;
+  }
+  if ((e.ctrlKey || e.metaKey) && (e.key === 'z' && e.shiftKey || e.key === 'y')) {
+    e.preventDefault();
+    undoManager.redo();
+    return;
+  }
+
   const ids = selection.getSelectedIds();
 
   // Delete
@@ -825,6 +858,7 @@ document.addEventListener('keydown', e => {
   const arrowMap = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
   if (arrowMap[e.key] && ids.length > 0) {
     e.preventDefault();
+    beginKeyMoveBatch();
     const [dx, dy] = arrowMap[e.key];
     const fine = e.ctrlKey || e.metaKey;
     const step = fine ? 1 : (canvas.snapEnabled ? canvas.gridSize : 1);

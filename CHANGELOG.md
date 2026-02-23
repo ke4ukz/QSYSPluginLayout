@@ -17,7 +17,13 @@
 - Lua syntax highlighting in output panel
 - Save/load projects as JSON
 - Auto-save to localStorage
-- Keyboard shortcuts: arrow move/resize, delete, duplicate, select all, page navigation
+- Undo/redo with coalesced drag and keyboard movement batching
+- Keyboard shortcuts: arrow move/resize, delete, duplicate, select all, page navigation, alignment, z-order, undo/redo
+- Shift+click toolbox items to add at canvas center
+- Double-click canvas objects to focus Name/Text property
+- Hold Ctrl/Cmd while dragging to bypass grid snapping
+- Two-row toolbar: file/modal buttons on top, alignment/arrangement on bottom
+- Grid, snap, and canvas size settings moved from toolbar to Settings modal
 - Application settings with persistent storage
 - Audio/serial pin editor (`GetPins`) with toolbar modal
 - Design-time property editor (`GetProperties` / `RectifyProperties` stub) with card-based modal

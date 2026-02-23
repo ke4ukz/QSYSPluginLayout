@@ -10,6 +10,8 @@ export class DataModel {
     this.pluginInfo = null; // null means not configured
     this.pins = []; // GetPins entries: { Name, Direction, Domain }
     this.designProperties = []; // GetProperties entries
+    this.undoManager = null;
+    this._restoring = false;
 
     // Page support
     const defaultPage = {
@@ -20,6 +22,18 @@ export class DataModel {
     };
     this.pages = [defaultPage];
     this.currentPageId = defaultPage.id;
+  }
+
+  _saveUndo() {
+    if (!this._restoring && this.undoManager) {
+      this.undoManager.save();
+    }
+  }
+
+  restoreState(state) {
+    this._restoring = true;
+    this.fromJSON(state);
+    this._restoring = false;
   }
 
   // ── Canvas size delegates to current page ──
@@ -59,6 +73,7 @@ export class DataModel {
   }
 
   addPage(name) {
+    this._saveUndo();
     const page = {
       id: generateId(),
       name: name || this._uniquePageName(),
@@ -71,6 +86,7 @@ export class DataModel {
   }
 
   removePage(pageId) {
+    this._saveUndo();
     if (this.pages.length <= 1) return;
     const idx = this.pages.findIndex(p => p.id === pageId);
     if (idx === -1) return;
@@ -98,6 +114,7 @@ export class DataModel {
   }
 
   renamePage(pageId, name) {
+    this._saveUndo();
     const page = this.pages.find(p => p.id === pageId);
     if (!page) return;
     // Ensure uniqueness
@@ -183,6 +200,7 @@ export class DataModel {
   // ── Object CRUD ──
 
   createControlObject(controlType, x, y) {
+    this._saveUndo();
     const defaults = CONTROL_DEFAULTS[controlType];
     if (!defaults) return null;
     const name = this._uniqueName(defaults.controlDef.Name);
@@ -208,6 +226,7 @@ export class DataModel {
   }
 
   createGraphicObject(graphicType, x, y) {
+    this._saveUndo();
     const defaults = GRAPHIC_DEFAULTS[graphicType];
     if (!defaults) return null;
     const obj = {
@@ -226,11 +245,13 @@ export class DataModel {
   }
 
   addObject(obj) {
+    this._saveUndo();
     this.objects.push(obj);
     this.eventBus.emit('object:added', obj);
   }
 
   removeObject(id) {
+    this._saveUndo();
     const idx = this.objects.findIndex(o => o.id === id);
     if (idx === -1) return;
     const removed = this.objects.splice(idx, 1)[0];
@@ -238,6 +259,7 @@ export class DataModel {
   }
 
   removeObjects(ids) {
+    this._saveUndo();
     const idSet = new Set(ids);
     const removed = this.objects.filter(o => idSet.has(o.id));
     this.objects = this.objects.filter(o => !idSet.has(o.id));
@@ -265,6 +287,7 @@ export class DataModel {
   }
 
   updateObject(id, changes) {
+    this._saveUndo();
     const obj = this.getObject(id);
     if (!obj) return;
     for (const [key, value] of Object.entries(changes)) {
@@ -280,6 +303,7 @@ export class DataModel {
   }
 
   updateMultiple(updates) {
+    this._saveUndo();
     const changed = [];
     for (const { id, changes } of updates) {
       const obj = this.getObject(id);
@@ -342,15 +366,23 @@ export class DataModel {
   }
 
   expandToArray(id, count) {
+    this._saveUndo();
+    if (this.undoManager) this.undoManager.beginBatch();
     const obj = this.getObject(id);
-    if (!obj || obj.kind !== 'control') return;
+    if (!obj || obj.kind !== 'control') {
+      if (this.undoManager) this.undoManager.endBatch();
+      return;
+    }
 
     const currentMembers = obj.arrayGroup
       ? this.getArrayGroup(obj.arrayGroup)
       : [obj];
     const currentCount = currentMembers.length;
 
-    if (count === currentCount || count < 1) return;
+    if (count === currentCount || count < 1) {
+      if (this.undoManager) this.undoManager.endBatch();
+      return;
+    }
 
     if (count === 1 && currentCount > 1) {
       // Contract to standalone: keep first, remove rest
@@ -365,6 +397,7 @@ export class DataModel {
       keep.arrayIndex = null;
       delete keep.controlDef.Count;
       this.eventBus.emit('object:updated', keep);
+      if (this.undoManager) this.undoManager.endBatch();
       return;
     }
 
@@ -408,15 +441,21 @@ export class DataModel {
       this.objects = this.objects.filter(o => !removeSet.has(o.id));
       for (const r of removed) this.eventBus.emit('object:removed', r);
     }
+    if (this.undoManager) this.undoManager.endBatch();
   }
 
   propagateControlDef(id, changes) {
+    if (this.undoManager) this.undoManager.beginBatch();
     const obj = this.getObject(id);
-    if (!obj) return;
+    if (!obj) {
+      if (this.undoManager) this.undoManager.endBatch();
+      return;
+    }
 
     if (!obj.arrayGroup) {
       // Standalone — just update normally
       this.updateObject(id, { controlDef: changes });
+      if (this.undoManager) this.undoManager.endBatch();
       return;
     }
 
@@ -427,9 +466,11 @@ export class DataModel {
       changes: { controlDef: changes },
     }));
     this.updateMultiple(updates);
+    if (this.undoManager) this.undoManager.endBatch();
   }
 
   duplicateObjects(ids, offsetX = 20, offsetY = 20) {
+    this._saveUndo();
     const dupes = [];
     for (const id of ids) {
       const orig = this.getObject(id);
@@ -454,6 +495,7 @@ export class DataModel {
   }
 
   bringToFront(ids) {
+    if (this.undoManager) this.undoManager.beginBatch();
     const idSet = new Set(ids);
     const visible = this.getAllObjects(); // sorted by zOrder
     const rest = visible.filter(o => !idSet.has(o.id));
@@ -461,9 +503,11 @@ export class DataModel {
     const reordered = [...rest, ...target];
     const updates = reordered.map((o, i) => ({ id: o.id, changes: { zOrder: i } }));
     this.updateMultiple(updates);
+    if (this.undoManager) this.undoManager.endBatch();
   }
 
   sendToBack(ids) {
+    if (this.undoManager) this.undoManager.beginBatch();
     const idSet = new Set(ids);
     const visible = this.getAllObjects(); // sorted by zOrder
     const target = visible.filter(o => idSet.has(o.id));
@@ -471,9 +515,11 @@ export class DataModel {
     const reordered = [...target, ...rest];
     const updates = reordered.map((o, i) => ({ id: o.id, changes: { zOrder: i } }));
     this.updateMultiple(updates);
+    if (this.undoManager) this.undoManager.endBatch();
   }
 
   setCanvasSize(w, h) {
+    this._saveUndo();
     const page = this.getCurrentPage();
     if (page) {
       page.canvasWidth = w;
@@ -483,6 +529,7 @@ export class DataModel {
   }
 
   setPluginInfo(info) {
+    this._saveUndo();
     this.pluginInfo = info ? deepClone(info) : null;
     this.eventBus.emit('pluginInfo:changed', this.pluginInfo);
   }
@@ -492,6 +539,7 @@ export class DataModel {
   }
 
   setPins(pins) {
+    this._saveUndo();
     this.pins = deepClone(pins || []);
     this.eventBus.emit('pins:changed', this.pins);
   }
@@ -501,6 +549,7 @@ export class DataModel {
   }
 
   setDesignProperties(props) {
+    this._saveUndo();
     this.designProperties = deepClone(props || []);
     this.eventBus.emit('designProperties:changed', this.designProperties);
   }
@@ -521,6 +570,7 @@ export class DataModel {
   }
 
   fromJSON(json) {
+    if (this.undoManager && !this._restoring) this.undoManager.clear();
     this.pages = json.pages || [{ id: generateId(), name: 'Page 1', canvasWidth: 400, canvasHeight: 300 }];
     this.currentPageId = json.currentPageId || this.pages[0].id;
     this.objects = json.objects || [];
@@ -575,6 +625,7 @@ export class DataModel {
     };
     this.pages = [defaultPage];
     this.currentPageId = defaultPage.id;
+    if (this.undoManager) this.undoManager.clear();
     this.eventBus.emit('model:loaded', this.toJSON());
   }
 }

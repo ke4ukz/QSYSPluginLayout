@@ -207,6 +207,7 @@ export class CanvasManager {
         ids: this.selection.getSelectedIds(),
         startClient: client,
         originals: this._snapshotSelected(),
+        hasMoved: false,
       };
       return;
     }
@@ -263,6 +264,7 @@ export class CanvasManager {
     const ds = this._dragState;
 
     if (ds.type === 'move') {
+      if (!ds.hasMoved) this.eventBus.emit('drag:start');
       ds.hasMoved = true;
       // Use screen-space delta (immune to canvas resizing during drag)
       const dx = e.clientX - ds.startClient.x;
@@ -283,6 +285,8 @@ export class CanvasManager {
     }
 
     if (ds.type === 'resize') {
+      if (!ds.hasMoved) this.eventBus.emit('drag:start');
+      ds.hasMoved = true;
       // Use screen-space delta (immune to canvas resizing during drag)
       const dx = e.clientX - ds.startClient.x;
       const dy = e.clientY - ds.startClient.y;
@@ -326,6 +330,10 @@ export class CanvasManager {
           this.selection.select(objEl.dataset.id);
         }
       }
+    }
+
+    if ((ds.type === 'move' && ds.hasMoved) || (ds.type === 'resize' && ds.hasMoved)) {
+      this.eventBus.emit('drag:end');
     }
 
     this._dragState = null;
