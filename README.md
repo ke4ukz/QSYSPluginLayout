@@ -29,9 +29,12 @@ Website/           Main application files
     lua-highlight.js Lua syntax highlighting
     schema.js        Control and graphic type defaults
     selection.js     Selection state management
+    undo-manager.js  Snapshot-based undo/redo
     settings.js      Persistent user settings
     event-bus.js     Pub/sub event system
     utils.js         Shared utilities
+  help/            Help page
+    help.html        Keyboard shortcuts, usage guide
 Documentation/     Reference material
 ```
 
