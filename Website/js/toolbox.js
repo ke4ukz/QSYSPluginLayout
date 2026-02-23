@@ -6,6 +6,63 @@ export class Toolbox {
     this.settings = settings;
 
     this._bindDragEvents();
+    this._bindClickEvents();
+  }
+
+  _createObject(kind, type, x, y) {
+    let obj;
+    if (kind === 'control') {
+      obj = this.dataModel.createControlObject(type, x, y);
+
+      // Auto-add a label to the left of the control
+      if (obj && this.settings.get('autoAddLabel')) {
+        const labelW = 80;
+        const gap = 4;
+        const labelH = obj.h;
+        const labelX = x - labelW - gap;
+        const labelY = y;
+        const lbl = this.dataModel.createGraphicObject('Label', labelX, labelY);
+        if (lbl) {
+          this.dataModel.updateObject(lbl.id, {
+            w: labelW, h: labelH,
+            graphicProps: { Text: obj.controlDef.Name, HTextAlign: 'Right' },
+          });
+        }
+      }
+    } else if (kind === 'graphic') {
+      obj = this.dataModel.createGraphicObject(type, x, y);
+    }
+
+    if (obj) {
+      this.eventBus.emit('toolbox:object-created', obj);
+    }
+    return obj;
+  }
+
+  _bindClickEvents() {
+    const items = document.querySelectorAll('.toolbox-item');
+    for (const item of items) {
+      item.addEventListener('click', e => {
+        if (!e.shiftKey) return;
+        const kind = item.dataset.objectKind;
+        const type = item.dataset.type;
+        if (!kind || !type) return;
+
+        // Place at center of canvas
+        const cw = this.dataModel.canvasWidth || 400;
+        const ch = this.dataModel.canvasHeight || 300;
+        let x = Math.round(cw / 2);
+        let y = Math.round(ch / 2);
+
+        if (this.canvasManager.snapEnabled && this.canvasManager.gridSize) {
+          const gs = this.canvasManager.gridSize;
+          x = Math.round(x / gs) * gs;
+          y = Math.round(y / gs) * gs;
+        }
+
+        this._createObject(kind, type, x, y);
+      });
+    }
   }
 
   _bindDragEvents() {
@@ -42,37 +99,7 @@ export class Toolbox {
         y = Math.round(y / gs) * gs;
       }
 
-      let obj;
-      if (kind === 'control') {
-        obj = this.dataModel.createControlObject(type, x, y);
-
-        // Auto-add a label to the left of the control
-        if (obj && this.settings.get('autoAddLabel')) {
-          const labelW = 80;
-          const gap = 4;
-          const labelH = obj.h;
-          const labelX = x - labelW - gap;
-          const labelY = y;
-          const lbl = this.dataModel.createGraphicObject('Label', labelX, labelY);
-          if (lbl) {
-            lbl.w = labelW;
-            lbl.h = labelH;
-            lbl.graphicProps.Text = obj.controlDef.Name;
-            lbl.graphicProps.HTextAlign = 'Right';
-            this.dataModel.updateObject(lbl.id, {
-              w: labelW, h: labelH,
-              graphicProps: { Text: obj.controlDef.Name, HTextAlign: 'Right' },
-            });
-          }
-        }
-      } else if (kind === 'graphic') {
-        obj = this.dataModel.createGraphicObject(type, x, y);
-      }
-
-      if (obj) {
-        // Select the newly created object (the control, not the label)
-        this.eventBus.emit('toolbox:object-created', obj);
-      }
+      this._createObject(kind, type, x, y);
     });
   }
 }

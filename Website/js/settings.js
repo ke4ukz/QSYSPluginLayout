@@ -1,16 +1,16 @@
 const STORAGE_KEY = 'qsys-layout-editor-settings';
 
 const DEFAULTS = {
-  defaultUserPin: true,
+  defaultUserPin: false,
   defaultPinStyle: 'Both',
-  autoAddLabel: false,
+  autoAddLabel: true,
   gridSize: 10,
   snapToGrid: true,
   showGrid: true,
   canvasWidth: 400,
   canvasHeight: 300,
   alignmentAnchor: 'first',
-  autoGenerateStatus: false,
+  autoGenerateStatus: true,
   authorName: '',
 };
 

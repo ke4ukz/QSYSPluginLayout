@@ -172,6 +172,7 @@ export class CanvasManager {
 
   _bindEvents() {
     this.canvasEl.addEventListener('mousedown', e => this._onMouseDown(e));
+    this.canvasEl.addEventListener('dblclick', e => this._onDblClick(e));
     document.addEventListener('mousemove', e => this._onMouseMove(e));
     document.addEventListener('mouseup', e => this._onMouseUp(e));
   }
@@ -248,6 +249,15 @@ export class CanvasManager {
     }
   }
 
+  _onDblClick(e) {
+    const objEl = e.target.closest('.canvas-object');
+    if (!objEl) return;
+    const id = objEl.dataset.id;
+    const obj = this.dataModel.getObject(id);
+    if (!obj) return;
+    this.eventBus.emit('canvas:dblclick', obj);
+  }
+
   _onMouseMove(e) {
     if (!this._dragState) return;
     const ds = this._dragState;
@@ -261,7 +271,7 @@ export class CanvasManager {
         const orig = ds.originals.get(id);
         let newX = orig.x + dx;
         let newY = orig.y + dy;
-        if (this.snapEnabled) {
+        if (this.snapEnabled && !e.ctrlKey && !e.metaKey) {
           newX = this._snap(newX);
           newY = this._snap(newY);
         }
@@ -278,7 +288,7 @@ export class CanvasManager {
       const dy = e.clientY - ds.startClient.y;
       const updates = ds.ids.map(id => {
         const orig = ds.originals.get(id);
-        return { id, changes: this._computeResize(orig, ds.dir, dx, dy) };
+        return { id, changes: this._computeResize(orig, ds.dir, dx, dy, e.ctrlKey || e.metaKey) };
       });
       this.dataModel.updateMultiple(updates);
     }
@@ -338,7 +348,7 @@ export class CanvasManager {
     return map;
   }
 
-  _computeResize(orig, dir, dx, dy) {
+  _computeResize(orig, dir, dx, dy, bypassSnap = false) {
     let { x, y, w, h } = orig;
     const MIN = 8;
 
@@ -347,7 +357,7 @@ export class CanvasManager {
     if (dir.includes('s')) { h = Math.max(MIN, orig.h + dy); }
     if (dir.includes('n')) { h = Math.max(MIN, orig.h - dy); y = orig.y + orig.h - h; }
 
-    if (this.snapEnabled) {
+    if (this.snapEnabled && !bypassSnap) {
       w = this._snap(w) || MIN;
       h = this._snap(h) || MIN;
       x = this._snap(x);

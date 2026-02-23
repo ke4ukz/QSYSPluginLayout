@@ -487,10 +487,16 @@ export class PropertiesPanel {
     this.contentEl.appendChild(header);
   }
 
+  focusProperty(propName) {
+    const input = this.contentEl.querySelector(`[data-prop="${propName}"]`);
+    if (input) { input.focus(); input.select(); }
+  }
+
   _textRow(label, value, onChange, placeholder) {
     const row = this._makeRow(label);
     const input = document.createElement('input');
     input.type = 'text';
+    input.dataset.prop = label;
     input.value = value || '';
     if (placeholder) input.placeholder = placeholder;
     input.addEventListener('change', () => onChange(input.value));

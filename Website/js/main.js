@@ -9,6 +9,7 @@ import { Toolbar } from './toolbar.js';
 import { PageTabs } from './page-tabs.js';
 import { Outline } from './outline.js';
 import { generateLua, findControlLineRanges, findRuntimeLineRanges } from './lua-codegen.js';
+import * as align from './alignment.js';
 import { highlightLua } from './lua-highlight.js';
 
 // ── Initialize ──
@@ -639,6 +640,10 @@ function highlightSelectedControl() {
 
 eventBus.on('selection:changed', highlightSelectedControl);
 
+eventBus.on('canvas:dblclick', obj => {
+  propertiesPanel.focusProperty(obj.kind === 'control' ? 'Name' : 'Text');
+});
+
 if (btnGenerate) {
   btnGenerate.addEventListener('click', refreshLua);
 }
@@ -781,6 +786,37 @@ document.addEventListener('keydown', e => {
       selection.clearSelection();
       dataModel.switchPage(pages[idx - 1].id);
     }
+    return;
+  }
+
+  // Ctrl+Shift+Arrow — alignment (2+ selected)
+  const alignMap = {
+    ArrowLeft: align.alignLeft,
+    ArrowRight: align.alignRight,
+    ArrowUp: align.alignTop,
+    ArrowDown: align.alignBottom,
+  };
+  if ((e.ctrlKey || e.metaKey) && e.shiftKey && alignMap[e.key] && ids.length >= 2) {
+    e.preventDefault();
+    const rects = ids.map(id => {
+      const obj = dataModel.getObject(id);
+      return { id: obj.id, x: obj.x, y: obj.y, w: obj.w, h: obj.h };
+    });
+    const anchor = settings.get('alignmentAnchor') === 'last' ? rects[rects.length - 1] : rects[0];
+    const updates = alignMap[e.key](rects, anchor);
+    if (updates.length > 0) dataModel.updateMultiple(updates);
+    return;
+  }
+
+  // Bring to Front / Send to Back
+  if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+    e.preventDefault();
+    if (ids.length > 0) dataModel.bringToFront(ids);
+    return;
+  }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
+    e.preventDefault();
+    if (ids.length > 0) dataModel.sendToBack(ids);
     return;
   }
 

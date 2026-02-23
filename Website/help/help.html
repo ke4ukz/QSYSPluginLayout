@@ -55,7 +55,7 @@
     <ul>
       <li>Click an object to select it; <kbd>Shift</kbd>+click to toggle selection</li>
       <li>Click and drag on empty canvas to rubber-band select</li>
-      <li>Drag objects to move them; drag handles to resize</li>
+      <li>Drag objects to move them; drag handles to resize. Hold <kbd>Ctrl</kbd> (<kbd>Cmd</kbd> on Mac) while dragging to bypass grid snapping</li>
       <li>The blue border is the target page size (used for alignment reference)</li>
       <li>The orange dashed border is the bounding box of all objects</li>
     </ul>
@@ -80,9 +80,14 @@
       <tr><td><kbd>Ctrl</kbd>+<kbd>D</kbd></td><td>Duplicate selected objects</td></tr>
       <tr><td><kbd>Escape</kbd></td><td>Deselect all</td></tr>
       <tr><td><kbd>Arrow keys</kbd></td><td>Move selected objects (by grid size, or 1px with <kbd>Ctrl</kbd>)</td></tr>
-      <tr><td><kbd>Shift</kbd>+<kbd>Arrow keys</kbd></td><td>Resize selected objects</td></tr>
+      <tr><td><kbd>Shift</kbd>+<kbd>Arrow keys</kbd></td><td>Resize selected objects (by grid size, or 1px with <kbd>Ctrl</kbd>)</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Arrow keys</kbd></td><td>Align selected objects (left, right, top, bottom)</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>F</kbd></td><td>Bring to front</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>B</kbd></td><td>Send to back</td></tr>
       <tr><td><kbd>Ctrl</kbd>+<kbd>PageDown</kbd></td><td>Next page</td></tr>
       <tr><td><kbd>Ctrl</kbd>+<kbd>PageUp</kbd></td><td>Previous page</td></tr>
+      <tr><td><kbd>Shift</kbd>+click toolbox item</td><td>Add control/graphic at canvas center</td></tr>
+      <tr><td>Double-click object</td><td>Focus Name (controls) or Text (graphics) property</td></tr>
     </table>
   </div>
 
@@ -91,8 +96,8 @@
     <h3>Alignment</h3>
     <p>Aligns objects to the first-selected (or last-selected, per settings). Requires 2+ objects selected.</p>
 
-    <h3>Distribution</h3>
-    <p>Distributes objects evenly between the outermost positions. Requires 3+ objects.</p>
+    <h3>Spacing</h3>
+    <p>Spaces objects evenly between the outermost positions. Requires 3+ objects.</p>
 
     <h3>Sizing</h3>
     <p>Makes selected objects the same width, height, or both, matching the anchor object.</p>
@@ -103,7 +108,7 @@
     <h3>Center on Page</h3>
     <p>Centers the selection group within the target page size.</p>
 
-    <h3>Space Evenly</h3>
+    <h3>Distribute</h3>
     <p>Distributes objects with equal spacing across the full target page width or height.</p>
 
     <h3>Z-Order</h3>
