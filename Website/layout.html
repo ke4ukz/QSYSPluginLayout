@@ -371,6 +371,13 @@
     </footer>
   </div>
 
+  <script>
+    // Emergency reset: append ?reset=true to the URL to wipe all localStorage
+    if (new URLSearchParams(location.search).get('reset') === 'true') {
+      localStorage.clear();
+      location.replace(location.pathname);
+    }
+  </script>
   <script type="module" src="js/main.js"></script>
 </body>
 </html>
