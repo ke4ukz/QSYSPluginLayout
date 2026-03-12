@@ -46,6 +46,8 @@ html, body { height: 100%; overflow: hidden; font-family: 'Segoe UI', system-ui,
 #toolbar button:hover:not(:disabled) { background: #505050; }
 #toolbar button:active:not(:disabled) { background: #606060; }
 #toolbar button:disabled { opacity: 0.35; cursor: default; }
+#toolbar button.warning { border-color: #c44; color: #f99; }
+#toolbar button.warning:hover:not(:disabled) { border-color: #e55; }
 #toolbar label { font-size: 11px; display: flex; align-items: center; gap: 2px; white-space: nowrap; }
 #toolbar input[type="number"] {
   background: #2a2a2a; color: #ddd; border: 1px solid #555; border-radius: 3px;
@@ -240,6 +242,19 @@ html, body { height: 100%; overflow: hidden; font-family: 'Segoe UI', system-ui,
     linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
 }
+
+/* ── Light canvas theme ── */
+#canvas.theme-light { background: #e0e4e8; }
+#canvas.theme-light.show-grid {
+  background-image:
+    linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px);
+}
+#canvas.theme-light ~ #target-size-rect,
+#canvas.theme-light #target-size-rect { border-color: rgba(60, 120, 200, 0.5); }
+#canvas.theme-light .bbox-rect { border-color: rgba(200, 140, 30, 0.5); }
+#canvas.theme-light .bbox-label { color: rgba(160, 100, 10, 0.7); }
+#canvas-container.theme-light { background: #c8ccd0; }
 
 /* ── Canvas Objects ── */
 .canvas-object {
@@ -445,12 +460,22 @@ html, body { height: 100%; overflow: hidden; font-family: 'Segoe UI', system-ui,
   border: 1px dashed rgba(255,255,255,0.15);
 }
 .canvas-object[data-graphic-type="GroupBox"] > .control-body {
-  background: rgba(200, 200, 200, 0.05);
-  border: 1px solid rgba(200, 200, 200, 0.3);
-  border-radius: 4px;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 2px 6px;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+.groupbox-fieldset {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0 6px;
+  border: 1px solid #000;
+  text-align: center;
+}
+.groupbox-legend {
+  padding: 0 4px;
+  font-size: 12px;
+  line-height: 1;
 }
 .canvas-object[data-graphic-type="Header"] > .control-body {
   background: rgba(100, 100, 100, 0.2);
@@ -581,6 +606,12 @@ html, body { height: 100%; overflow: hidden; font-family: 'Segoe UI', system-ui,
   cursor: pointer;
 }
 .props-row input[type="checkbox"] { accent-color: #4a9eff; }
+.props-row .color-alpha {
+  width: 48px;
+  flex: 0 0 48px;
+  max-width: 48px;
+  margin-left: 4px;
+}
 .props-row-quad {
   display: grid;
   grid-template-columns: 90px 1fr 1fr;
@@ -656,6 +687,11 @@ html, body { height: 100%; overflow: hidden; font-family: 'Segoe UI', system-ui,
   line-height: 1;
 }
 #lua-panel-header .lua-icon-btn:hover { color: #aaa; background: transparent; }
+#lua-panel-header .lua-warning {
+  color: #e8a030;
+  font-size: 13px;
+  cursor: default;
+}
 #lua-output-wrap {
   flex: 1;
   background: #0d0d0d;

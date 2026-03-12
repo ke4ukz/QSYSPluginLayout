@@ -81,6 +81,12 @@ export function findRuntimeLineRanges(code, controlName) {
   return ranges;
 }
 
+/** Returns true if PluginInfo has all required fields (Name, Version, Id). */
+export function isPluginInfoComplete(dataModel) {
+  const pi = dataModel.getPluginInfo();
+  return !!(pi && pi.Name && pi.Version && pi.Id);
+}
+
 export function generateLua(dataModel, settings) {
   const pages = dataModel.getPages();
   const allControls = dataModel.getObjectsByKindGlobal('control');
@@ -89,19 +95,17 @@ export function generateLua(dataModel, settings) {
   let lua = '';
 
   // Header comments
-  const pi = dataModel.getPluginInfo();
+  const pi = dataModel.getPluginInfo() || {};
   const authorName = settings && settings.get('authorName');
-  const pluginName = pi && pi.Name;
+  const pluginName = pi.Name;
   if (pluginName || authorName) {
     lua += generateHeaderComments(pluginName, authorName);
     lua += '\n\n';
   }
 
-  // PluginInfo
-  if (pi) {
-    lua += generatePluginInfo(pi);
-    lua += '\n\n';
-  }
+  // PluginInfo (always emitted — required for valid plugins)
+  lua += generatePluginInfo(pi);
+  lua += '\n\n';
 
   // GetPages (only if 2+ pages)
   if (pages.length > 1) {
@@ -109,11 +113,11 @@ export function generateLua(dataModel, settings) {
     lua += '\n\n';
   }
 
-  // GetProperties / RectifyProperties (only if design properties defined)
+  // GetProperties / RectifyProperties (always emitted — required by Q-SYS)
   const designProps = dataModel.getDesignProperties();
+  lua += generateGetProperties(designProps);
+  lua += '\n\n';
   if (designProps.length > 0) {
-    lua += generateGetProperties(designProps);
-    lua += '\n\n';
     lua += generateRectifyProperties();
     lua += '\n\n';
   }

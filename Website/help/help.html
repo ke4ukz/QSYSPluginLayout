@@ -142,6 +142,7 @@
       <li>Meter and fader visual previews are static representations and do not reflect actual signal levels or control positions.</li>
       <li>The auto-generated Status control is only placed on the canvas when creating a new project. If the Status control is deleted from the canvas, the Lua codegen will still emit it if the setting is enabled, but without a layout entry.</li>
       <li>Knob controls do not support hiding the textbox (<code>ShowTextbox</code>), matching Q-SYS Designer behavior.</li>
+      <li>Q-SYS Designer automatically inverts certain colors (e.g., label text, group box text) when switching between dark and light mode. This editor does not replicate that behavior — colors are rendered as specified. Use the canvas theme toggle to preview your layout against both backgrounds.</li>
       <li>Font rendering may differ from Q-SYS Designer since this editor uses browser fonts rather than the Q-SYS font engine.</li>
     </ul>
   </div>

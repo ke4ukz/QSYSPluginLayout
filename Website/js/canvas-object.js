@@ -479,6 +479,12 @@ function updateGraphicVisuals(body, obj) {
   const staleImg = body.querySelector('.object-image');
   if (staleImg) staleImg.remove();
 
+  // GroupBox: fieldset-legend style rendering
+  if (gp.Type === 'GroupBox') {
+    renderGroupBox(body, label, gp);
+    return;
+  }
+
   label.textContent = gp.Text || '';
 
   if (gp.Fill) {
@@ -507,4 +513,52 @@ function updateGraphicVisuals(body, obj) {
   if (gp.CornerRadius !== undefined || gp.Radius !== undefined) {
     body.style.borderRadius = (gp.CornerRadius || gp.Radius || 0) + 'px';
   }
+}
+
+function renderGroupBox(body, label, gp) {
+  const strokeW = gp.StrokeWidth !== undefined ? gp.StrokeWidth : 1;
+  const radius = gp.CornerRadius || 0;
+  const fontSize = gp.FontSize || 12;
+  const textColor = gp.Color ? colorToCSS(gp.Color) : '#333';
+  const fillColor = gp.Fill ? colorToCSS(gp.Fill) : 'transparent';
+  const strokeColor = gp.StrokeColor ? colorToCSS(gp.StrokeColor) : '#000';
+
+  // Use a fieldset + legend for the inset text effect
+  let fieldset = body.querySelector('fieldset.groupbox-fieldset');
+  if (!fieldset) {
+    fieldset = document.createElement('fieldset');
+    fieldset.className = 'groupbox-fieldset';
+    const legend = document.createElement('legend');
+    legend.className = 'groupbox-legend';
+    fieldset.appendChild(legend);
+    body.insertBefore(fieldset, label);
+  }
+  const legend = fieldset.querySelector('.groupbox-legend');
+  legend.textContent = gp.Text || '';
+  legend.style.color = textColor;
+  legend.style.fontSize = fontSize + 'px';
+  if (gp.IsBold) legend.style.fontWeight = 'bold';
+  else legend.style.fontWeight = '';
+  if (gp.Font) legend.style.fontFamily = gp.Font;
+
+  const align = gp.HTextAlign || 'Center';
+  if (align === 'Left') {
+    legend.style.marginLeft = '6px';
+    legend.style.marginRight = '';
+  } else if (align === 'Right') {
+    legend.style.marginLeft = 'auto';
+    legend.style.marginRight = '6px';
+  } else {
+    legend.style.marginLeft = 'auto';
+    legend.style.marginRight = 'auto';
+  }
+
+  fieldset.style.borderWidth = strokeW + 'px';
+  fieldset.style.borderStyle = strokeW > 0 ? 'solid' : 'none';
+  fieldset.style.borderColor = strokeColor;
+  fieldset.style.borderRadius = radius + 'px';
+  fieldset.style.backgroundColor = fillColor;
+
+  // Hide the original label — the legend replaces it
+  label.textContent = '';
 }

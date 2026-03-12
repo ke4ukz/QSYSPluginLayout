@@ -8,7 +8,7 @@ import { PropertiesPanel } from './properties-panel.js';
 import { Toolbar } from './toolbar.js';
 import { PageTabs } from './page-tabs.js';
 import { Outline } from './outline.js';
-import { generateLua, findControlLineRanges, findRuntimeLineRanges } from './lua-codegen.js';
+import { generateLua, findControlLineRanges, findRuntimeLineRanges, isPluginInfoComplete } from './lua-codegen.js';
 import * as align from './alignment.js';
 import { highlightLua } from './lua-highlight.js';
 import { UndoManager } from './undo-manager.js';
@@ -44,12 +44,27 @@ const outline = new Outline(dataModel, selection, eventBus);
   }
 }
 
+// ── Canvas theme ──
+function applyCanvasTheme() {
+  const theme = settings.get('canvasTheme') || 'dark';
+  const isLight = theme === 'light';
+  document.getElementById('canvas').classList.toggle('theme-light', isLight);
+  document.getElementById('canvas-container').classList.toggle('theme-light', isLight);
+}
+
+document.getElementById('btn-theme-toggle').addEventListener('click', () => {
+  const current = settings.get('canvasTheme') || 'dark';
+  settings.set('canvasTheme', current === 'dark' ? 'light' : 'dark');
+  applyCanvasTheme();
+});
+
 // ── Apply saved settings on startup ──
 {
   canvas.setGridSize(settings.get('gridSize'));
   canvas.setShowGrid(settings.get('showGrid'));
   canvas.setSnapEnabled(settings.get('snapToGrid'));
   dataModel.setCanvasSize(settings.get('canvasWidth'), settings.get('canvasHeight'));
+  applyCanvasTheme();
 }
 
 // ── Undo batching for drag operations ──
@@ -634,10 +649,32 @@ const btnGenerate = document.getElementById('btn-generate-lua');
 const luaOutput = document.getElementById('lua-output');
 let _currentLuaCode = '';
 
+const btnPluginInfo = document.getElementById('btn-plugin-info');
+const luaPanelHeader = document.getElementById('lua-panel-header');
+
 function refreshLua() {
   _currentLuaCode = generateLua(dataModel, settings);
   luaOutput.innerHTML = highlightLua(_currentLuaCode);
   highlightSelectedControl();
+  updatePluginInfoWarning();
+}
+
+function updatePluginInfoWarning() {
+  const complete = isPluginInfoComplete(dataModel);
+  if (btnPluginInfo) btnPluginInfo.classList.toggle('warning', !complete);
+  // Show/hide warning badge in Lua panel header
+  let badge = luaPanelHeader.querySelector('.lua-warning');
+  if (!complete) {
+    if (!badge) {
+      badge = document.createElement('span');
+      badge.className = 'lua-warning';
+      badge.title = 'PluginInfo is incomplete — Name, Version, and Id are required';
+      badge.textContent = '\u26A0';
+      luaPanelHeader.querySelector('h3').after(badge);
+    }
+  } else if (badge) {
+    badge.remove();
+  }
 }
 
 function highlightSelectedControl() {

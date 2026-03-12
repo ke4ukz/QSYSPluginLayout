@@ -190,7 +190,7 @@ export class PropertiesPanel {
 
     // Advanced
     this._section('Advanced');
-    this._numberRow('StrokeWidth', lp.StrokeWidth !== undefined ? lp.StrokeWidth : 1, v => this._updateLayoutProps(obj.id, { StrokeWidth: v }));
+    this._numberRow('StrokeWidth', lp.StrokeWidth !== undefined ? lp.StrokeWidth : 1, v => this._updateLayoutProps(obj.id, { StrokeWidth: v }), { min: 0, max: 64 });
     this._colorRow('StrokeColor', lp.StrokeColor, v => this._updateLayoutProps(obj.id, { StrokeColor: v }));
     this._numberRow('Margin', lp.Margin || 0, v => this._updateLayoutProps(obj.id, { Margin: v }));
     this._numberRow('Padding', lp.Padding !== undefined ? lp.Padding : 1, v => this._updateLayoutProps(obj.id, { Padding: v }));
@@ -234,7 +234,7 @@ export class PropertiesPanel {
       }
       if (gp.Type !== 'Header') {
         this._colorRow('StrokeColor', gp.StrokeColor, v => this._updateGraphicProps(obj.id, { StrokeColor: v }));
-        this._numberRow('StrokeWidth', gp.StrokeWidth !== undefined ? gp.StrokeWidth : 0, v => this._updateGraphicProps(obj.id, { StrokeWidth: v }));
+        this._numberRow('StrokeWidth', gp.StrokeWidth !== undefined ? gp.StrokeWidth : 0, v => this._updateGraphicProps(obj.id, { StrokeWidth: v }), { min: 0, max: 64 });
         this._numberRow('CornerRadius', gp.CornerRadius || 0, v => this._updateGraphicProps(obj.id, { CornerRadius: v }));
       }
 
@@ -499,20 +499,28 @@ export class PropertiesPanel {
     input.dataset.prop = label;
     input.value = value || '';
     if (placeholder) input.placeholder = placeholder;
-    input.addEventListener('change', () => onChange(input.value));
+    const commit = () => onChange(input.value);
+    input.addEventListener('change', commit);
+    input.addEventListener('blur', commit);
     row.appendChild(input);
     this.contentEl.appendChild(row);
   }
 
-  _numberRow(label, value, onChange) {
+  _numberRow(label, value, onChange, { min, max } = {}) {
     const row = this._makeRow(label);
     const input = document.createElement('input');
     input.type = 'number';
     input.value = value !== '' && value !== undefined ? value : '';
-    input.addEventListener('change', () => {
-      const v = input.value === '' ? '' : parseFloat(input.value);
+    if (min !== undefined) input.min = min;
+    if (max !== undefined) input.max = max;
+    const commit = () => {
+      let v = input.value === '' ? '' : parseFloat(input.value);
+      if (v !== '' && min !== undefined) v = Math.max(min, v);
+      if (v !== '' && max !== undefined) v = Math.min(max, v);
       onChange(v);
-    });
+    };
+    input.addEventListener('change', commit);
+    input.addEventListener('blur', commit);
     row.appendChild(input);
     this.contentEl.appendChild(row);
   }
@@ -544,11 +552,36 @@ export class PropertiesPanel {
 
   _colorRow(label, value, onChange) {
     const row = this._makeRow(label);
-    const input = document.createElement('input');
-    input.type = 'color';
-    input.value = value ? rgbToHex(value) : '#000000';
-    input.addEventListener('input', () => onChange(hexToRGB(input.value)));
-    row.appendChild(input);
+    const colorInput = document.createElement('input');
+    colorInput.type = 'color';
+    colorInput.value = value ? rgbToHex(value) : '#000000';
+
+    const alphaInput = document.createElement('input');
+    alphaInput.type = 'number';
+    alphaInput.min = 0;
+    alphaInput.max = 100;
+    alphaInput.title = 'Alpha (0–100%)';
+    alphaInput.placeholder = '%';
+    alphaInput.className = 'color-alpha';
+    // Convert stored 0–255 alpha to 0–100% for display
+    alphaInput.value = value && value.length >= 4 ? Math.round(value[3] / 2.55) : '';
+
+    const commit = () => {
+      const rgb = hexToRGB(colorInput.value);
+      if (alphaInput.value !== '') {
+        const pct = Math.min(100, Math.max(0, parseInt(alphaInput.value) || 0));
+        const a = Math.round(pct * 2.55);
+        onChange([...rgb, a]);
+      } else {
+        onChange(rgb);
+      }
+    };
+    colorInput.addEventListener('input', commit);
+    alphaInput.addEventListener('change', commit);
+    alphaInput.addEventListener('blur', commit);
+
+    row.appendChild(colorInput);
+    row.appendChild(alphaInput);
     this.contentEl.appendChild(row);
   }
 
