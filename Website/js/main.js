@@ -741,16 +741,23 @@ window.addEventListener('beforeunload', () => {
 });
 
 // Restore on startup
+let restoredFromSave = false;
 try {
   const saved = localStorage.getItem(AUTOSAVE_KEY);
   if (saved) {
     const json = JSON.parse(saved);
     if (json && json.objects && json.objects.length > 0) {
       dataModel.fromJSON(json);
+      restoredFromSave = true;
     }
   }
 } catch (e) {
   // Corrupted data — ignore and start fresh
+}
+// Seed status control on fresh start (no saved project)
+if (!restoredFromSave) {
+  dataModel._seedStatusControl();
+  dataModel.eventBus.emit('model:loaded', dataModel.toJSON());
 }
 
 // Show boilerplate on initial load

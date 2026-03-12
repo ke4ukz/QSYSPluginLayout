@@ -310,8 +310,9 @@ function generateGetControls(controls, autoStatus) {
   let code = 'function GetControls(props)\n';
   code += '  local ctrls = {}\n';
 
-  // Auto-generated Status control
-  if (autoStatus) {
+  // Auto-generated Status control (only if not already placed on canvas)
+  const hasStatusOnCanvas = controls.some(c => c.controlDef.Name === 'Status' && c.controlDef.IndicatorType === 'Status');
+  if (autoStatus && !hasStatusOnCanvas) {
     code += '  -- Status\n';
     code += '  table.insert(ctrls, {\n';
     code += '    Name = "Status",\n';

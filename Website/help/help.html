@@ -140,6 +140,8 @@
       <li>Not all Q-SYS control layout properties are supported. Some properties (e.g., <code>ClassName</code>, <code>WordWrap</code>, <code>IconColor</code>, <code>CustomButtonUp/Down</code>) are not yet available in the editor.</li>
       <li>The <code>Media</code> layout style is not supported.</li>
       <li>Meter and fader visual previews are static representations and do not reflect actual signal levels or control positions.</li>
+      <li>The auto-generated Status control is only placed on the canvas when creating a new project. If the Status control is deleted from the canvas, the Lua codegen will still emit it if the setting is enabled, but without a layout entry.</li>
+      <li>Knob controls do not support hiding the textbox (<code>ShowTextbox</code>), matching Q-SYS Designer behavior.</li>
       <li>Font rendering may differ from Q-SYS Designer since this editor uses browser fonts rather than the Q-SYS font engine.</li>
     </ul>
   </div>

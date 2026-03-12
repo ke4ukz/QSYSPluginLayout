@@ -625,7 +625,73 @@ export class DataModel {
     };
     this.pages = [defaultPage];
     this.currentPageId = defaultPage.id;
+    this._seedStatusControl();
     if (this.undoManager) this.undoManager.clear();
     this.eventBus.emit('model:loaded', this.toJSON());
+  }
+
+  /** Place a Status indicator + label on the canvas when autoGenerateStatus is enabled. */
+  _seedStatusControl() {
+    if (!this.settings || !this.settings.get('autoGenerateStatus')) return;
+
+    const page = this.pages[0];
+    const grid = this.settings.get('gridSize') || 10;
+    const ctrlW = 120;
+    const ctrlH = 16;
+    const labelW = 40;
+    const labelGap = 4;
+
+    // Place below the lowest existing object, or at the default bottom position
+    let statusY = page.canvasHeight - grid - ctrlH;
+    if (this.objects.length > 0) {
+      const lowestBottom = Math.max(...this.objects.map(o => o.y + o.h));
+      const belowLowest = lowestBottom + grid;
+      if (belowLowest + ctrlH > statusY) {
+        statusY = belowLowest;
+      }
+    }
+
+    const labelX = grid;
+    const labelY = statusY;
+    const ctrlX = labelX + labelW + labelGap;
+    const ctrlY = statusY;
+
+    // Status label graphic
+    this.objects.push({
+      id: generateId(),
+      kind: 'graphic',
+      pageId: page.id,
+      x: labelX, y: labelY,
+      w: labelW, h: ctrlH,
+      zOrder: 0,
+      graphicProps: {
+        Type: 'Label',
+        Text: 'Status',
+        FontSize: 12,
+        HTextAlign: 'Right',
+        Color: [255, 255, 255],
+      },
+    });
+
+    // Status indicator control
+    this.objects.push({
+      id: generateId(),
+      kind: 'control',
+      pageId: page.id,
+      x: ctrlX, y: ctrlY,
+      w: ctrlW, h: ctrlH,
+      zOrder: 1,
+      controlDef: {
+        Name: 'Status',
+        ControlType: 'Indicator',
+        IndicatorType: 'Status',
+        UserPin: true,
+        PinStyle: 'Output',
+        Count: 1,
+      },
+      layoutProps: {
+        Style: 'Text',
+      },
+    });
   }
 }
