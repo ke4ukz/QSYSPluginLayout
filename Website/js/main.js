@@ -27,6 +27,23 @@ const toolbar = new Toolbar(dataModel, selection, canvas, eventBus, settings);
 const pageTabs = new PageTabs(dataModel, selection, eventBus);
 const outline = new Outline(dataModel, selection, eventBus);
 
+// ── Disclaimer modal ──
+{
+  const DISCLAIMER_KEY = 'disclaimerAcknowledged';
+  if (!localStorage.getItem(DISCLAIMER_KEY)) {
+    const overlay = document.getElementById('disclaimer-overlay');
+    const btnOk = document.getElementById('disclaimer-ok');
+    const chkDontShow = document.getElementById('disclaimer-dont-show');
+    overlay.hidden = false;
+    btnOk.addEventListener('click', () => {
+      if (chkDontShow.checked) {
+        localStorage.setItem(DISCLAIMER_KEY, '1');
+      }
+      overlay.hidden = true;
+    });
+  }
+}
+
 // ── Apply saved settings on startup ──
 {
   canvas.setGridSize(settings.get('gridSize'));

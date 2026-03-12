@@ -162,6 +162,29 @@
       </div>
     </div>
 
+    <!-- ── Disclaimer Modal ── -->
+    <div id="disclaimer-overlay" class="modal-overlay" hidden>
+      <div class="modal-dialog" style="max-width:480px">
+        <div class="modal-header">
+          <h3>Disclaimer</h3>
+        </div>
+        <div class="modal-body about-body">
+          <p>This tool generates boilerplate Lua code for Q-SYS plugin development. <strong>The generated code is not guaranteed to be correct, complete, or functional.</strong> Always review and test generated code before use in any production environment.</p>
+          <p>This software is provided "as is" without warranty of any kind. The author assumes no liability for any damages resulting from the use of this tool or its generated code.</p>
+          <p class="about-disclaimer">Not affiliated with, endorsed by, or sponsored by QSC, LLC, Q-SYS, or Acuity Brands. Q-SYS is a trademark of QSC, LLC. Any reference to Q-SYS products or documentation is for interoperability purposes only.</p>
+          <p style="margin-top:8px; font-size:11px;"><a href="help/help.html#known-limitations" target="_blank" style="color:#569cd6;">See known limitations</a></p>
+          <div style="margin-top:8px">
+            <label style="font-size:11px; display:flex; align-items:center; gap:6px; cursor:pointer;">
+              <input type="checkbox" id="disclaimer-dont-show"> Don't show this again
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="disclaimer-ok" class="btn-primary">I Understand</button>
+        </div>
+      </div>
+    </div>
+
     <!-- ── About Modal ── -->
     <div id="about-overlay" class="modal-overlay" hidden>
       <div class="modal-dialog" style="max-width:440px">

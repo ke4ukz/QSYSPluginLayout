@@ -132,9 +132,21 @@
     <p>Selecting a control or graphic on the canvas highlights its corresponding code blocks in the Lua output.</p>
   </div>
 
+  <div class="section" id="known-limitations">
+    <h2>Known Limitations</h2>
+    <ul>
+      <li>Control appearance on the canvas is a wireframe approximation, not a pixel-accurate representation of Q-SYS Designer. Fine-tuning of appearance (colors, fonts, corner radii, etc.) should be verified in Q-SYS Designer.</li>
+      <li>Generated Lua code is a starting point and is not guaranteed to compile or run correctly. Always review and test in Q-SYS Designer before deploying.</li>
+      <li>Not all Q-SYS control layout properties are supported. Some properties (e.g., <code>ClassName</code>, <code>WordWrap</code>, <code>IconColor</code>, <code>CustomButtonUp/Down</code>) are not yet available in the editor.</li>
+      <li>The <code>Media</code> layout style is not supported.</li>
+      <li>Meter and fader visual previews are static representations and do not reflect actual signal levels or control positions.</li>
+      <li>Font rendering may differ from Q-SYS Designer since this editor uses browser fonts rather than the Q-SYS font engine.</li>
+    </ul>
+  </div>
+
   <div class="section">
     <h2>Troubleshooting</h2>
-    <p>If the editor fails to load or behaves unexpectedly, append <code>?reset=true</code> to the URL (e.g. <code>layout.html?reset=true</code>) to clear all saved data and settings. The page will reload with a fresh state.</p>
+    <p>If the editor fails to load or behaves unexpectedly, append <code>?reset=true</code> to the URL (e.g. <code>layout.html?reset=true</code>) to clear all saved data and settings. The page will reload with a fresh state. This also resets the disclaimer acknowledgement.</p>
   </div>
 
 </body>
