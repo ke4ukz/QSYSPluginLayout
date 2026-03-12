@@ -45,3 +45,6 @@ If the editor fails to load or behaves unexpectedly due to corrupted local stora
 ## Disclaimer
 
 This tool is provided as-is with no warranty, expressed or implied. Not affiliated with, endorsed by, or sponsored by QSC, LLC, Q-SYS, or Acuity Brands.
+
+## AI Disclosure
+Portions of this software was developed with the assisntance of an artificial intelligence agent.
