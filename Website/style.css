@@ -647,6 +647,15 @@ html, body { height: 100%; overflow: hidden; font-family: 'Segoe UI', system-ui,
   font-size: 11px;
 }
 #lua-panel-header button:hover { background: #505050; }
+#lua-panel-header .lua-icon-btn {
+  padding: 2px 4px;
+  background: transparent;
+  border: none;
+  color: #666;
+  font-size: 14px;
+  line-height: 1;
+}
+#lua-panel-header .lua-icon-btn:hover { color: #aaa; background: transparent; }
 #lua-output-wrap {
   flex: 1;
   background: #0d0d0d;
