@@ -1,12 +1,8 @@
 # Q-SYS Plugin Layout Editor
 
-A browser-based WYSIWYG editor for designing Q-SYS plugin control layouts. Drag controls and graphics onto the canvas, configure their properties, and generate the Lua code for `GetControls`, `GetControlLayout`, `GetPages`, and stub `EventHandler` functions.
+A browser-based WYSIWYG editor for designing Q-SYS plugin control layouts. Drag controls and graphics onto the canvas, configure their properties, and generate the Lua code for required methods (like `GetControls`, `GetControlLayout`, etc.) and stub `EventHandler` functions.
 
 All project data is stored locally in your browser. Nothing is sent to or stored on any server.
-
-## Getting Started
-
-Open `Website/layout.html` in a browser. No build tools or dependencies required.
 
 ## Project Structure
 
