@@ -37,6 +37,17 @@ Website/           Main application files
 Documentation/     Reference material
 ```
 
+## Known Limitations
+
+- Control appearance is a wireframe approximation, not pixel-accurate. Verify in Q-SYS Designer.
+- Generated Lua code is a starting point — always review and test before deploying.
+- Some layout properties are not yet supported (e.g., `ClassName`, `WordWrap`, `IconColor`, `CustomButtonUp/Down`). The `Media` layout style is not supported.
+- Q-SYS Designer inverts certain colors between dark and light mode; this editor does not replicate that behavior.
+- Font rendering may differ from Q-SYS Designer (browser fonts vs. Q-SYS font engine).
+- Meter and fader previews are static and do not reflect signal levels or control positions.
+
+See the [full known limitations list](Website/help/help.html#known-limitations) for more details.
+
 ## Troubleshooting
 
 If the editor fails to load or behaves unexpectedly due to corrupted local storage, append `?reset=true` to the URL (e.g. `layout.html?reset=true`). This clears all saved data and settings, then redirects back to the clean URL.
