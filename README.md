@@ -10,6 +10,8 @@ All project data is stored locally in your browser. Nothing is sent to or stored
 Website/           Main application files
   layout.html      Entry point
   style.css        Styles
+  privacy.html     Privacy policy
+  .htaccess        Server configuration
   js/              Application modules
     main.js          App initialization and wiring
     data-model.js    Core data model and object CRUD
@@ -30,7 +32,8 @@ Website/           Main application files
     event-bus.js     Pub/sub event system
     utils.js         Shared utilities
   help/            Help page
-    help.html        Keyboard shortcuts, usage guide
+    help.html        Keyboard shortcuts, usage guide, known limitations
+    .htaccess        Server configuration
 Documentation/     Reference material
 ```
 
