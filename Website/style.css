@@ -496,13 +496,13 @@ html, body { height: 100%; overflow: hidden; font-family: 'Segoe UI', system-ui,
   font-weight: bold;
   padding: 0 2px;
 }
-.canvas-object[data-graphic-type="image"] > .control-body,
-.canvas-object[data-graphic-type="svg"] > .control-body {
+.canvas-object[data-graphic-type="Image"] > .control-body,
+.canvas-object[data-graphic-type="Svg"] > .control-body {
   background: rgba(40, 40, 40, 0.6);
   border: 1px dashed rgba(255, 255, 255, 0.2);
 }
-.canvas-object[data-graphic-type="image"] .object-label,
-.canvas-object[data-graphic-type="svg"] .object-label {
+.canvas-object[data-graphic-type="Image"] .object-label,
+.canvas-object[data-graphic-type="Svg"] .object-label {
   color: #666;
   font-size: 11px;
   font-style: italic;

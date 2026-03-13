@@ -451,7 +451,7 @@ function updateGraphicVisuals(body, obj) {
   const gp = obj.graphicProps;
 
   // Image / SVG types
-  if (gp.Type === 'image' || gp.Type === 'svg') {
+  if (gp.Type === 'Image' || gp.Type === 'Svg') {
     let img = body.querySelector('.object-image');
     if (gp.Image) {
       if (!img) {
@@ -459,7 +459,7 @@ function updateGraphicVisuals(body, obj) {
         img.className = 'object-image';
         body.insertBefore(img, label);
       }
-      const mime = gp.Type === 'svg' ? 'image/svg+xml' : detectImageMime(gp.Image);
+      const mime = gp.Type === 'Svg' ? 'image/svg+xml' : detectImageMime(gp.Image);
       const src = `data:${mime};base64,${gp.Image}`;
       if (img.dataset.src !== src) {
         img.src = src;
@@ -468,7 +468,7 @@ function updateGraphicVisuals(body, obj) {
       label.textContent = '';
     } else {
       if (img) img.remove();
-      label.textContent = gp.Type === 'svg' ? '[SVG]' : '[Image]';
+      label.textContent = gp.Type === 'Svg' ? '[SVG]' : '[Image]';
     }
     return;
   }

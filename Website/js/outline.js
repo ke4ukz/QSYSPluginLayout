@@ -8,8 +8,8 @@ const ICONS = {
   Label: 'A',
   GroupBox: '\u25A1',
   Header: '\u2501',
-  image: '\u25A4',
-  svg: '</>',
+  Image: '\u25A4',
+  Svg: '</>',
 };
 
 export class Outline {

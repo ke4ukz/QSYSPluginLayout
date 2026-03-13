@@ -20,7 +20,7 @@ export const H_TEXT_ALIGNS = ['Center', 'Left', 'Right'];
 export const V_TEXT_ALIGNS = ['Center', 'Top', 'Bottom'];
 
 // ── Graphics Type enum ──
-export const GRAPHIC_TYPES = ['Label', 'GroupBox', 'Header', 'image', 'svg'];
+export const GRAPHIC_TYPES = ['Label', 'GroupBox', 'Header', 'Image', 'Svg'];
 
 // ── Fonts available in Q-SYS ──
 export const QSYS_FONTS = [
@@ -167,17 +167,17 @@ export const GRAPHIC_DEFAULTS = {
     w: 200,
     h: 24,
   },
-  image: {
+  Image: {
     graphicProps: {
-      Type: 'image',
+      Type: 'Image',
       Image: '',
     },
     w: 100,
     h: 100,
   },
-  svg: {
+  Svg: {
     graphicProps: {
-      Type: 'svg',
+      Type: 'Svg',
       Image: '',
     },
     w: 100,

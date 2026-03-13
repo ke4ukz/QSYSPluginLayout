@@ -228,7 +228,7 @@ export class PropertiesPanel {
 
   _buildGraphicProps(obj) {
     const gp = obj.graphicProps;
-    const isImage = gp.Type === 'image' || gp.Type === 'svg';
+    const isImage = gp.Type === 'Image' || gp.Type === 'Svg';
 
     this._section('Graphic');
     this._readonlyRow('Type', gp.Type);
@@ -240,7 +240,7 @@ export class PropertiesPanel {
     if (isImage) {
       this._fileRow('Image', gp.Image,
         v => this._updateGraphicProps(obj.id, { Image: v }),
-        gp.Type === 'svg' ? '.svg' : 'image/*'
+        gp.Type === 'Svg' ? '.svg' : 'image/*'
       );
     }
 
