@@ -464,23 +464,37 @@ html, body { height: 100%; overflow: hidden; font-family: 'Segoe UI', system-ui,
   border: none;
   padding: 0;
 }
-.groupbox-fieldset {
+.groupbox-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+.groupbox-text {
+  position: absolute;
+  white-space: nowrap;
+  line-height: 1;
+  pointer-events: none;
+}
+.header-wrapper {
   position: absolute;
   inset: 0;
-  margin: 0;
-  padding: 0 6px;
-  border: 1px solid #000;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 2px;
 }
-.groupbox-legend {
-  padding: 0 4px;
-  font-size: 12px;
-  line-height: 1;
+.header-line {
+  flex: 1;
+  min-width: 4px;
+  border-bottom: 1px solid #333;
 }
-.canvas-object[data-graphic-type="Header"] > .control-body {
-  background: rgba(100, 100, 100, 0.2);
-  border-bottom: 2px solid #888;
+.header-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-weight: bold;
+  padding: 0 2px;
 }
 .canvas-object[data-graphic-type="image"] > .control-body,
 .canvas-object[data-graphic-type="svg"] > .control-body {

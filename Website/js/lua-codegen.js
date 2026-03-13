@@ -349,8 +349,19 @@ function emitControlEntry(cd, count) {
   code += `    Name = "${cd.Name}",\n`;
   code += `    ControlType = "${cd.ControlType}",\n`;
 
-  if (cd.ControlType === 'Button' && cd.ButtonType) {
-    code += `    ButtonType = "${cd.ButtonType}",\n`;
+  if (cd.ControlType === 'Button') {
+    if (cd.ButtonType) code += `    ButtonType = "${cd.ButtonType}",\n`;
+    if (cd.ButtonType === 'StateTrigger') {
+      code += `    Min = ${cd.Min !== undefined ? cd.Min : 0},\n`;
+      code += `    Max = ${cd.Max !== undefined ? cd.Max : 1},\n`;
+    } else {
+      if (cd.Min !== undefined) code += `    Min = ${cd.Min},\n`;
+      if (cd.Max !== undefined) code += `    Max = ${cd.Max},\n`;
+    }
+    if (cd.Icon) {
+      code += `    Icon = "${luaEscape(cd.Icon)}",\n`;
+      code += `    IconType = "${luaEscape(cd.IconType || 'Icon')}",\n`;
+    }
   }
   if (cd.ControlType === 'Knob') {
     if (cd.ControlUnit) code += `    ControlUnit = "${cd.ControlUnit}",\n`;
@@ -504,7 +515,11 @@ function emitLayoutBody(ctrl, I) {
   if (lp.Style === 'Button') {
     if (lp.ButtonStyle) code += `${I}ButtonStyle = "${lp.ButtonStyle}",\n`;
     if (lp.ButtonVisualStyle && lp.ButtonVisualStyle !== 'Gloss') code += `${I}ButtonVisualStyle = "${lp.ButtonVisualStyle}",\n`;
-    if (lp.Legend) code += `${I}Legend = "${lp.Legend}",\n`;
+    if (lp.Legend) code += `${I}Legend = "${luaEscape(lp.Legend)}",\n`;
+    if (lp.Icon) {
+      code += `${I}Icon = "${luaEscape(lp.Icon)}",\n`;
+      code += `${I}IconType = "${luaEscape(lp.IconType || 'Icon')}",\n`;
+    }
     if (lp.UnlinkOffColor) {
       code += `${I}UnlinkOffColor = true,\n`;
       if (lp.OffColor) code += `${I}OffColor = ${luaColor(lp.OffColor)},\n`;
@@ -522,7 +537,7 @@ function emitLayoutBody(ctrl, I) {
   if (lp.Style === 'Meter') {
     if (lp.MeterStyle) code += `${I}MeterStyle = "${lp.MeterStyle}",\n`;
     if (lp.BackgroundColor) code += `${I}BackgroundColor = ${luaColor(lp.BackgroundColor)},\n`;
-    if (lp.ShowTextbox === false) code += `${I}ShowTextbox = false,\n`;
+    if (lp.ShowTextbox) code += `${I}ShowTextbox = true,\n`;
   }
 
   // Text-specific

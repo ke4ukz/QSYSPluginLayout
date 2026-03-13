@@ -1,5 +1,5 @@
 import {
-  CONTROL_TYPES, BUTTON_TYPES, INDICATOR_TYPES, CONTROL_UNITS, PIN_STYLES,
+  CONTROL_TYPES, BUTTON_TYPES, INDICATOR_TYPES, CONTROL_UNITS, PIN_STYLES, ICON_TYPES,
   LAYOUT_STYLES, BUTTON_STYLES, BUTTON_VISUAL_STYLES, METER_STYLES, TEXTBOX_STYLES,
   H_TEXT_ALIGNS, V_TEXT_ALIGNS, GRAPHIC_TYPES, QSYS_FONTS, FONT_STYLES,
   STYLES_FOR_CONTROL_TYPE,
@@ -109,7 +109,22 @@ export class PropertiesPanel {
     // Control Definition
     this._section('Control Definition');
     if (cd.ControlType === 'Button') {
-      this._selectRow('ButtonType', cd.ButtonType, BUTTON_TYPES, v => updateCD(obj.id, { ButtonType: v }));
+      this._selectRow('ButtonType', cd.ButtonType, BUTTON_TYPES, v => {
+        updateCD(obj.id, { ButtonType: v });
+        // Sync ButtonStyle in layout to match
+        this._updateLayoutProps(obj.id, { ButtonStyle: v });
+      });
+      if (cd.ButtonType === 'StateTrigger') {
+        this._numberRow('Min', cd.Min !== undefined ? cd.Min : 0, v => updateCD(obj.id, { Min: v }));
+        this._numberRow('Max', cd.Max !== undefined ? cd.Max : 1, v => updateCD(obj.id, { Max: v }));
+      } else {
+        this._numberRow('Min', cd.Min !== undefined ? cd.Min : '', v => updateCD(obj.id, { Min: v === '' ? undefined : v }));
+        this._numberRow('Max', cd.Max !== undefined ? cd.Max : '', v => updateCD(obj.id, { Max: v === '' ? undefined : v }));
+      }
+      this._textRow('Icon', cd.Icon || '', v => updateCD(obj.id, { Icon: v || undefined, IconType: v ? (cd.IconType || 'Icon') : undefined }));
+      if (cd.Icon) {
+        this._selectRow('IconType', cd.IconType || 'Icon', ICON_TYPES, v => updateCD(obj.id, { IconType: v }));
+      }
     }
     if (cd.ControlType === 'Knob') {
       this._selectRow('ControlUnit', cd.ControlUnit, CONTROL_UNITS, v => updateCD(obj.id, { ControlUnit: v }));
@@ -137,6 +152,13 @@ export class PropertiesPanel {
     const validStyles = STYLES_FOR_CONTROL_TYPE[cd.ControlType] || LAYOUT_STYLES;
     this._selectRow('Style', lp.Style, validStyles, v => {
       this._updateLayoutProps(obj.id, { Style: v });
+      // Sync IndicatorType when layout Style changes for Indicator controls
+      if (cd.ControlType === 'Indicator') {
+        const styleToIndicator = { Led: 'Led', Meter: 'Meter', Text: 'Text' };
+        if (styleToIndicator[v]) {
+          this._updateControlDef(obj.id, { IndicatorType: styleToIndicator[v] });
+        }
+      }
       this._rebuild();
     });
     this._textRow('PrettyName', lp.PrettyName || '', v => this._updateLayoutProps(obj.id, { PrettyName: v || undefined }), 'Group~Name');
@@ -155,9 +177,14 @@ export class PropertiesPanel {
     // Style-specific
     if (lp.Style === 'Button') {
       this._section('Button Style');
-      this._selectRow('ButtonStyle', lp.ButtonStyle || 'Momentary', BUTTON_STYLES, v => this._updateLayoutProps(obj.id, { ButtonStyle: v }));
       this._selectRow('VisualStyle', lp.ButtonVisualStyle || 'Gloss', BUTTON_VISUAL_STYLES, v => this._updateLayoutProps(obj.id, { ButtonVisualStyle: v }));
       this._textRow('Legend', lp.Legend || '', v => this._updateLayoutProps(obj.id, { Legend: v || undefined }));
+      this._textRow('Icon', lp.Icon || '', v => this._updateLayoutProps(obj.id, { Icon: v || undefined, IconType: v ? (lp.IconType || 'Icon') : undefined }));
+      if (lp.Icon) {
+        this._selectRow('IconType', lp.IconType || 'Icon', ICON_TYPES, v => this._updateLayoutProps(obj.id, { IconType: v }));
+        this._colorRow('IconColor', lp.IconColor, v => this._updateLayoutProps(obj.id, { IconColor: v }));
+      }
+      this._checkboxRow('WordWrap', lp.WordWrap || false, v => this._updateLayoutProps(obj.id, { WordWrap: v }));
       this._numberRow('CornerRadius', lp.CornerRadius || 0, v => this._updateLayoutProps(obj.id, { CornerRadius: v }));
       this._checkboxRow('UnlinkOffColor', lp.UnlinkOffColor || false, v => this._updateLayoutProps(obj.id, { UnlinkOffColor: v }));
       if (lp.UnlinkOffColor) {
@@ -173,7 +200,7 @@ export class PropertiesPanel {
     if (lp.Style === 'Meter') {
       this._section('Meter Style');
       this._selectRow('MeterStyle', lp.MeterStyle || 'Standard', METER_STYLES, v => this._updateLayoutProps(obj.id, { MeterStyle: v }));
-      this._checkboxRow('ShowTextbox', lp.ShowTextbox !== false, v => this._updateLayoutProps(obj.id, { ShowTextbox: v }));
+      this._checkboxRow('ShowTextbox', lp.ShowTextbox || false, v => this._updateLayoutProps(obj.id, { ShowTextbox: v }));
       this._colorRow('BgColor', lp.BackgroundColor, v => this._updateLayoutProps(obj.id, { BackgroundColor: v }));
     }
 
@@ -563,18 +590,14 @@ export class PropertiesPanel {
     alphaInput.title = 'Alpha (0–100%)';
     alphaInput.placeholder = '%';
     alphaInput.className = 'color-alpha';
-    // Convert stored 0–255 alpha to 0–100% for display
-    alphaInput.value = value && value.length >= 4 ? Math.round(value[3] / 2.55) : '';
+    // Convert stored 0–255 alpha to 0–100% for display; default to 100%
+    alphaInput.value = value && value.length >= 4 ? Math.round(value[3] / 2.55) : 100;
 
     const commit = () => {
       const rgb = hexToRGB(colorInput.value);
-      if (alphaInput.value !== '') {
-        const pct = Math.min(100, Math.max(0, parseInt(alphaInput.value) || 0));
-        const a = Math.round(pct * 2.55);
-        onChange([...rgb, a]);
-      } else {
-        onChange(rgb);
-      }
+      const pct = Math.min(100, Math.max(0, parseInt(alphaInput.value) || 0));
+      const a = Math.round(pct * 2.55);
+      onChange([...rgb, a]);
     };
     colorInput.addEventListener('input', commit);
     alphaInput.addEventListener('change', commit);

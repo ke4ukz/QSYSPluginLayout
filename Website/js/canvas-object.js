@@ -297,10 +297,8 @@ function renderButton(body, label, lp, cd) {
     if (gloss) gloss.remove();
   }
 
-  // Legend overrides label text
-  if (lp.Legend) {
-    label.textContent = lp.Legend;
-  }
+  // Button shows Legend text, not control name
+  label.textContent = lp.Legend || '';
 
   if (lp.TextColor) {
     body.style.color = colorToCSS(lp.TextColor);
@@ -485,6 +483,12 @@ function updateGraphicVisuals(body, obj) {
     return;
   }
 
+  // Header: horizontal bar with centered text
+  if (gp.Type === 'Header') {
+    renderHeader(body, label, gp);
+    return;
+  }
+
   label.textContent = gp.Text || '';
 
   if (gp.Fill) {
@@ -515,50 +519,175 @@ function updateGraphicVisuals(body, obj) {
   }
 }
 
+// Shared offscreen canvas for text measurement
+const _measureCtx = document.createElement('canvas').getContext('2d');
+function measureText(text, fontSize, font, bold) {
+  _measureCtx.font = `${bold ? 'bold ' : ''}${fontSize}px ${font || 'sans-serif'}`;
+  return _measureCtx.measureText(text).width;
+}
+
 function renderGroupBox(body, label, gp) {
   const strokeW = gp.StrokeWidth !== undefined ? gp.StrokeWidth : 1;
-  const radius = gp.CornerRadius || 0;
   const fontSize = gp.FontSize || 12;
   const textColor = gp.Color ? colorToCSS(gp.Color) : '#333';
   const fillColor = gp.Fill ? colorToCSS(gp.Fill) : 'transparent';
   const strokeColor = gp.StrokeColor ? colorToCSS(gp.StrokeColor) : '#000';
-
-  // Use a fieldset + legend for the inset text effect
-  let fieldset = body.querySelector('fieldset.groupbox-fieldset');
-  if (!fieldset) {
-    fieldset = document.createElement('fieldset');
-    fieldset.className = 'groupbox-fieldset';
-    const legend = document.createElement('legend');
-    legend.className = 'groupbox-legend';
-    fieldset.appendChild(legend);
-    body.insertBefore(fieldset, label);
-  }
-  const legend = fieldset.querySelector('.groupbox-legend');
-  legend.textContent = gp.Text || '';
-  legend.style.color = textColor;
-  legend.style.fontSize = fontSize + 'px';
-  if (gp.IsBold) legend.style.fontWeight = 'bold';
-  else legend.style.fontWeight = '';
-  if (gp.Font) legend.style.fontFamily = gp.Font;
-
   const align = gp.HTextAlign || 'Center';
+  const text = gp.Text || '';
+
+  const w = body.clientWidth || 200;
+  const h = body.clientHeight || 120;
+
+  // Text element for display
+  let textEl = body.querySelector('.groupbox-text');
+  if (!textEl) {
+    textEl = document.createElement('span');
+    textEl.className = 'groupbox-text';
+    body.appendChild(textEl);
+  }
+  textEl.textContent = text;
+  textEl.style.fontSize = fontSize + 'px';
+  textEl.style.fontWeight = gp.IsBold ? 'bold' : '';
+  textEl.style.color = textColor;
+  if (gp.Font) textEl.style.fontFamily = gp.Font;
+
+  // Measure text using offscreen canvas (reliable, synchronous)
+  const textW = measureText(text, fontSize, gp.Font, gp.IsBold);
+  const notchPadX = 4;
+  const notchPadY = 2;
+  const half = strokeW / 2;
+  const notchH = fontSize + notchPadY * 2 + strokeW;
+  const notchW = Math.ceil(textW) + notchPadX * 2;
+
+  // Notch X position based on alignment (always 8-corner concavity style)
+  let notchX;
   if (align === 'Left') {
-    legend.style.marginLeft = '6px';
-    legend.style.marginRight = '';
+    notchX = half + 6;
   } else if (align === 'Right') {
-    legend.style.marginLeft = 'auto';
-    legend.style.marginRight = '6px';
+    notchX = w - half - notchW - 6;
   } else {
-    legend.style.marginLeft = 'auto';
-    legend.style.marginRight = 'auto';
+    notchX = (w - notchW) / 2;
+  }
+  notchX = Math.max(strokeW, Math.min(notchX, w - notchW - strokeW));
+
+  // Position text inside the notch
+  textEl.style.left = (notchX + notchPadX) + 'px';
+  textEl.style.top = (strokeW + notchPadY) + 'px';
+
+  // SVG
+  const svgNS = 'http://www.w3.org/2000/svg';
+  let svg = body.querySelector('.groupbox-svg');
+  if (!svg) {
+    svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('class', 'groupbox-svg');
+    body.insertBefore(svg, textEl);
+  }
+  svg.setAttribute('width', w);
+  svg.setAttribute('height', h);
+  svg.style.width = w + 'px';
+  svg.style.height = h + 'px';
+
+  const top = half;
+  const left = half;
+  const right = w - half;
+  const bottom = h - half;
+  const nx1 = notchX;
+  const nx2 = notchX + notchW;
+  const nb = notchH;
+
+  // Corner radius
+  const cr = gp.CornerRadius || 0;
+  const maxR = Math.min((nx1 - left) / 2, (right - nx2) / 2, (bottom - nb) / 2, notchW / 2, notchH - strokeW);
+  const r = Math.max(0, Math.min(cr, maxR));
+
+  // 8-corner path: notch cuts DOWN from top edge as a concavity
+  let d;
+  if (r > 0) {
+    d = `M ${left},${top + r}`
+      + ` A ${r},${r} 0 0 1 ${left + r},${top}`
+      + ` L ${nx1 - r},${top}`
+      + ` A ${r},${r} 0 0 1 ${nx1},${top + r}`
+      + ` L ${nx1},${nb - r}`
+      + ` A ${r},${r} 0 0 0 ${nx1 + r},${nb}`
+      + ` L ${nx2 - r},${nb}`
+      + ` A ${r},${r} 0 0 0 ${nx2},${nb - r}`
+      + ` L ${nx2},${top + r}`
+      + ` A ${r},${r} 0 0 1 ${nx2 + r},${top}`
+      + ` L ${right - r},${top}`
+      + ` A ${r},${r} 0 0 1 ${right},${top + r}`
+      + ` L ${right},${bottom - r}`
+      + ` A ${r},${r} 0 0 1 ${right - r},${bottom}`
+      + ` L ${left + r},${bottom}`
+      + ` A ${r},${r} 0 0 1 ${left},${bottom - r}`
+      + ` Z`;
+  } else {
+    d = `M ${left},${top} L ${nx1},${top} L ${nx1},${nb} L ${nx2},${nb} L ${nx2},${top} L ${right},${top} L ${right},${bottom} L ${left},${bottom} Z`;
   }
 
-  fieldset.style.borderWidth = strokeW + 'px';
-  fieldset.style.borderStyle = strokeW > 0 ? 'solid' : 'none';
-  fieldset.style.borderColor = strokeColor;
-  fieldset.style.borderRadius = radius + 'px';
-  fieldset.style.backgroundColor = fillColor;
+  let path = svg.querySelector('path');
+  if (!path) {
+    path = document.createElementNS(svgNS, 'path');
+    svg.appendChild(path);
+  }
+  // Clean up any leftover elements from previous approaches
+  for (const el of svg.querySelectorAll('.groupbox-fill, .groupbox-stroke')) el.remove();
 
-  // Hide the original label — the legend replaces it
+  path.setAttribute('d', d);
+  path.setAttribute('fill', fillColor);
+  path.setAttribute('stroke', strokeColor);
+  path.setAttribute('stroke-width', strokeW);
+  path.removeAttribute('fill-rule');
+
+  label.textContent = '';
+}
+
+function renderHeader(body, label, gp) {
+  const fontSize = gp.FontSize || 14;
+  const color = gp.Color ? colorToCSS(gp.Color) : '#333';
+  const align = gp.HTextAlign || 'Center';
+
+  // Build: [line] text [line]  with the line broken around the text
+  let wrapper = body.querySelector('.header-wrapper');
+  if (!wrapper) {
+    wrapper = document.createElement('div');
+    wrapper.className = 'header-wrapper';
+    const lineBefore = document.createElement('span');
+    lineBefore.className = 'header-line header-line-before';
+    const text = document.createElement('span');
+    text.className = 'header-text';
+    const lineAfter = document.createElement('span');
+    lineAfter.className = 'header-line header-line-after';
+    wrapper.appendChild(lineBefore);
+    wrapper.appendChild(text);
+    wrapper.appendChild(lineAfter);
+    body.insertBefore(wrapper, label);
+  }
+
+  const lineBefore = wrapper.querySelector('.header-line-before');
+  const lineAfter = wrapper.querySelector('.header-line-after');
+  const text = wrapper.querySelector('.header-text');
+
+  text.textContent = gp.Text || '';
+  text.style.color = color;
+  text.style.fontSize = fontSize + 'px';
+  text.style.fontWeight = 'bold';
+  if (gp.Font) text.style.fontFamily = gp.Font;
+
+  // Same color for line and text
+  lineBefore.style.borderBottomColor = color;
+  lineAfter.style.borderBottomColor = color;
+
+  // Alignment: adjust flex growth of lines
+  if (align === 'Left') {
+    lineBefore.style.flex = '0 0 6px';
+    lineAfter.style.flex = '1';
+  } else if (align === 'Right') {
+    lineBefore.style.flex = '1';
+    lineAfter.style.flex = '0 0 6px';
+  } else {
+    lineBefore.style.flex = '1';
+    lineAfter.style.flex = '1';
+  }
+
   label.textContent = '';
 }

@@ -6,6 +6,7 @@ export const BUTTON_TYPES = ['Toggle', 'Momentary', 'Trigger', 'StateTrigger'];
 export const INDICATOR_TYPES = ['Led', 'Meter', 'Text', 'Status'];
 export const CONTROL_UNITS = ['dB', 'Hz', 'Float', 'Integer', 'Pan', 'Percent', 'Position', 'Seconds'];
 export const PIN_STYLES = ['Input', 'Output', 'Both', 'None'];
+export const ICON_TYPES = ['Icon', 'SVG', 'Image'];
 
 // ── GetControlLayout Style enum ──
 export const LAYOUT_STYLES = ['Fader', 'Knob', 'Button', 'Text', 'Meter', 'Led', 'ListBox', 'ComboBox', 'None'];
@@ -161,7 +162,7 @@ export const GRAPHIC_DEFAULTS = {
       Text: 'Header',
       FontSize: 14,
       HTextAlign: 'Center',
-      Color: [255, 255, 255],
+      Color: [51, 51, 51],
     },
     w: 200,
     h: 24,
