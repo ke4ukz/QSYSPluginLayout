@@ -36,7 +36,6 @@ Website/           Main application files
   help/            Help page
     help.html        Keyboard shortcuts, usage guide, known limitations
     .htaccess        Server configuration
-Documentation/     Reference material
 ```
 
 ## Known Limitations
