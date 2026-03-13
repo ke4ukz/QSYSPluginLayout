@@ -53,6 +53,11 @@ See the [full known limitations list](Website/help/help.html#known-limitations) 
 
 If the editor fails to load or behaves unexpectedly due to corrupted local storage, append `?reset=true` to the URL (e.g. `layout.html?reset=true`). This clears all saved data and settings, then redirects back to the clean URL.
 
+## Potential Future Updates
+- Icons in buttons displayed in editor (not just the property field)
+- Actual WYSIWYG
+- Boilerplate download to go straight to the plugin compiler tool (instead of just one qplug file)
+
 ## Disclaimer
 
 This tool is provided as-is with no warranty, expressed or implied. Not affiliated with, endorsed by, or sponsored by QSC, LLC, Q-SYS, or Acuity Brands.
