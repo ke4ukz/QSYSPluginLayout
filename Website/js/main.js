@@ -723,6 +723,23 @@ if (btnGenerate) {
   btnGenerate.addEventListener('click', refreshLua);
 }
 
+const btnDownload = document.getElementById('btn-download');
+if (btnDownload) {
+  btnDownload.addEventListener('click', () => {
+    const pi = dataModel.getPluginInfo() || {};
+    const name = (pi.Name || 'plugin').replace(/[^a-zA-Z0-9_\- ]/g, '');
+    const version = (pi.Version || '').replace(/[^a-zA-Z0-9._\-]/g, '');
+    const filename = version ? `${name} v${version}.qplug` : `${name}.qplug`;
+    const blob = new Blob([_currentLuaCode], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+}
+
 eventBus.on('object:added', refreshLua);
 eventBus.on('object:removed', refreshLua);
 eventBus.on('object:updated', refreshLua);
